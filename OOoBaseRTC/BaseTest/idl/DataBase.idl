@@ -1,0 +1,20 @@
+module DataBase {
+	interface mDataBase
+	{
+		boolean setConnection(in string name, in string usr_name, in string passward);
+		boolean executeQuery(in string con, in string fn);
+		boolean ResultSetNext();
+		boolean ResultSetPrevious();
+		boolean ResultSetFirst();
+		boolean ResultSetLast();
+		boolean ResultSetBeforeFirst();
+		boolean ResultSetAfterLast();
+		octet getByte(in short num);
+		short getShort(in short num);
+		long getLong(in short num);
+		float getFloat(in short num);
+		double getDouble(in short num);
+		boolean getBoolean(in short num);
+		string getString(in short num);
+	};
+};

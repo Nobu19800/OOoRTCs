@@ -1,0 +1,28 @@
+cd /d %~dp0
+
+set OOoScriptPath=%USERPROFILE%\AppData\Roaming\OpenOffice.org\3\user\Scripts\python
+set OOoPath="%ProgramFiles%\OpenOffice.org 3\program"
+
+copy OOoCalcRTC.py %OOoScriptPath%\OOoCalcRTC.py
+copy OOoDrawRTC.py %OOoScriptPath%\OOoDrawRTC.py
+copy OOoWriterRTC.py %OOoScriptPath%\OOoWriterRTC.py
+copy OOoBaseRTC.py %OOoScriptPath%\OOoBaseRTC.py
+copy OOoImpressRTC.py %OOoScriptPath%\OOoImpressRTC.py
+
+
+copy OOoRTC.py %OOoPath%\OOoRTC.py
+copy rtc.conf %OOoPath%\rtc.conf
+xcopy BaseIDL /e %OOoPath%\BaseIDL
+xcopy CalcIDL/e %OOoPath%\CalcIDL
+
+set OOoCD=%CD%
+
+cd %OOoPath%
+unopkg add -v %OOoCD%\OOoCalcControlRTC.oxt
+unopkg add -v %OOoCD%\OOoDrawControlRTC.oxt
+unopkg add -v %OOoCD%\OOoWriterControlRTC.oxt
+unopkg add -v %OOoCD%\OOoBaseControlRTC.oxt
+unopkg add -v %OOoCD%\OOoImpressControlRTC.oxt
+
+pause
+

@@ -1,0 +1,54 @@
+# BaseTest CMake config file
+#
+# This file sets the following variables:
+# BaseTest_FOUND - Always TRUE.
+# BaseTest_INCLUDE_DIRS - Directories containing the BaseTest include files.
+# BaseTest_IDL_DIRS - Directories containing the BaseTest IDL files.
+# BaseTest_LIBRARIES - Libraries needed to use BaseTest.
+# BaseTest_DEFINITIONS - Compiler flags for BaseTest.
+# BaseTest_VERSION - The version of BaseTest found.
+# BaseTest_VERSION_MAJOR - The major version of BaseTest found.
+# BaseTest_VERSION_MINOR - The minor version of BaseTest found.
+# BaseTest_VERSION_REVISION - The revision version of BaseTest found.
+# BaseTest_VERSION_CANDIDATE - The candidate version of BaseTest found.
+
+message(STATUS "Found BaseTest-@PROJECT_VERSION@")
+set(BaseTest_FOUND TRUE)
+
+find_package(<dependency> REQUIRED)
+
+#set(BaseTest_INCLUDE_DIRS
+#    "@CMAKE_INSTALL_PREFIX@/include/@PROJECT_NAME_LOWER@-@PROJECT_VERSION_MAJOR@"
+#    ${<dependency>_INCLUDE_DIRS}
+#    )
+#
+#set(BaseTest_IDL_DIRS
+#    "@CMAKE_INSTALL_PREFIX@/include/@PROJECT_NAME_LOWER@-@PROJECT_VERSION_MAJOR@/idl")
+set(BaseTest_INCLUDE_DIRS
+    "@CMAKE_INSTALL_PREFIX@/include/@CPACK_PACKAGE_FILE_NAME@"
+    ${<dependency>_INCLUDE_DIRS}
+    )
+set(BaseTest_IDL_DIRS
+    "@CMAKE_INSTALL_PREFIX@/include/@CPACK_PACKAGE_FILE_NAME@/idl")
+
+
+if(WIN32)
+    set(BaseTest_LIBRARIES
+        "@CMAKE_INSTALL_PREFIX@/@LIB_INSTALL_DIR@/@CMAKE_SHARED_LIBRARY_PREFIX@@PROJECT_NAME_LOWER@@CMAKE_STATIC_LIBRARY_SUFFIX@"
+        ${<dependency>_LIBRARIES}
+        )
+else(WIN32)
+    set(BaseTest_LIBRARIES
+        "@CMAKE_INSTALL_PREFIX@/@LIB_INSTALL_DIR@/@CMAKE_SHARED_LIBRARY_PREFIX@@PROJECT_NAME_LOWER@@CMAKE_SHARED_LIBRARY_SUFFIX@"
+        ${<dependency>_LIBRARIES}
+        )
+endif(WIN32)
+
+set(BaseTest_DEFINITIONS ${<dependency>_DEFINITIONS})
+
+set(BaseTest_VERSION @PROJECT_VERSION@)
+set(BaseTest_VERSION_MAJOR @PROJECT_VERSION_MAJOR@)
+set(BaseTest_VERSION_MINOR @PROJECT_VERSION_MINOR@)
+set(BaseTest_VERSION_REVISION @PROJECT_VERSION_REVISION@)
+set(BaseTest_VERSION_CANDIDATE @PROJECT_VERSION_CANDIDATE@)
+
