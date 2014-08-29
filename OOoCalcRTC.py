@@ -53,8 +53,8 @@ import SpreadSheet, SpreadSheet__POA
 
 
 
-comp_num = random.randint(1,3000)
-imp_id = "OOoCalcControl" + str(comp_num)
+#comp_num = random.randint(1,3000)
+imp_id = "OOoCalcControl"# + str(comp_num)
 
 
 class m_ControlName:
@@ -522,10 +522,7 @@ class OOoCalcControl(OpenRTM_aist.DataFlowComponentBase):
   
   def onDeactivated(self, ec_id):
 
-    for n,o in self._OutPorts.items():
-        o._num = int(o._col)
-    for n,i in self._InPorts.items():
-        i._num = int(i._col)
+    
         
     
     self.calc.document.addActionLock()

@@ -49,8 +49,8 @@ import OOoRTC
 
 
 
-comp_num = random.randint(1,3000)
-imp_id = "OOoImpressControl" + str(comp_num)
+#comp_num = random.randint(1,3000)
+imp_id = "OOoImpressControl"# + str(comp_num)
 
 
 

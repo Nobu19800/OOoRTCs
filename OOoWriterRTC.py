@@ -53,8 +53,8 @@ import OOoRTC
 
 
 
-comp_num = random.randint(1,3000)
-imp_id = "OOoWriterControl" + str(comp_num)
+#comp_num = random.randint(1,3000)
+imp_id = "OOoWriterControl"# + str(comp_num)
 
 
 

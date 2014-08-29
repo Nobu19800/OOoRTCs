@@ -52,8 +52,8 @@ import DataBase, DataBase__POA
 
 
 
-comp_num = random.randint(1,3000)
-imp_id = "OOoBaseControl" + str(comp_num)
+#comp_num = random.randint(1,3000)
+imp_id = "OOoBaseControl"# + str(comp_num)
 
 
 
