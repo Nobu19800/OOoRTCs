@@ -3,6 +3,7 @@
 OOoScriptPath=~/.openoffice.org/3/user/Scripts/python
 OOoPath=/usr/lib/openoffice/basis-link/program
 
+mkdir ${OOoScriptPath}
 
 cp OOoCalcRTC.py ${OOoScriptPath}/OOoCalcRTC.py
 cp OOoDrawRTC.py ${OOoScriptPath}/OOoDrawRTC.py

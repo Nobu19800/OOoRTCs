@@ -224,6 +224,7 @@ class OOoImpressControl(OpenRTM_aist.DataFlowComponentBase):
         pagenum = Presentation.Controller.getSlideCount() - 1
       if pagenum != Presentation.Controller.getCurrentSlideIndex():
         Presentation.Controller.gotoSlideIndex(pagenum)
+        OpenRTM_aist.setTimestamp(self._d_m_SlideNumout)
         self._d_m_SlideNumout.data = Presentation.Controller.getCurrentSlideIndex()
         self._m_SlideNumOut.write()
       

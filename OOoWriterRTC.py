@@ -479,7 +479,8 @@ class OOoWriterControl(OpenRTM_aist.DataFlowComponentBase):
         #t2_ = OpenRTM_aist.Time()
         #self.file.write(str((t2_-t1_).getTime().toDouble())+"\n")
 
-    
+
+    OpenRTM_aist.setTimestamp(self._d_m_selWord)
     self._d_m_selWord.data = str(self.GetWord())
     self._m_selWordOut.write()
         
