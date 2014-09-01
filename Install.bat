@@ -13,7 +13,8 @@ copy OOoImpressRTC.py %OOoScriptPath%\OOoImpressRTC.py
 copy OOoRTC.py %OOoPath%\OOoRTC.py
 copy rtc.conf %OOoPath%\rtc.conf
 xcopy BaseIDL /e %OOoPath%\BaseIDL
-xcopy CalcIDL/e %OOoPath%\CalcIDL
+xcopy CalcIDL /e %OOoPath%\CalcIDL
+xcopy WriterIDL /e %OOoPath%\WriterIDL
 
 set OOoCD=%CD%
 

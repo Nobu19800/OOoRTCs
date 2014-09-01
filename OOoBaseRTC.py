@@ -48,6 +48,7 @@ import OOoRTC
 import DataBase_idl
 from omniORB import PortableServer
 import DataBase, DataBase__POA
+import _GlobalIDL, _GlobalIDL__POA
 
 
 
@@ -88,7 +89,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
         Initialise member variables here
         """
         
-        self.ResultSet = None
+        
         
 
     # void setConnection(in string name, in string usr_name, in string passward)
@@ -100,6 +101,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
           db = OOoRTC.base_comp.base._context.getByName(name)
           tmp["Connection"] = db.getConnection(usr_name,passward)
           tmp["Statement"] = tmp["Connection"].createStatement()
+          
           OOoRTC.base_comp.ConnectionList[name] = tmp
           return True
         except:
@@ -110,10 +112,10 @@ class mDataBase_i (DataBase__POA.mDataBase):
         # Must return: None
 
     # void executeQuery(in string fn)
-    def executeQuery(self, con, fn):
+    def executeQuery(self, name, con, oSQL):
         if OOoRTC.base_comp.ConnectionList.has_key(con):
           try:
-            self.ResultSet = OOoRTC.base_comp.ConnectionList[con]["Statement"].executeQuery(fn)
+            OOoRTC.base_comp.ResultSet[name] = OOoRTC.base_comp.ConnectionList[con]["Statement"].executeQuery(oSQL)
             return True
           except:
             return False
@@ -124,10 +126,10 @@ class mDataBase_i (DataBase__POA.mDataBase):
         # Must return: None
 
     # boolean ResultSetNext()
-    def ResultSetNext(self):
+    def ResultSetNext(self, name):
         
-        if self.ResultSet:
-          return self.ResultSet.next()
+        if OOoRTC.base_comp.ResultSet.has_key(name):
+          return OOoRTC.base_comp.ResultSet[name].next()
         else:
           return False
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
@@ -135,9 +137,9 @@ class mDataBase_i (DataBase__POA.mDataBase):
         # Must return: result
 
     # boolean ResultSetPrevious()
-    def ResultSetPrevious(self):
-        if self.ResultSet:
-          return self.ResultSet.previous()
+    def ResultSetPrevious(self, name):
+        if OOoRTC.base_comp.ResultSet.has_key(name):
+          return OOoRTC.base_comp.ResultSet[name].previous()
         else:
           return False
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
@@ -145,9 +147,9 @@ class mDataBase_i (DataBase__POA.mDataBase):
         # Must return: result
 
     # boolean ResultSetFirst()
-    def ResultSetFirst(self):
-        if self.ResultSet:
-          return self.ResultSet.first()
+    def ResultSetFirst(self, name):
+        if OOoRTC.base_comp.ResultSet.has_key(name):
+          return OOoRTC.base_comp.ResultSet[name].first()
         else:
           return False
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
@@ -155,9 +157,9 @@ class mDataBase_i (DataBase__POA.mDataBase):
         # Must return: result
 
     # boolean ResultSetLast()
-    def ResultSetLast(self):
-        if self.ResultSet:
-          return self.ResultSet.last()
+    def ResultSetLast(self, name):
+        if OOoRTC.base_comp.ResultSet.has_key(name):
+          return OOoRTC.base_comp.ResultSet[name].last()
         else:
           return False
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
@@ -165,9 +167,9 @@ class mDataBase_i (DataBase__POA.mDataBase):
         # Must return: result
 
     # boolean ResultSetBeforeFirst()
-    def ResultSetBeforeFirst(self):
-        if self.ResultSet:
-          return self.ResultSet.beforeFirst()
+    def ResultSetBeforeFirst(self, name):
+        if OOoRTC.base_comp.ResultSet.has_key(name):
+          return OOoRTC.base_comp.ResultSet[name].beforeFirst()
         else:
           return False
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
@@ -175,9 +177,9 @@ class mDataBase_i (DataBase__POA.mDataBase):
         # Must return: result
 
     # boolean ResultSetAfterLast()
-    def ResultSetAfterLast(self):
-        if self.ResultSet:
-          return self.ResultSet.afterLast()
+    def ResultSetAfterLast(self, name):
+        if OOoRTC.base_comp.ResultSet.has_key(name):
+          return OOoRTC.base_comp.ResultSet[name].afterLast()
         else:
           return False
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
@@ -185,9 +187,9 @@ class mDataBase_i (DataBase__POA.mDataBase):
         # Must return: result
 
     # octet getByte(in short num)
-    def getByte(self, num):
-        if self.ResultSet:
-          return self.ResultSet.getByte(num)
+    def getByte(self, name, num):
+        if OOoRTC.base_comp.ResultSet.has_key(name):
+          return OOoRTC.base_comp.ResultSet[name].getByte(num)
         else:
           return 0
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
@@ -195,18 +197,18 @@ class mDataBase_i (DataBase__POA.mDataBase):
         # Must return: result
 
     # short getShort(in short num)
-    def getShort(self, num):
-        if self.ResultSet:
-          return int(self.ResultSet.getShort(num))
+    def getShort(self, name, num):
+        if OOoRTC.base_comp.ResultSet.has_key(name):
+          return int(OOoRTC.base_comp.ResultSet[name].getShort(num))
         return 0
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
         # *** Implement me
         # Must return: result
 
     # long getLong(in short num)
-    def getLong(self, num):
-        if self.ResultSet:
-          return long(self.ResultSet.getLong(num))
+    def getLong(self, name, num):
+        if OOoRTC.base_comp.ResultSet.has_key(name):
+          return long(OOoRTC.base_comp.ResultSet[name].getLong(num))
         else:
           return 0
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
@@ -214,9 +216,9 @@ class mDataBase_i (DataBase__POA.mDataBase):
         # Must return: result
 
     # float getFloat(in short num)
-    def getFloat(self, num):
-        if self.ResultSet:
-          return float(self.ResultSet.getFloat(num))
+    def getFloat(self, name, num):
+        if OOoRTC.base_comp.ResultSet.has_key(name):
+          return float(OOoRTC.base_comp.ResultSet[name].getFloat(num))
         else:
           return 0
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
@@ -224,9 +226,9 @@ class mDataBase_i (DataBase__POA.mDataBase):
         # Must return: result
 
     # double getDouble(in short num)
-    def getDouble(self, num):
-        if self.ResultSet:
-          return float(self.ResultSet.getDouble(num))
+    def getDouble(self, name, num):
+        if OOoRTC.base_comp.ResultSet.has_key(name):
+          return float(OOoRTC.base_comp.ResultSet[name].getDouble(num))
         else:
           return 0
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
@@ -234,9 +236,9 @@ class mDataBase_i (DataBase__POA.mDataBase):
         # Must return: result
 
     # boolean getBoolean(in short num)
-    def getBoolean(self, num):
-        if self.ResultSet:
-          return bool(self.ResultSet.getBoolean(num))
+    def getBoolean(self, name, num):
+        if OOoRTC.base_comp.ResultSet.has_key(name):
+          return bool(OOoRTC.base_comp.ResultSet[name].getBoolean(num))
         else:
           return False
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
@@ -244,11 +246,76 @@ class mDataBase_i (DataBase__POA.mDataBase):
         # Must return: result
 
     # string getString(in short num)
-    def getString(self, num):
-        if self.ResultSet:
-          return str(self.ResultSet.getString(num))
+    def getString(self, name, num):
+        if OOoRTC.base_comp.ResultSet.has_key(name):
+          return str(OOoRTC.base_comp.ResultSet[name].getString(num))
         else:
           return ""
+        raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
+        # *** Implement me
+        # Must return: result
+
+    # StringLine getDataBaseNames()
+    def getDataBaseNames(self):
+        Ans = _GlobalIDL.StringLine([])
+        names = OOoRTC.base_comp.base._context.getElementNames()
+        for i in names:
+            Ans.value.append(str(i))
+        return Ans
+        raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
+        # *** Implement me
+        # Must return: result
+
+    # StringLine getDataTableNames(in string con)
+    def getDataTableNames(self, con):
+        Ans = _GlobalIDL.StringLine([])
+        
+        
+        
+        if OOoRTC.base_comp.ConnectionList.has_key(con):
+            try:
+		
+                oDBTables = OOoRTC.base_comp.ConnectionList[con]["Connection"].getTables().createEnumeration()
+                while oDBTables.hasMoreElements():
+                    oTable = oDBTables.nextElement()
+                    Ans.value.append(str(oTable.Name))
+                    
+            except:
+                Ans.value.append("ERROR")
+                
+
+        return Ans
+        raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
+        # *** Implement me
+        # Must return: result
+
+    # boolean executeUpdate(in string name, in string oSQL)
+    def executeUpdate(self, con, oSQL):
+        
+        oRstDataSources = OOoRTC.base_comp.base._context.getByName(con)
+        
+        
+        if OOoRTC.base_comp.ConnectionList.has_key(con):
+          try:
+
+            OOoRTC.base_comp.ConnectionList[con]["Statement"].executeUpdate(oSQL)
+            
+            return True
+          except:
+            return False
+          raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
+        else:
+          return False
+        
+        raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
+        # *** Implement me
+        # Must return: result
+
+    # short getRow(in string name)
+    def getRow(self, name):
+        if OOoRTC.base_comp.ResultSet.has_key(name):
+          return int(OOoRTC.base_comp.ResultSet[name].getRow())
+        return 0
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
         # *** Implement me
         # Must return: result
@@ -265,6 +332,7 @@ class OOoBaseControl(OpenRTM_aist.DataFlowComponentBase):
     
     
     self.ConnectionList = {}
+    self.ResultSet = {}
 
     try:
       self.base = OOoBase()
@@ -329,11 +397,12 @@ class OOoBaseControl(OpenRTM_aist.DataFlowComponentBase):
       j["Connection"].close()
       j["Connection"].dispose()
     self.ConnectionList = {}
+    self.ResultSet = {}
     return RTC.RTC_OK
   
   def onExecute(self, ec_id):
     
-        
+    
 
     return RTC.RTC_OK
 

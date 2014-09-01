@@ -8,6 +8,28 @@ _omnipy.checkVersion(3,0, __file__)
 
 
 #
+# Start of module "_GlobalIDL"
+#
+__name__ = "_GlobalIDL"
+_0__GlobalIDL = omniORB.openModule("_GlobalIDL", r"idl/DataBase.idl")
+_0__GlobalIDL__POA = omniORB.openModule("_GlobalIDL__POA", r"idl/DataBase.idl")
+
+
+# struct StringLine
+_0__GlobalIDL.StringLine = omniORB.newEmptyClass()
+class StringLine (omniORB.StructBase):
+    _NP_RepositoryId = "IDL:StringLine:1.0"
+
+    def __init__(self, value):
+        self.value = value
+
+_0__GlobalIDL.StringLine = StringLine
+_0__GlobalIDL._d_StringLine  = (omniORB.tcInternal.tv_struct, StringLine, StringLine._NP_RepositoryId, "StringLine", "value", (omniORB.tcInternal.tv_sequence, (omniORB.tcInternal.tv_string,0), 0))
+_0__GlobalIDL._tc_StringLine = omniORB.tcInternal.createTypeCode(_0__GlobalIDL._d_StringLine)
+omniORB.registerType(StringLine._NP_RepositoryId, _0__GlobalIDL._d_StringLine, _0__GlobalIDL._tc_StringLine)
+del StringLine
+
+#
 # Start of module "DataBase"
 #
 __name__ = "DataBase"
@@ -34,20 +56,24 @@ omniORB.registerType(mDataBase._NP_RepositoryId, _0_DataBase._d_mDataBase, _0_Da
 
 # mDataBase operations and attributes
 mDataBase._d_setConnection = (((omniORB.tcInternal.tv_string,0), (omniORB.tcInternal.tv_string,0), (omniORB.tcInternal.tv_string,0)), (omniORB.tcInternal.tv_boolean, ), None)
-mDataBase._d_executeQuery = (((omniORB.tcInternal.tv_string,0), (omniORB.tcInternal.tv_string,0)), (omniORB.tcInternal.tv_boolean, ), None)
-mDataBase._d_ResultSetNext = ((), (omniORB.tcInternal.tv_boolean, ), None)
-mDataBase._d_ResultSetPrevious = ((), (omniORB.tcInternal.tv_boolean, ), None)
-mDataBase._d_ResultSetFirst = ((), (omniORB.tcInternal.tv_boolean, ), None)
-mDataBase._d_ResultSetLast = ((), (omniORB.tcInternal.tv_boolean, ), None)
-mDataBase._d_ResultSetBeforeFirst = ((), (omniORB.tcInternal.tv_boolean, ), None)
-mDataBase._d_ResultSetAfterLast = ((), (omniORB.tcInternal.tv_boolean, ), None)
-mDataBase._d_getByte = ((omniORB.tcInternal.tv_short, ), (omniORB.tcInternal.tv_octet, ), None)
-mDataBase._d_getShort = ((omniORB.tcInternal.tv_short, ), (omniORB.tcInternal.tv_short, ), None)
-mDataBase._d_getLong = ((omniORB.tcInternal.tv_short, ), (omniORB.tcInternal.tv_long, ), None)
-mDataBase._d_getFloat = ((omniORB.tcInternal.tv_short, ), (omniORB.tcInternal.tv_float, ), None)
-mDataBase._d_getDouble = ((omniORB.tcInternal.tv_short, ), (omniORB.tcInternal.tv_double, ), None)
-mDataBase._d_getBoolean = ((omniORB.tcInternal.tv_short, ), (omniORB.tcInternal.tv_boolean, ), None)
-mDataBase._d_getString = ((omniORB.tcInternal.tv_short, ), ((omniORB.tcInternal.tv_string,0), ), None)
+mDataBase._d_executeQuery = (((omniORB.tcInternal.tv_string,0), (omniORB.tcInternal.tv_string,0), (omniORB.tcInternal.tv_string,0)), (omniORB.tcInternal.tv_boolean, ), None)
+mDataBase._d_ResultSetNext = (((omniORB.tcInternal.tv_string,0), ), (omniORB.tcInternal.tv_boolean, ), None)
+mDataBase._d_ResultSetPrevious = (((omniORB.tcInternal.tv_string,0), ), (omniORB.tcInternal.tv_boolean, ), None)
+mDataBase._d_ResultSetFirst = (((omniORB.tcInternal.tv_string,0), ), (omniORB.tcInternal.tv_boolean, ), None)
+mDataBase._d_ResultSetLast = (((omniORB.tcInternal.tv_string,0), ), (omniORB.tcInternal.tv_boolean, ), None)
+mDataBase._d_ResultSetBeforeFirst = (((omniORB.tcInternal.tv_string,0), ), (omniORB.tcInternal.tv_boolean, ), None)
+mDataBase._d_ResultSetAfterLast = (((omniORB.tcInternal.tv_string,0), ), (omniORB.tcInternal.tv_boolean, ), None)
+mDataBase._d_getByte = (((omniORB.tcInternal.tv_string,0), omniORB.tcInternal.tv_short), (omniORB.tcInternal.tv_octet, ), None)
+mDataBase._d_getShort = (((omniORB.tcInternal.tv_string,0), omniORB.tcInternal.tv_short), (omniORB.tcInternal.tv_short, ), None)
+mDataBase._d_getLong = (((omniORB.tcInternal.tv_string,0), omniORB.tcInternal.tv_short), (omniORB.tcInternal.tv_long, ), None)
+mDataBase._d_getFloat = (((omniORB.tcInternal.tv_string,0), omniORB.tcInternal.tv_short), (omniORB.tcInternal.tv_float, ), None)
+mDataBase._d_getDouble = (((omniORB.tcInternal.tv_string,0), omniORB.tcInternal.tv_short), (omniORB.tcInternal.tv_double, ), None)
+mDataBase._d_getBoolean = (((omniORB.tcInternal.tv_string,0), omniORB.tcInternal.tv_short), (omniORB.tcInternal.tv_boolean, ), None)
+mDataBase._d_getString = (((omniORB.tcInternal.tv_string,0), omniORB.tcInternal.tv_short), ((omniORB.tcInternal.tv_string,0), ), None)
+mDataBase._d_getDataBaseNames = ((), (omniORB.typeMapping["IDL:StringLine:1.0"], ), None)
+mDataBase._d_getDataTableNames = (((omniORB.tcInternal.tv_string,0), ), (omniORB.typeMapping["IDL:StringLine:1.0"], ), None)
+mDataBase._d_executeUpdate = (((omniORB.tcInternal.tv_string,0), (omniORB.tcInternal.tv_string,0)), (omniORB.tcInternal.tv_boolean, ), None)
+mDataBase._d_getRow = (((omniORB.tcInternal.tv_string,0), ), (omniORB.tcInternal.tv_short, ), None)
 
 # mDataBase object reference
 class _objref_mDataBase (CORBA.Object):
@@ -101,7 +127,19 @@ class _objref_mDataBase (CORBA.Object):
     def getString(self, *args):
         return _omnipy.invoke(self, "getString", _0_DataBase.mDataBase._d_getString, args)
 
-    __methods__ = ["setConnection", "executeQuery", "ResultSetNext", "ResultSetPrevious", "ResultSetFirst", "ResultSetLast", "ResultSetBeforeFirst", "ResultSetAfterLast", "getByte", "getShort", "getLong", "getFloat", "getDouble", "getBoolean", "getString"] + CORBA.Object.__methods__
+    def getDataBaseNames(self, *args):
+        return _omnipy.invoke(self, "getDataBaseNames", _0_DataBase.mDataBase._d_getDataBaseNames, args)
+
+    def getDataTableNames(self, *args):
+        return _omnipy.invoke(self, "getDataTableNames", _0_DataBase.mDataBase._d_getDataTableNames, args)
+
+    def executeUpdate(self, *args):
+        return _omnipy.invoke(self, "executeUpdate", _0_DataBase.mDataBase._d_executeUpdate, args)
+
+    def getRow(self, *args):
+        return _omnipy.invoke(self, "getRow", _0_DataBase.mDataBase._d_getRow, args)
+
+    __methods__ = ["setConnection", "executeQuery", "ResultSetNext", "ResultSetPrevious", "ResultSetFirst", "ResultSetLast", "ResultSetBeforeFirst", "ResultSetAfterLast", "getByte", "getShort", "getLong", "getFloat", "getDouble", "getBoolean", "getString", "getDataBaseNames", "getDataTableNames", "executeUpdate", "getRow"] + CORBA.Object.__methods__
 
 omniORB.registerObjref(mDataBase._NP_RepositoryId, _objref_mDataBase)
 _0_DataBase._objref_mDataBase = _objref_mDataBase
@@ -113,7 +151,7 @@ class mDataBase (PortableServer.Servant):
     _NP_RepositoryId = _0_DataBase.mDataBase._NP_RepositoryId
 
 
-    _omni_op_d = {"setConnection": _0_DataBase.mDataBase._d_setConnection, "executeQuery": _0_DataBase.mDataBase._d_executeQuery, "ResultSetNext": _0_DataBase.mDataBase._d_ResultSetNext, "ResultSetPrevious": _0_DataBase.mDataBase._d_ResultSetPrevious, "ResultSetFirst": _0_DataBase.mDataBase._d_ResultSetFirst, "ResultSetLast": _0_DataBase.mDataBase._d_ResultSetLast, "ResultSetBeforeFirst": _0_DataBase.mDataBase._d_ResultSetBeforeFirst, "ResultSetAfterLast": _0_DataBase.mDataBase._d_ResultSetAfterLast, "getByte": _0_DataBase.mDataBase._d_getByte, "getShort": _0_DataBase.mDataBase._d_getShort, "getLong": _0_DataBase.mDataBase._d_getLong, "getFloat": _0_DataBase.mDataBase._d_getFloat, "getDouble": _0_DataBase.mDataBase._d_getDouble, "getBoolean": _0_DataBase.mDataBase._d_getBoolean, "getString": _0_DataBase.mDataBase._d_getString}
+    _omni_op_d = {"setConnection": _0_DataBase.mDataBase._d_setConnection, "executeQuery": _0_DataBase.mDataBase._d_executeQuery, "ResultSetNext": _0_DataBase.mDataBase._d_ResultSetNext, "ResultSetPrevious": _0_DataBase.mDataBase._d_ResultSetPrevious, "ResultSetFirst": _0_DataBase.mDataBase._d_ResultSetFirst, "ResultSetLast": _0_DataBase.mDataBase._d_ResultSetLast, "ResultSetBeforeFirst": _0_DataBase.mDataBase._d_ResultSetBeforeFirst, "ResultSetAfterLast": _0_DataBase.mDataBase._d_ResultSetAfterLast, "getByte": _0_DataBase.mDataBase._d_getByte, "getShort": _0_DataBase.mDataBase._d_getShort, "getLong": _0_DataBase.mDataBase._d_getLong, "getFloat": _0_DataBase.mDataBase._d_getFloat, "getDouble": _0_DataBase.mDataBase._d_getDouble, "getBoolean": _0_DataBase.mDataBase._d_getBoolean, "getString": _0_DataBase.mDataBase._d_getString, "getDataBaseNames": _0_DataBase.mDataBase._d_getDataBaseNames, "getDataTableNames": _0_DataBase.mDataBase._d_getDataTableNames, "executeUpdate": _0_DataBase.mDataBase._d_executeUpdate, "getRow": _0_DataBase.mDataBase._d_getRow}
 
 mDataBase._omni_skeleton = mDataBase
 _0_DataBase__POA.mDataBase = mDataBase
@@ -124,8 +162,14 @@ __name__ = "DataBase"
 #
 # End of module "DataBase"
 #
+__name__ = "_GlobalIDL"
+
+
+#
+# End of module "_GlobalIDL"
+#
 __name__ = "DataBase_idl"
 
-_exported_modules = ( "DataBase", )
+_exported_modules = ( "DataBase", "_GlobalIDL")
 
 # The end.

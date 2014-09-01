@@ -17,6 +17,7 @@ cp OOoRTC.py ${OOoPath}/OOoRTC.py
 cp rtc.conf ${OOoPath}/rtc.conf
 cp BaseIDL -r ${OOoPath}/BaseIDL
 cp CalcIDL -r ${OOoPath}/CalcIDL
+cp WriterIDL -r ${OOoPath}/WriterIDL
 
 unopkg add -v OOoCalcControlRTC.oxt
 unopkg add -v OOoDrawControlRTC.oxt

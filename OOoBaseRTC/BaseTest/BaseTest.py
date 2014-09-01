@@ -156,16 +156,16 @@ class BaseTest(OpenRTM_aist.DataFlowComponentBase):
 		#
 	def onActivated(self, ec_id):
                 flag = True
-                while flag:
+		while flag:
                         try:
                                 f1 = self._database._ptr().setConnection("OOoBaseRTC","","")
-                                f2 = self._database._ptr().executeQuery("OOoBaseRTC","select * from Table1")
+                                f2 = self._database._ptr().executeQuery("RS1", "OOoBaseRTC","select * from TABLE1")
+
                                 if f1 and f2:
                                         flag = False
-                                
-                                
+
                         except:
-                                pass
+                                print "ERROR"
 		return RTC.RTC_OK
 	
 	#	##
@@ -194,14 +194,14 @@ class BaseTest(OpenRTM_aist.DataFlowComponentBase):
 		#
 	def onExecute(self, ec_id):
                 sys.stdin.readline()
-                try:
-                        
-                        if self._database._ptr().ResultSetNext():
-                                print self._database._ptr().getString(1)
-                                print self._database._ptr().getString(2)
+                try:   
+                        if self._database._ptr().ResultSetNext("RS1"):
+                                print self._database._ptr().getString("RS1", 1)
+                                print self._database._ptr().getString("RS1", 2)
+                                
 
                 except:
-                        pass
+                        print "ERROR"
 		return RTC.RTC_OK
 	
 	#	##
