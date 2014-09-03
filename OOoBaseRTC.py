@@ -9,18 +9,14 @@ import random
 import commands
 import math
 
-import os.path
+
 
 if os.name == 'posix':
     sys.path += ['/usr/lib/openoffice/basis-link/program/BaseIDL', '/usr/lib/python2.6/dist-packages', '/usr/lib/python2.6/dist-packages/rtctree/rtmidl']
 elif os.name == 'nt':
-    sys.path += ['C:\\Python26\\lib\\site-packages', 'C:\\Python26\\lib\\site-packages\\rtctree\\rtmidl']
-    p_name = 'C:\\Program Files\\OpenOffice.org 3\\program\\BaseIDL'
-    if os.path.isdir(p_name):
-        sys.path += [p_name]
-    p_name = 'C:\\Program Files (x86)\\OpenOffice.org 3\\program\\BaseIDL'
-    if os.path.isdir(p_name):
-        sys.path += [p_name]
+    sys.path += ['.\\BaseIDL', 'C:\\Python26\\lib\\site-packages', 'C:\\Python26\\lib\\site-packages\\rtctree\\rtmidl']
+    
+    
 
 import time
 import random
