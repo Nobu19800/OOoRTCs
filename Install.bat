@@ -4,7 +4,8 @@ set OOoScriptPath=%USERPROFILE%\AppData\Roaming\OpenOffice.org\3\user\Scripts\py
 set OOoPath="%ProgramFiles%\OpenOffice.org 3\program"
 
 IF NOT EXIST %OOoPath% (
-   set OOoPath="%ProgramFiles(x86)%\OpenOffice.org 3\program"
+
+   set OOoPath="%ProgramFiles(x86)%\OpenOffice.org 3\program"
 )
 
 copy OOoCalcRTC.py %OOoScriptPath%\OOoCalcRTC.py
@@ -14,11 +15,10 @@ copy OOoBaseRTC.py %OOoScriptPath%\OOoBaseRTC.py
 copy OOoImpressRTC.py %OOoScriptPath%\OOoImpressRTC.py
 
 
-copy OOoRTC.py %OOoPath%\OOoRTC.py
+
 copy rtc.conf %OOoPath%\rtc.conf
-xcopy BaseIDL /e %OOoPath%\BaseIDL
-xcopy CalcIDL /e %OOoPath%\CalcIDL
-xcopy WriterIDL /e %OOoPath%\WriterIDL
+xcopy OOoRTC /e %OOoPath%\OOoRTC
+
 
 set OOoCD=%CD%
 
