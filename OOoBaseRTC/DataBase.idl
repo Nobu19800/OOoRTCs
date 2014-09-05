@@ -1,7 +1,5 @@
-struct StringLine
-{
-	sequence<string> value;
-};
+typedef sequence<string> StringSeq;
+
 
 
 module DataBase {
@@ -23,10 +21,16 @@ module DataBase {
 		boolean getBoolean(in string name, in short num);
 		string getString(in string name, in short num);
 
-		StringLine getDataBaseNames();
-		StringLine getDataTableNames(in string con);
+		StringSeq getDataBaseNames();
+		StringSeq getDataTableNames(in string con);
 		boolean executeUpdate(in string con, in string oSQL);
 		short getRow(in string name);
+
+		boolean AddTable(in string name, in string con, in StringLine cols, in StringLine dt);
+		boolean RemoveTable(in string name, in string con);
+		boolean AddDataBase(in string name);
+		boolean RemoveDataBase(in string name);
+		
 		
 		
 	};

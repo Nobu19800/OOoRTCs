@@ -14,7 +14,7 @@ import math
 if os.name == 'posix':
     sys.path += ['./OOoRTC', './OOoRTC/BaseIDL', '/usr/lib/python2.6/dist-packages', '/usr/lib/python2.6/dist-packages/rtctree/rtmidl']
 elif os.name == 'nt':
-    sys.path += ['.\\OOoRTC', '.\\OOoRTC\\BaseIDL', 'C:\\Python26\\lib\\site-packages', 'C:\\Python26\\lib\\site-packages\\rtctree\\rtmidl']
+    sys.path += ['.\\OOoRTC', '.\\OOoRTC\\BaseIDL', 'C:\\Python26\\lib\\site-packages', 'C:\\Python26\\Lib\\site-packages\\OpenRTM_aist\\RTM_IDL', 'C:\\Python26\\lib\\site-packages\\rtctree\\rtmidl']
     
     
 
@@ -38,10 +38,34 @@ import uno
 import unohelper
 import traceback
 from com.sun.star.awt import Rectangle
+from com.sun.star.beans import PropertyValue
 
 from com.sun.star.awt import XActionListener
 
 from com.sun.star.script.provider import XScriptContext
+
+
+from  com.sun.star.sdbc.DataType import BIT
+from  com.sun.star.sdbc.DataType import TINYINT
+from  com.sun.star.sdbc.DataType import SMALLINT
+from  com.sun.star.sdbc.DataType import INTEGER
+from  com.sun.star.sdbc.DataType import BIGINT
+from  com.sun.star.sdbc.DataType import FLOAT
+from  com.sun.star.sdbc.DataType import REAL
+from  com.sun.star.sdbc.DataType import DOUBLE
+from  com.sun.star.sdbc.DataType import NUMERIC
+from  com.sun.star.sdbc.DataType import DECIMAL
+from  com.sun.star.sdbc.DataType import CHAR
+from  com.sun.star.sdbc.DataType import VARCHAR
+from  com.sun.star.sdbc.DataType import LONGVARCHAR
+from  com.sun.star.sdbc.DataType import DATE
+from  com.sun.star.sdbc.DataType import TIME
+from  com.sun.star.sdbc.DataType import TIMESTAMP
+from  com.sun.star.sdbc.DataType import BINARY
+from  com.sun.star.sdbc.DataType import VARBINARY
+from  com.sun.star.sdbc.DataType import LONGVARBINARY
+from  com.sun.star.sdbc.DataType import SQLNULL
+from  com.sun.star.sdbc.DataType import OTHER
 
 
 
@@ -260,10 +284,10 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
     # StringLine getDataBaseNames()
     def getDataBaseNames(self):
-        Ans = _GlobalIDL.StringLine([])
+        Ans = []
         names = OOoRTC.base_comp.base._context.getElementNames()
         for i in names:
-            Ans.value.append(str(i))
+            Ans.append(str(i))
         return Ans
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
         # *** Implement me
@@ -271,7 +295,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
     # StringLine getDataTableNames(in string con)
     def getDataTableNames(self, con):
-        Ans = _GlobalIDL.StringLine([])
+        Ans = []
         
         
         
@@ -281,10 +305,10 @@ class mDataBase_i (DataBase__POA.mDataBase):
                 oDBTables = OOoRTC.base_comp.ConnectionList[con]["Connection"].getTables().createEnumeration()
                 while oDBTables.hasMoreElements():
                     oTable = oDBTables.nextElement()
-                    Ans.value.append(str(oTable.Name))
+                    Ans.append(str(oTable.Name))
                     
             except:
-                Ans.value.append("ERROR")
+                Ans.append("ERROR")
                 
 
         return Ans
@@ -322,6 +346,171 @@ class mDataBase_i (DataBase__POA.mDataBase):
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
         # *** Implement me
         # Must return: result
+
+    def AddTable(self, name, con, cols, dt):
+        if OOoRTC.base_comp.ConnectionList.has_key(con):
+          try:
+            oTables = OOoRTC.base_comp.ConnectionList[con]["Connection"].getTables()
+            oDBTables = oTables.createEnumeration()
+
+            while oDBTables.hasMoreElements():
+                oTable = oDBTables.nextElement()
+                if str(oTable.Name) == name:
+                    return False
+
+            
+
+            oTableDescriptor = oTables.createDataDescriptor() 
+            oTableDescriptor.Name = name
+            oCols = oTableDescriptor.getColumns()
+
+            
+            
+            for i in range(0, len(cols)):
+                if len(dt) > i:
+                    oCol = oCols.createDataDescriptor()
+                    oCol.Name = cols[i]
+                    if i == 0:
+                        oCol.Description = "Primary Key"
+                    if dt[i] == "BIT":
+                        oCol.Type = BIT
+                        oCol.Precision = 2
+                    elif dt[i] == "TINYINT":
+                        oCol.Type = TINYINT
+                        oCol.Precision = 4
+                    elif dt[i] == "SMALLINT":
+                        oCol.Type = SMALLINT
+                        oCol.Precision = 8
+                    elif dt[i] == "INTEGER":
+                        oCol.Type = INTEGER
+                        oCol.Precision = 16
+                    elif dt[i] == "BIGINT":
+                        oCol.Type = BIGINT
+                        oCol.Precision = 32
+                    elif dt[i] == "FLOAT":
+                        oCol.Type = FLOAT
+                        oCol.Precision = 64
+                    elif dt[i] == "REAL":
+                        oCol.Type = REAL
+                    elif dt[i] == "DOUBLE":
+                        oCol.Type = DOUBLE
+                        oCol.Precision = 128
+                    elif dt[i] == "NUMERIC":
+                        oCol.Type = NUMERIC
+                    elif dt[i] == "DECIMAL":
+                        oCol.Type = DECIMAL
+                    elif dt[i] == "CHAR":
+                        oCol.Type = CHAR
+                        oCol.Precision = 128
+                    elif dt[i] == "VARCHAR":
+                        oCol.Type = VARCHAR
+                        oCol.Precision = 256
+                    elif dt[i] == "LONGVARCHAR":
+                        oCol.Type = LONGVARCHAR
+                        oCol.Precision = 512
+                    elif dt[i] == "DATE":
+                        oCol.Type = DATE
+                    elif dt[i] == "TIME":
+                        oCol.Type = TIME
+                    elif dt[i] == "TIMESTAMP":
+                        oCol.Type = TIMESTAMP
+                    elif dt[i] == "BINARY":
+                        oCol.Type = BINARY
+                    elif dt[i] == "VARBINARY":
+                        oCol.Type = VARBINARY
+                    elif dt[i] == "LONGVARBINARY":
+                        oCol.Type = LONGVARBINARY
+                        oCol.Precision = 2147483647
+                    elif dt[i] == "SQLNULL":
+                        oCol.Type = SQLNULL
+                    elif dt[i] == "OTHER":
+                        oCol.Type = OTHER
+                    oCols.appendByDescriptor(oCol)
+            
+            
+            
+        
+            oTables.appendByDescriptor(oTableDescriptor)
+
+            
+            
+            
+            return True
+          except:
+            return False
+          
+        else:
+          return False
+        raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
+        # *** Implement me
+        # Must return: result
+
+    # boolean RemoveTable(in string name, in string con)
+    def RemoveTable(self, name, con):
+        if OOoRTC.base_comp.ConnectionList.has_key(con):
+          try:
+            oTables = OOoRTC.base_comp.ConnectionList[con]["Connection"].getTables()
+            oDBTables = oTables.createEnumeration()
+
+            while oDBTables.hasMoreElements():
+                oTable = oDBTables.nextElement()
+                if str(oTable.Name) == name:
+                    oTables.dropByName(name)
+                    return True
+            return False
+          except:
+            return False
+          
+        else:
+          return False
+        raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
+        # *** Implement me
+        # Must return: result
+
+    # boolean AddDataBase(in string name)
+    def AddDataBase(self, name):
+        try:
+            names = OOoRTC.base_comp.base._context.getElementNames()
+            for i in names:
+                if name == str(i):
+                    return False
+            
+            dbURL = "C:\\Users\\Nobuhiko\\Desktop\\OOoBaseRTC\\" + name + ".odb"
+            ofile= os.path.abspath(dbURL)
+
+            oDB = OOoRTC.base_comp.base._context.createInstance()
+            oDB.URL = "sdbc:embedded:hsqldb"
+
+            p = PropertyValue()
+            properties = (p,)
+
+            oDB.DatabaseDocument.storeAsURL(ofile, properties)
+
+            oDS = XSCRIPTCONTEXT.getDesktop().loadComponentFromURL(unohelper.systemPathToFileUrl(ofile),"_blank", 0, () )
+            OOoRTC.base_comp.base._context.registerObject(name,oDS.DataSource)
+            oDS.close(True)
+
+            return True
+        except:
+            return False
+        
+        raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
+        # *** Implement me
+        # Must return: result
+
+    # boolean RemoveDataBase(in string name)
+    def RemoveDataBase(self, name):
+        
+        try:
+            OOoRTC.base_comp.base._context.revokeObject(name)
+            return True
+        except:
+            return False
+        raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
+        # *** Implement me
+        # Must return: result
+
+    
 
 
 ##

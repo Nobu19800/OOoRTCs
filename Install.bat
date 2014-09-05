@@ -8,6 +8,8 @@ IF NOT EXIST %OOoPath% (
    set OOoPath="%ProgramFiles(x86)%\OpenOffice.org 3\program"
 )
 
+mkdir %OOoScriptPath%
+
 copy OOoCalcRTC.py %OOoScriptPath%\OOoCalcRTC.py
 copy OOoDrawRTC.py %OOoScriptPath%\OOoDrawRTC.py
 copy OOoWriterRTC.py %OOoScriptPath%\OOoWriterRTC.py
