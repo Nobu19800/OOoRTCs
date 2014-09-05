@@ -1,14 +1,12 @@
-#-adsh_path_var PATH,OOoScriptPath,OOoPath,OpenOfficePath
+#-adsh_path_var PATH,OOoScriptPath,OpenOfficePath
 
 OOoScriptPath=~/.openoffice.org/3/user/Scripts/python
 
-OOoPath=/opt/openoffice3/basis-link/program
+
 
 OpenOfficePath=/opt/openoffice3/program
 
-if [ ! -e $OOoPath ]; then
-	OOoPath=/usr/lib/openoffice/basis-link/program
-fi
+
 
 mkdir ~/.openoffice.org/3/user/Scripts
 mkdir ${OOoScriptPath}
@@ -21,8 +19,8 @@ cp OOoImpressRTC.py ${OOoScriptPath}/OOoImpressRTC.py
 
 
 
-sudo cp rtc.conf ${OOoPath}/rtc.conf
 
+cp rtc.conf ~/rtc.conf
 cp OOoRTC -r ~/OOoRTC
 
 

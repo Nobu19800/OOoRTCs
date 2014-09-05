@@ -23,7 +23,7 @@ rm ${OOoScriptPath}/OOoImpressRTC.py
 
 
 
-sudo rm ${OOoPath}/rtc.conf
+rm ~/rtc.conf
 
 rm -rf ~/OOoRTC
 
