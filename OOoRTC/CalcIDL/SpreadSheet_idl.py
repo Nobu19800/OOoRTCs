@@ -15,19 +15,17 @@ _0__GlobalIDL = omniORB.openModule("_GlobalIDL", r"idl/SpreadSheet.idl")
 _0__GlobalIDL__POA = omniORB.openModule("_GlobalIDL__POA", r"idl/SpreadSheet.idl")
 
 
-# struct StringLine
-_0__GlobalIDL.StringLine = omniORB.newEmptyClass()
-class StringLine (omniORB.StructBase):
-    _NP_RepositoryId = "IDL:StringLine:1.0"
-
-    def __init__(self, value):
-        self.value = value
-
-_0__GlobalIDL.StringLine = StringLine
-_0__GlobalIDL._d_StringLine  = (omniORB.tcInternal.tv_struct, StringLine, StringLine._NP_RepositoryId, "StringLine", "value", (omniORB.tcInternal.tv_sequence, (omniORB.tcInternal.tv_string,0), 0))
-_0__GlobalIDL._tc_StringLine = omniORB.tcInternal.createTypeCode(_0__GlobalIDL._d_StringLine)
-omniORB.registerType(StringLine._NP_RepositoryId, _0__GlobalIDL._d_StringLine, _0__GlobalIDL._tc_StringLine)
-del StringLine
+# typedef ... StringSeq
+class StringSeq:
+    _NP_RepositoryId = "IDL:StringSeq:1.0"
+    def __init__(self, *args, **kw):
+        raise RuntimeError("Cannot construct objects of this type.")
+_0__GlobalIDL.StringSeq = StringSeq
+_0__GlobalIDL._d_StringSeq  = (omniORB.tcInternal.tv_sequence, (omniORB.tcInternal.tv_string,0), 0)
+_0__GlobalIDL._ad_StringSeq = (omniORB.tcInternal.tv_alias, StringSeq._NP_RepositoryId, "StringSeq", (omniORB.tcInternal.tv_sequence, (omniORB.tcInternal.tv_string,0), 0))
+_0__GlobalIDL._tc_StringSeq = omniORB.tcInternal.createTypeCode(_0__GlobalIDL._ad_StringSeq)
+omniORB.registerType(StringSeq._NP_RepositoryId, _0__GlobalIDL._ad_StringSeq, _0__GlobalIDL._tc_StringSeq)
+del StringSeq
 
 # typedef ... StringList
 class StringList:
@@ -35,37 +33,35 @@ class StringList:
     def __init__(self, *args, **kw):
         raise RuntimeError("Cannot construct objects of this type.")
 _0__GlobalIDL.StringList = StringList
-_0__GlobalIDL._d_StringList  = (omniORB.tcInternal.tv_sequence, omniORB.typeMapping["IDL:StringLine:1.0"], 0)
-_0__GlobalIDL._ad_StringList = (omniORB.tcInternal.tv_alias, StringList._NP_RepositoryId, "StringList", (omniORB.tcInternal.tv_sequence, omniORB.typeMapping["IDL:StringLine:1.0"], 0))
+_0__GlobalIDL._d_StringList  = (omniORB.tcInternal.tv_sequence, omniORB.typeMapping["IDL:StringSeq:1.0"], 0)
+_0__GlobalIDL._ad_StringList = (omniORB.tcInternal.tv_alias, StringList._NP_RepositoryId, "StringList", (omniORB.tcInternal.tv_sequence, omniORB.typeMapping["IDL:StringSeq:1.0"], 0))
 _0__GlobalIDL._tc_StringList = omniORB.tcInternal.createTypeCode(_0__GlobalIDL._ad_StringList)
 omniORB.registerType(StringList._NP_RepositoryId, _0__GlobalIDL._ad_StringList, _0__GlobalIDL._tc_StringList)
 del StringList
 
-# struct ValueLine
-_0__GlobalIDL.ValueLine = omniORB.newEmptyClass()
-class ValueLine (omniORB.StructBase):
-    _NP_RepositoryId = "IDL:ValueLine:1.0"
-
-    def __init__(self, value):
-        self.value = value
-
-_0__GlobalIDL.ValueLine = ValueLine
-_0__GlobalIDL._d_ValueLine  = (omniORB.tcInternal.tv_struct, ValueLine, ValueLine._NP_RepositoryId, "ValueLine", "value", (omniORB.tcInternal.tv_sequence, omniORB.tcInternal.tv_float, 0))
-_0__GlobalIDL._tc_ValueLine = omniORB.tcInternal.createTypeCode(_0__GlobalIDL._d_ValueLine)
-omniORB.registerType(ValueLine._NP_RepositoryId, _0__GlobalIDL._d_ValueLine, _0__GlobalIDL._tc_ValueLine)
-del ValueLine
-
-# typedef ... ValueList
-class ValueList:
-    _NP_RepositoryId = "IDL:ValueList:1.0"
+# typedef ... FloatSeq
+class FloatSeq:
+    _NP_RepositoryId = "IDL:FloatSeq:1.0"
     def __init__(self, *args, **kw):
         raise RuntimeError("Cannot construct objects of this type.")
-_0__GlobalIDL.ValueList = ValueList
-_0__GlobalIDL._d_ValueList  = (omniORB.tcInternal.tv_sequence, omniORB.typeMapping["IDL:ValueLine:1.0"], 0)
-_0__GlobalIDL._ad_ValueList = (omniORB.tcInternal.tv_alias, ValueList._NP_RepositoryId, "ValueList", (omniORB.tcInternal.tv_sequence, omniORB.typeMapping["IDL:ValueLine:1.0"], 0))
-_0__GlobalIDL._tc_ValueList = omniORB.tcInternal.createTypeCode(_0__GlobalIDL._ad_ValueList)
-omniORB.registerType(ValueList._NP_RepositoryId, _0__GlobalIDL._ad_ValueList, _0__GlobalIDL._tc_ValueList)
-del ValueList
+_0__GlobalIDL.FloatSeq = FloatSeq
+_0__GlobalIDL._d_FloatSeq  = (omniORB.tcInternal.tv_sequence, omniORB.tcInternal.tv_float, 0)
+_0__GlobalIDL._ad_FloatSeq = (omniORB.tcInternal.tv_alias, FloatSeq._NP_RepositoryId, "FloatSeq", (omniORB.tcInternal.tv_sequence, omniORB.tcInternal.tv_float, 0))
+_0__GlobalIDL._tc_FloatSeq = omniORB.tcInternal.createTypeCode(_0__GlobalIDL._ad_FloatSeq)
+omniORB.registerType(FloatSeq._NP_RepositoryId, _0__GlobalIDL._ad_FloatSeq, _0__GlobalIDL._tc_FloatSeq)
+del FloatSeq
+
+# typedef ... FloatList
+class FloatList:
+    _NP_RepositoryId = "IDL:FloatList:1.0"
+    def __init__(self, *args, **kw):
+        raise RuntimeError("Cannot construct objects of this type.")
+_0__GlobalIDL.FloatList = FloatList
+_0__GlobalIDL._d_FloatList  = (omniORB.tcInternal.tv_sequence, omniORB.typeMapping["IDL:FloatSeq:1.0"], 0)
+_0__GlobalIDL._ad_FloatList = (omniORB.tcInternal.tv_alias, FloatList._NP_RepositoryId, "FloatList", (omniORB.tcInternal.tv_sequence, omniORB.typeMapping["IDL:FloatSeq:1.0"], 0))
+_0__GlobalIDL._tc_FloatList = omniORB.tcInternal.createTypeCode(_0__GlobalIDL._ad_FloatList)
+omniORB.registerType(FloatList._NP_RepositoryId, _0__GlobalIDL._ad_FloatList, _0__GlobalIDL._tc_FloatList)
+del FloatList
 
 #
 # Start of module "SpreadSheet"
@@ -96,7 +92,7 @@ omniORB.registerType(mSpreadSheet._NP_RepositoryId, _0_SpreadSheet._d_mSpreadShe
 mSpreadSheet._d_get_string = (((omniORB.tcInternal.tv_string,0), (omniORB.tcInternal.tv_string,0), (omniORB.tcInternal.tv_string,0)), ((omniORB.tcInternal.tv_string,0), ), None)
 mSpreadSheet._d_set_value = (((omniORB.tcInternal.tv_string,0), (omniORB.tcInternal.tv_string,0), (omniORB.tcInternal.tv_string,0), omniORB.tcInternal.tv_float), (), None)
 mSpreadSheet._d_get_string_range = (((omniORB.tcInternal.tv_string,0), (omniORB.tcInternal.tv_string,0), (omniORB.tcInternal.tv_string,0), (omniORB.tcInternal.tv_string,0), (omniORB.tcInternal.tv_string,0)), (omniORB.typeMapping["IDL:StringList:1.0"], ), None)
-mSpreadSheet._d_set_value_range = (((omniORB.tcInternal.tv_string,0), (omniORB.tcInternal.tv_string,0), (omniORB.tcInternal.tv_string,0), omniORB.typeMapping["IDL:ValueList:1.0"]), (), None)
+mSpreadSheet._d_set_value_range = (((omniORB.tcInternal.tv_string,0), (omniORB.tcInternal.tv_string,0), (omniORB.tcInternal.tv_string,0), omniORB.typeMapping["IDL:FloatList:1.0"]), (), None)
 mSpreadSheet._d_set_string = (((omniORB.tcInternal.tv_string,0), (omniORB.tcInternal.tv_string,0), (omniORB.tcInternal.tv_string,0), (omniORB.tcInternal.tv_string,0)), (), None)
 mSpreadSheet._d_set_string_range = (((omniORB.tcInternal.tv_string,0), (omniORB.tcInternal.tv_string,0), (omniORB.tcInternal.tv_string,0), omniORB.typeMapping["IDL:StringList:1.0"]), (), None)
 
