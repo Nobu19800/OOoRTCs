@@ -86,7 +86,7 @@ imp_id = "OOoBaseControl"# + str(comp_num)
 
 
 
-
+user_profile = os.environ['USERPROFILE']
 
 
 ooobasecontrol_spec = ["implementation_id", imp_id,
@@ -99,6 +99,8 @@ ooobasecontrol_spec = ["implementation_id", imp_id,
                   "max_instance",      "10",
                   "language",          "Python",
                   "lang_type",         "script",
+                  "conf.default.filepath", user_profile + "\\Documents",
+                  "conf.__widget__.filepath", "text",
                   ""]
 
 ##
@@ -475,7 +477,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
                 if name == str(i):
                     return False
             
-            dbURL = "C:\\Users\\Nobuhiko\\Desktop\\OOoBaseRTC\\" + name + ".odb"
+            dbURL = OOoRTC.base_comp.filepath[0] + "\\" + name + ".odb"
             ofile= os.path.abspath(dbURL)
 
             oDB = OOoRTC.base_comp.base._context.createInstance()
@@ -534,6 +536,9 @@ class OOoBaseControl(OpenRTM_aist.DataFlowComponentBase):
     self._DataBasePort = OpenRTM_aist.CorbaPort("DataBase")
     self._database = mDataBase_i()
 
+    user_profile = os.environ['USERPROFILE']
+    self.filepath = [user_profile + "\\Documents"]
+
     
 
     
@@ -574,7 +579,9 @@ class OOoBaseControl(OpenRTM_aist.DataFlowComponentBase):
     self._DataBasePort.registerProvider("database", "DataBase::mDataBase", self._database)
     self.addPort(self._DataBasePort)
 
-    
+
+    user_profile = os.environ['USERPROFILE']
+    self.bindParameter("filepath", self.filepath, user_profile + "\\Documents")    
     
     
     return RTC.RTC_OK
