@@ -52,16 +52,19 @@ databaseoutput_spec = ["implementation_id", "DataBaseOutPut",
                  "conf.default.row_in", "None",
                  "conf.default.OutPortDataType", "TimedStringSeq",
                  "conf.default.InPortDataType", "TimedString",
+                 "conf.default.conditional", "=",
                  "conf.__widget__.DataBase_Name", "text",
                  "conf.__widget__.Table_Name", "text",
                  "conf.__widget__.row_out", "text",
                  "conf.__widget__.row_in", "text",
                  "conf.__widget__.OutPortDataType", "radio",
                  "conf.__widget__.InPortDataType", "radio",
+                 "conf.__widget__.conditional", "radio",
                  "conf.__constraints__.OutPortDataType", """(TimedDoubleSeq,TimedLongSeq,TimedFloatSeq,TimedShortSeq,TimedULongSeq,TimedUShortSeq,TimedCharSeq,TimedWCharSeq,
                                                             TimedBooleanSeq,TimedOctetSeq,TimedStringSeq,TimedWStringSeq)""",
                  "conf.__constraints__.InPortDataType", """(TimedDouble,TimedLong,TimedFloat,TimedShort,TimedULong,TimedUShort,TimedChar,TimedWChar,
                                                             TimedBoolean,TimedOctet,TimedString,TimedWString)""",
+                 "conf.__constraints__.conditional", "(=,!=,>,<,>=,<=)"
 		 ""]
 # </rtc-template>
 
@@ -121,6 +124,7 @@ class DataBaseOutPut(OpenRTM_aist.DataFlowComponentBase):
                 self.row_in = ["None"]
                 self.OutPortDataType = ["TimedStringSeq"]
                 self.InPortDataType = ["TimedString"]
+                self.conditional = ["="]
 
                 self.currentOutPortDataType = "TimedStringSeq"
                 self.currentInPortDataType = "TimedString"
@@ -236,6 +240,7 @@ class DataBaseOutPut(OpenRTM_aist.DataFlowComponentBase):
                 self.bindParameter("row_in", self.row_in, "None")
                 self.bindParameter("OutPortDataType", self.OutPortDataType, "TimedStringSeq")
                 self.bindParameter("InPortDataType", self.InPortDataType, "TimedString")
+                self.bindParameter("conditional", self.conditional, "=")
 
                 
 		
@@ -331,7 +336,7 @@ class DataBaseOutPut(OpenRTM_aist.DataFlowComponentBase):
                 if self._m_inIn.isNew():
                         data = self._m_inIn.read()
                         self.DSName = self.DataBase_Name[0] + self.Table_Name[0] + str(data.tm.sec) + str(data.tm.nsec)
-                        SQL = "SELECT "+ self.row_out[0] + " FROM " + self.Table_Name[0] + " WHERE " + self.row_in[0] + " = " + "'" + str(data.data) + "'"
+                        SQL = "SELECT "+ self.row_out[0] + " FROM " + self.Table_Name[0] + " WHERE " + self.row_in[0] + " " + self.conditional[0] + " " + "'" + str(data.data) + "'"
                         
                         try:
                                 f2 = self._database._ptr().executeQuery(self.DSName, self.DataBase_Name[0],SQL)
