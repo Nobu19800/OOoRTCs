@@ -187,7 +187,11 @@ class DataBaseInPut(OpenRTM_aist.DataFlowComponentBase):
 		#
 	def onActivated(self, ec_id):
                 flag = True
+                t1 = OpenRTM_aist.Time()
 		while flag:
+                        t2 = OpenRTM_aist.Time()
+                        if (t2 - t1).getTime().toDouble() > 5:
+                                return RTC.RTC_ERROR
                         try:
                                 if self._database._ptr().setConnection(self.DataBase_Name[0],"",""):
                                         flag = False       

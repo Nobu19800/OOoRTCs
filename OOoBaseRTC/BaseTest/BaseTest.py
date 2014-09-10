@@ -156,7 +156,11 @@ class BaseTest(OpenRTM_aist.DataFlowComponentBase):
 		#
 	def onActivated(self, ec_id):
                 flag = True
+                t1 = OpenRTM_aist.Time()
 		while flag:
+                        t2 = OpenRTM_aist.Time()
+                        if (t2 - t1).getTime().toDouble() > 5:
+                                return RTC.RTC_ERROR
                         try:
                                 f1 = self._database._ptr().setConnection("OOoBaseRTC","","")
                                 f2 = self._database._ptr().executeQuery("RS1", "OOoBaseRTC","select * from TABLE1")
