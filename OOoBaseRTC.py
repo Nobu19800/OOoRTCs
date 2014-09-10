@@ -86,7 +86,9 @@ imp_id = "OOoBaseControl"# + str(comp_num)
 
 
 
-user_profile = os.environ['USERPROFILE']
+user_profile = os.environ['USERPROFILE'] + "\\Documents"
+if os.name == 'posix':
+    user_profile = '~'
 
 
 ooobasecontrol_spec = ["implementation_id", imp_id,
@@ -99,7 +101,7 @@ ooobasecontrol_spec = ["implementation_id", imp_id,
                   "max_instance",      "10",
                   "language",          "Python",
                   "lang_type",         "script",
-                  "conf.default.filepath", user_profile + "\\Documents",
+                  "conf.default.filepath", user_profile,
                   "conf.__widget__.filepath", "text",
                   ""]
 
@@ -376,40 +378,43 @@ class mDataBase_i (DataBase__POA.mDataBase):
                         oCol.Description = "Primary Key"
                     if dt[i] == "BIT":
                         oCol.Type = BIT
-                        oCol.Precision = 2
+                        oCol.Precision = 1
                     elif dt[i] == "TINYINT":
                         oCol.Type = TINYINT
-                        oCol.Precision = 4
+                        oCol.Precision = 3
                     elif dt[i] == "SMALLINT":
                         oCol.Type = SMALLINT
-                        oCol.Precision = 8
+                        oCol.Precision = 5
                     elif dt[i] == "INTEGER":
                         oCol.Type = INTEGER
-                        oCol.Precision = 16
+                        oCol.Precision = 10
                     elif dt[i] == "BIGINT":
                         oCol.Type = BIGINT
-                        oCol.Precision = 32
+                        oCol.Precision = 19
                     elif dt[i] == "FLOAT":
                         oCol.Type = FLOAT
-                        oCol.Precision = 64
+                        oCol.Precision = 17
                     elif dt[i] == "REAL":
                         oCol.Type = REAL
+                        oCol.Precision = 17
                     elif dt[i] == "DOUBLE":
                         oCol.Type = DOUBLE
-                        oCol.Precision = 128
+                        oCol.Precision = 17
                     elif dt[i] == "NUMERIC":
                         oCol.Type = NUMERIC
+                        oCol.Precision = 10
                     elif dt[i] == "DECIMAL":
                         oCol.Type = DECIMAL
+                        oCol.Precision = 10
                     elif dt[i] == "CHAR":
                         oCol.Type = CHAR
-                        oCol.Precision = 128
+                        oCol.Precision = 256
                     elif dt[i] == "VARCHAR":
                         oCol.Type = VARCHAR
                         oCol.Precision = 256
                     elif dt[i] == "LONGVARCHAR":
                         oCol.Type = LONGVARCHAR
-                        oCol.Precision = 512
+                        oCol.Precision = 2147483647
                     elif dt[i] == "DATE":
                         oCol.Type = DATE
                     elif dt[i] == "TIME":
@@ -418,8 +423,10 @@ class mDataBase_i (DataBase__POA.mDataBase):
                         oCol.Type = TIMESTAMP
                     elif dt[i] == "BINARY":
                         oCol.Type = BINARY
+                        oCol.Precision = 2147483647
                     elif dt[i] == "VARBINARY":
                         oCol.Type = VARBINARY
+                        oCol.Precision = 2147483647
                     elif dt[i] == "LONGVARBINARY":
                         oCol.Type = LONGVARBINARY
                         oCol.Precision = 2147483647
@@ -427,6 +434,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
                         oCol.Type = SQLNULL
                     elif dt[i] == "OTHER":
                         oCol.Type = OTHER
+                        oCol.Precision = 2147483647
                     oCols.appendByDescriptor(oCol)
             
             
@@ -478,6 +486,8 @@ class mDataBase_i (DataBase__POA.mDataBase):
                     return False
             
             dbURL = OOoRTC.base_comp.filepath[0] + "\\" + name + ".odb"
+            if os.name == 'posix':
+                dbURL = OOoRTC.base_comp.filepath[0] + "/" + name + ".odb"
             ofile= os.path.abspath(dbURL)
 
             oDB = OOoRTC.base_comp.base._context.createInstance()
@@ -536,8 +546,8 @@ class OOoBaseControl(OpenRTM_aist.DataFlowComponentBase):
     self._DataBasePort = OpenRTM_aist.CorbaPort("DataBase")
     self._database = mDataBase_i()
 
-    user_profile = os.environ['USERPROFILE']
-    self.filepath = [user_profile + "\\Documents"]
+    global user_profile
+    self.filepath = [user_profile]
 
     
 
@@ -580,8 +590,8 @@ class OOoBaseControl(OpenRTM_aist.DataFlowComponentBase):
     self.addPort(self._DataBasePort)
 
 
-    user_profile = os.environ['USERPROFILE']
-    self.bindParameter("filepath", self.filepath, user_profile + "\\Documents")    
+    global user_profile
+    self.bindParameter("filepath", self.filepath, user_profile)
     
     
     return RTC.RTC_OK
