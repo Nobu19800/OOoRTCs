@@ -118,26 +118,27 @@ class mDataBase_i (DataBase__POA.mDataBase):
     Example class implementing IDL interface DataBase.mDataBase
     """
 
-    def __init__(self):
+    def __init__(self, m_comp):
         """
         @brief standard constructor
         Initialise member variables here
         """
+        self.m_comp = m_comp
         
         
         
 
     # void setConnection(in string name, in string usr_name, in string passward)
     def setConnection(self, name, usr_name, passward):
-        if OOoRTC.base_comp.ConnectionList.has_key(name):
+        if self.m_comp.ConnectionList.has_key(name):
           return True
         try:
           tmp = {}
-          db = OOoRTC.base_comp.base._context.getByName(name)
+          db = self.m_comp.base._context.getByName(name)
           tmp["Connection"] = db.getConnection(usr_name,passward)
           tmp["Statement"] = tmp["Connection"].createStatement()
           
-          OOoRTC.base_comp.ConnectionList[name] = tmp
+          self.m_comp.ConnectionList[name] = tmp
           return True
         except:
           return False
@@ -148,9 +149,9 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
     # void executeQuery(in string fn)
     def executeQuery(self, name, con, oSQL):
-        if OOoRTC.base_comp.ConnectionList.has_key(con):
+        if self.m_comp.ConnectionList.has_key(con):
           try:
-            OOoRTC.base_comp.ResultSet[name] = OOoRTC.base_comp.ConnectionList[con]["Statement"].executeQuery(oSQL)
+            self.m_comp.ResultSet[name] = self.m_comp.ConnectionList[con]["Statement"].executeQuery(oSQL)
             return True
           except:
             return False
@@ -163,8 +164,8 @@ class mDataBase_i (DataBase__POA.mDataBase):
     # boolean ResultSetNext()
     def ResultSetNext(self, name):
         
-        if OOoRTC.base_comp.ResultSet.has_key(name):
-          return OOoRTC.base_comp.ResultSet[name].next()
+        if self.m_comp.ResultSet.has_key(name):
+          return self.m_comp.ResultSet[name].next()
         else:
           return False
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
@@ -173,8 +174,8 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
     # boolean ResultSetPrevious()
     def ResultSetPrevious(self, name):
-        if OOoRTC.base_comp.ResultSet.has_key(name):
-          return OOoRTC.base_comp.ResultSet[name].previous()
+        if self.m_comp.ResultSet.has_key(name):
+          return self.m_comp.ResultSet[name].previous()
         else:
           return False
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
@@ -183,8 +184,8 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
     # boolean ResultSetFirst()
     def ResultSetFirst(self, name):
-        if OOoRTC.base_comp.ResultSet.has_key(name):
-          return OOoRTC.base_comp.ResultSet[name].first()
+        if self.m_comp.ResultSet.has_key(name):
+          return self.m_comp.ResultSet[name].first()
         else:
           return False
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
@@ -193,8 +194,8 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
     # boolean ResultSetLast()
     def ResultSetLast(self, name):
-        if OOoRTC.base_comp.ResultSet.has_key(name):
-          return OOoRTC.base_comp.ResultSet[name].last()
+        if self.m_comp.ResultSet.has_key(name):
+          return self.m_comp.ResultSet[name].last()
         else:
           return False
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
@@ -203,8 +204,8 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
     # boolean ResultSetBeforeFirst()
     def ResultSetBeforeFirst(self, name):
-        if OOoRTC.base_comp.ResultSet.has_key(name):
-          return OOoRTC.base_comp.ResultSet[name].beforeFirst()
+        if self.m_comp.ResultSet.has_key(name):
+          return self.m_comp.ResultSet[name].beforeFirst()
         else:
           return False
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
@@ -213,8 +214,8 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
     # boolean ResultSetAfterLast()
     def ResultSetAfterLast(self, name):
-        if OOoRTC.base_comp.ResultSet.has_key(name):
-          return OOoRTC.base_comp.ResultSet[name].afterLast()
+        if self.m_comp.ResultSet.has_key(name):
+          return self.m_comp.ResultSet[name].afterLast()
         else:
           return False
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
@@ -223,8 +224,8 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
     # octet getByte(in short num)
     def getByte(self, name, num):
-        if OOoRTC.base_comp.ResultSet.has_key(name):
-          return OOoRTC.base_comp.ResultSet[name].getByte(num)
+        if self.m_comp.ResultSet.has_key(name):
+          return self.m_comp.ResultSet[name].getByte(num)
         else:
           return 0
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
@@ -233,8 +234,8 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
     # short getShort(in short num)
     def getShort(self, name, num):
-        if OOoRTC.base_comp.ResultSet.has_key(name):
-          return int(OOoRTC.base_comp.ResultSet[name].getShort(num))
+        if self.m_comp.ResultSet.has_key(name):
+          return int(self.m_comp.ResultSet[name].getShort(num))
         return 0
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
         # *** Implement me
@@ -242,8 +243,8 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
     # long getLong(in short num)
     def getLong(self, name, num):
-        if OOoRTC.base_comp.ResultSet.has_key(name):
-          return long(OOoRTC.base_comp.ResultSet[name].getLong(num))
+        if self.m_comp.ResultSet.has_key(name):
+          return long(self.m_comp.ResultSet[name].getLong(num))
         else:
           return 0
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
@@ -252,8 +253,8 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
     # float getFloat(in short num)
     def getFloat(self, name, num):
-        if OOoRTC.base_comp.ResultSet.has_key(name):
-          return float(OOoRTC.base_comp.ResultSet[name].getFloat(num))
+        if self.m_comp.ResultSet.has_key(name):
+          return float(self.m_comp.ResultSet[name].getFloat(num))
         else:
           return 0
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
@@ -262,8 +263,8 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
     # double getDouble(in short num)
     def getDouble(self, name, num):
-        if OOoRTC.base_comp.ResultSet.has_key(name):
-          return float(OOoRTC.base_comp.ResultSet[name].getDouble(num))
+        if self.m_comp.ResultSet.has_key(name):
+          return float(self.m_comp.ResultSet[name].getDouble(num))
         else:
           return 0
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
@@ -272,8 +273,8 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
     # boolean getBoolean(in short num)
     def getBoolean(self, name, num):
-        if OOoRTC.base_comp.ResultSet.has_key(name):
-          return bool(OOoRTC.base_comp.ResultSet[name].getBoolean(num))
+        if self.m_comp.ResultSet.has_key(name):
+          return bool(self.m_comp.ResultSet[name].getBoolean(num))
         else:
           return False
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
@@ -282,8 +283,8 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
     # string getString(in short num)
     def getString(self, name, num):
-        if OOoRTC.base_comp.ResultSet.has_key(name):
-          return str(OOoRTC.base_comp.ResultSet[name].getString(num))
+        if self.m_comp.ResultSet.has_key(name):
+          return str(self.m_comp.ResultSet[name].getString(num))
         else:
           return ""
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
@@ -293,7 +294,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
     # StringLine getDataBaseNames()
     def getDataBaseNames(self):
         Ans = []
-        names = OOoRTC.base_comp.base._context.getElementNames()
+        names = self.m_comp.base._context.getElementNames()
         for i in names:
             Ans.append(str(i))
         return Ans
@@ -307,10 +308,10 @@ class mDataBase_i (DataBase__POA.mDataBase):
         
         
         
-        if OOoRTC.base_comp.ConnectionList.has_key(con):
+        if self.m_comp.ConnectionList.has_key(con):
             try:
 		
-                oDBTables = OOoRTC.base_comp.ConnectionList[con]["Connection"].getTables().createEnumeration()
+                oDBTables = self.m_comp.ConnectionList[con]["Connection"].getTables().createEnumeration()
                 while oDBTables.hasMoreElements():
                     oTable = oDBTables.nextElement()
                     Ans.append(str(oTable.Name))
@@ -327,13 +328,13 @@ class mDataBase_i (DataBase__POA.mDataBase):
     # boolean executeUpdate(in string name, in string oSQL)
     def executeUpdate(self, con, oSQL):
         
-        oRstDataSources = OOoRTC.base_comp.base._context.getByName(con)
+        oRstDataSources = self.m_comp.base._context.getByName(con)
         
         
-        if OOoRTC.base_comp.ConnectionList.has_key(con):
+        if self.m_comp.ConnectionList.has_key(con):
           try:
 
-            OOoRTC.base_comp.ConnectionList[con]["Statement"].executeUpdate(oSQL)
+            self.m_comp.ConnectionList[con]["Statement"].executeUpdate(oSQL)
             
             return True
           except:
@@ -348,17 +349,17 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
     # short getRow(in string name)
     def getRow(self, name):
-        if OOoRTC.base_comp.ResultSet.has_key(name):
-          return int(OOoRTC.base_comp.ResultSet[name].getRow())
+        if self.m_comp.ResultSet.has_key(name):
+          return int(self.m_comp.ResultSet[name].getRow())
         return 0
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
         # *** Implement me
         # Must return: result
 
     def AddTable(self, name, con, cols, dt):
-        if OOoRTC.base_comp.ConnectionList.has_key(con):
+        if self.m_comp.ConnectionList.has_key(con):
           try:
-            oTables = OOoRTC.base_comp.ConnectionList[con]["Connection"].getTables()
+            oTables = self.m_comp.ConnectionList[con]["Connection"].getTables()
             oDBTables = oTables.createEnumeration()
 
             while oDBTables.hasMoreElements():
@@ -461,9 +462,9 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
     # boolean RemoveTable(in string name, in string con)
     def RemoveTable(self, name, con):
-        if OOoRTC.base_comp.ConnectionList.has_key(con):
+        if self.m_comp.ConnectionList.has_key(con):
           try:
-            oTables = OOoRTC.base_comp.ConnectionList[con]["Connection"].getTables()
+            oTables = self.m_comp.ConnectionList[con]["Connection"].getTables()
             oDBTables = oTables.createEnumeration()
 
             while oDBTables.hasMoreElements():
@@ -484,17 +485,17 @@ class mDataBase_i (DataBase__POA.mDataBase):
     # boolean AddDataBase(in string name)
     def AddDataBase(self, name):
         try:
-            names = OOoRTC.base_comp.base._context.getElementNames()
+            names = self.m_comp.base._context.getElementNames()
             for i in names:
                 if name == str(i):
                     return False
             
-            dbURL = OOoRTC.base_comp.filepath[0] + "\\" + name + ".odb"
+            dbURL = self.m_comp.filepath[0] + "\\" + name + ".odb"
             if os.name == 'posix':
-                dbURL = OOoRTC.base_comp.filepath[0] + "/" + name + ".odb"
+                dbURL = self.m_comp.filepath[0] + "/" + name + ".odb"
             ofile= os.path.abspath(dbURL)
 
-            oDB = OOoRTC.base_comp.base._context.createInstance()
+            oDB = self.m_comp.base._context.createInstance()
             oDB.URL = "sdbc:embedded:hsqldb"
 
             p = PropertyValue()
@@ -503,7 +504,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
             oDB.DatabaseDocument.storeAsURL(ofile, properties)
 
             oDS = XSCRIPTCONTEXT.getDesktop().loadComponentFromURL(unohelper.systemPathToFileUrl(ofile),"_blank", 0, () )
-            OOoRTC.base_comp.base._context.registerObject(name,oDS.DataSource)
+            self.m_comp.base._context.registerObject(name,oDS.DataSource)
             oDS.close(True)
 
             return True
@@ -518,7 +519,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
     def RemoveDataBase(self, name):
         
         try:
-            OOoRTC.base_comp.base._context.revokeObject(name)
+            self.m_comp.base._context.revokeObject(name)
             return True
         except:
             return False
@@ -548,7 +549,7 @@ class OOoBaseControl(OpenRTM_aist.DataFlowComponentBase):
       return
 
     self._DataBasePort = OpenRTM_aist.CorbaPort("DataBase")
-    self._database = mDataBase_i()
+    self._database = mDataBase_i(self)
 
     global user_profile
     self.filepath = [user_profile]
