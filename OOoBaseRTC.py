@@ -113,22 +113,21 @@ ooobasecontrol_spec = ["implementation_id", imp_id,
 #サービスポートDataBase
 ##
 class mDataBase_i (DataBase__POA.mDataBase):
-    """
-    @class mDataBase_i
-    Example class implementing IDL interface DataBase.mDataBase
-    """
+    
 
     def __init__(self, m_comp):
-        """
-        @brief standard constructor
-        Initialise member variables here
-        """
+        
         self.m_comp = m_comp
         
         
         
 
-    # void setConnection(in string name, in string usr_name, in string passward)
+    ##
+    # データベースと接続する関数
+    # name：データベースの登録名
+    # usr_name, passward：パスワードがかかってる場合に入力します
+    # 戻り値：成功ならTrue、失敗ならFalse
+    ##
     def setConnection(self, name, usr_name, passward):
         if self.m_comp.ConnectionList.has_key(name):
           return True
@@ -144,10 +143,15 @@ class mDataBase_i (DataBase__POA.mDataBase):
           return False
         
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
-        # *** Implement me
-        # Must return: None
+        
 
-    # void executeQuery(in string fn)
+    ##
+    # データベースに問い合わせて結果セットを取得する関数
+    # name：結果セットの名前(設定した名前で辞書オブジェクトに格納されます)
+    # con：データベース登録名
+    # oSQL：SQL文
+    # 戻り値：成功ならTrue、失敗ならFalse
+    ##
     def executeQuery(self, name, con, oSQL):
         if self.m_comp.ConnectionList.has_key(con):
           try:
@@ -158,10 +162,13 @@ class mDataBase_i (DataBase__POA.mDataBase):
           raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
         else:
           return False
-        # *** Implement me
-        # Must return: None
+        
 
-    # boolean ResultSetNext()
+    ##
+    # 次のデータレコードへ移動する関数
+    # name：結果セットの名前
+    # 戻り値：成功ならTrue、失敗ならFalse
+    ##
     def ResultSetNext(self, name):
         
         if self.m_comp.ResultSet.has_key(name):
@@ -169,129 +176,174 @@ class mDataBase_i (DataBase__POA.mDataBase):
         else:
           return False
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
-        # *** Implement me
-        # Must return: result
+        
 
-    # boolean ResultSetPrevious()
+    ##
+    # 前のデータレコードへ移動する
+    # name：結果セットの名前
+    # 戻り値：成功ならTrue、失敗ならFalse
+    ##
     def ResultSetPrevious(self, name):
         if self.m_comp.ResultSet.has_key(name):
           return self.m_comp.ResultSet[name].previous()
         else:
           return False
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
-        # *** Implement me
-        # Must return: result
+        
 
-    # boolean ResultSetFirst()
+    ##
+    # 最初のデータレコードへ移動する
+    # name：結果セットの名前
+    # 戻り値：成功ならTrue、失敗ならFalse
+    ##
     def ResultSetFirst(self, name):
         if self.m_comp.ResultSet.has_key(name):
           return self.m_comp.ResultSet[name].first()
         else:
           return False
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
-        # *** Implement me
-        # Must return: result
+        
 
-    # boolean ResultSetLast()
+    ##
+    # 最後のデータレコードへ移動する
+    # name：結果セットの名前
+    # 戻り値：成功ならTrue、失敗ならFalse
+    ##
     def ResultSetLast(self, name):
         if self.m_comp.ResultSet.has_key(name):
           return self.m_comp.ResultSet[name].last()
         else:
           return False
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
-        # *** Implement me
-        # Must return: result
+        
 
-    # boolean ResultSetBeforeFirst()
+    ##
+    # 最初のデータレコードの前へ移動する
+    # name：結果セットの名前
+    # 戻り値：成功ならTrue、失敗ならFalse
+    ##
     def ResultSetBeforeFirst(self, name):
         if self.m_comp.ResultSet.has_key(name):
           return self.m_comp.ResultSet[name].beforeFirst()
         else:
           return False
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
-        # *** Implement me
-        # Must return: result
+        
 
-    # boolean ResultSetAfterLast()
+    ##
+    # 最後のデータレコードの次へ移動する
+    # name：結果セットの名前
+    # 戻り値：成功ならTrue、失敗ならFalse
+    ##
     def ResultSetAfterLast(self, name):
         if self.m_comp.ResultSet.has_key(name):
           return self.m_comp.ResultSet[name].afterLast()
         else:
           return False
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
-        # *** Implement me
-        # Must return: result
+        
 
-    # octet getByte(in short num)
+    ##
+    # Byte型のデータを取得する関数
+    # name：結果セットの名前
+    # num：列番号
+    # 戻り値：取得したデータ
+    ##
     def getByte(self, name, num):
         if self.m_comp.ResultSet.has_key(name):
-          return self.m_comp.ResultSet[name].getByte(num)
+          return chr(self.m_comp.ResultSet[name].getByte(num))
         else:
           return 0
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
-        # *** Implement me
-        # Must return: result
+        
 
-    # short getShort(in short num)
+    ##
+    # Short型のデータを取得する関数
+    # name：結果セットの名前
+    # num：列番号
+    # 戻り値：取得したデータ
+    ## 
     def getShort(self, name, num):
         if self.m_comp.ResultSet.has_key(name):
           return int(self.m_comp.ResultSet[name].getShort(num))
         return 0
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
-        # *** Implement me
-        # Must return: result
+        
 
-    # long getLong(in short num)
+    ##
+    # Long型のデータを取得する関数
+    # name：結果セットの名前
+    # num：列番号
+    # 戻り値：取得したデータ
+    ##
     def getLong(self, name, num):
         if self.m_comp.ResultSet.has_key(name):
           return long(self.m_comp.ResultSet[name].getLong(num))
         else:
           return 0
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
-        # *** Implement me
-        # Must return: result
+        
 
-    # float getFloat(in short num)
+    ##
+    # Float型のデータを取得する関数
+    # name：結果セットの名前
+    # num：列番号
+    # 戻り値：取得したデータ
+    ##
     def getFloat(self, name, num):
         if self.m_comp.ResultSet.has_key(name):
           return float(self.m_comp.ResultSet[name].getFloat(num))
         else:
           return 0
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
-        # *** Implement me
-        # Must return: result
+        
 
-    # double getDouble(in short num)
+    ##
+    # Double型のデータを取得する関数
+    # name：結果セットの名前
+    # num：列番号
+    # 戻り値：取得したデータ
+    ##
     def getDouble(self, name, num):
         if self.m_comp.ResultSet.has_key(name):
-          return float(self.m_comp.ResultSet[name].getDouble(num))
+          return self.m_comp.ResultSet[name].getDouble(num)
         else:
           return 0
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
-        # *** Implement me
-        # Must return: result
+        
 
-    # boolean getBoolean(in short num)
+    ##
+    # bool型のデータを取得する関数
+    # name：結果セットの名前
+    # num：列番号
+    # 戻り値：取得したデータ
+    ##
     def getBoolean(self, name, num):
         if self.m_comp.ResultSet.has_key(name):
           return bool(self.m_comp.ResultSet[name].getBoolean(num))
         else:
           return False
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
-        # *** Implement me
-        # Must return: result
+        
 
-    # string getString(in short num)
+    ##
+    # String型のデータを取得する関数
+    # name：結果セットの名前
+    # num：列番号
+    # 戻り値：取得したデータ
+    ##
     def getString(self, name, num):
         if self.m_comp.ResultSet.has_key(name):
           return str(self.m_comp.ResultSet[name].getString(num))
         else:
           return ""
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
-        # *** Implement me
-        # Must return: result
+        
 
-    # StringLine getDataBaseNames()
+    ##
+    # 登録されたデータベースの名前を取得
+    # 戻り値：データベース名のリスト
+    ##
     def getDataBaseNames(self):
         Ans = []
         names = self.m_comp.base._context.getElementNames()
@@ -299,10 +351,13 @@ class mDataBase_i (DataBase__POA.mDataBase):
             Ans.append(str(i))
         return Ans
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
-        # *** Implement me
-        # Must return: result
+         
 
-    # StringLine getDataTableNames(in string con)
+    ##
+    # データベースに存在するテーブルの名前を取得
+    # con：データベースの登録名
+    # 戻り値：テーブル名のリスト
+    ##
     def getDataTableNames(self, con):
         Ans = []
         
@@ -322,10 +377,14 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
         return Ans
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
-        # *** Implement me
-        # Must return: result
+        
 
-    # boolean executeUpdate(in string name, in string oSQL)
+    ##
+    # データベースの更新
+    # con：データベースの登録名
+    # oSQL：SQL文
+    # 戻り値：成功ならTrue、失敗ならFalse
+    ##
     def executeUpdate(self, con, oSQL):
         
         oRstDataSources = self.m_comp.base._context.getByName(con)
@@ -344,18 +403,28 @@ class mDataBase_i (DataBase__POA.mDataBase):
           return False
         
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
-        # *** Implement me
-        # Must return: result
+        
 
-    # short getRow(in string name)
+    ##
+    # カーソルの行番号を取得
+    # name：結果セットの名前
+    # 戻り値：行番号
+    ##
     def getRow(self, name):
         if self.m_comp.ResultSet.has_key(name):
           return int(self.m_comp.ResultSet[name].getRow())
         return 0
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
-        # *** Implement me
-        # Must return: result
+        
 
+    ##
+    # データベースにテーブルを追加
+    # name：追加するテーブル名
+    # con：データベースの登録名
+    # cols：フィールド名のリスト
+    # dt：フィールドのタイプのリスト
+    # 戻り値：成功ならTrue、失敗ならFalse
+    ##
     def AddTable(self, name, con, cols, dt):
         if self.m_comp.ConnectionList.has_key(con):
           try:
@@ -457,10 +526,14 @@ class mDataBase_i (DataBase__POA.mDataBase):
         else:
           return False
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
-        # *** Implement me
-        # Must return: result
+        
 
-    # boolean RemoveTable(in string name, in string con)
+    ##
+    # データベースからテーブルを削除
+    # name：削除するテーブル名
+    # con：データベースの登録名
+    # 戻り値：成功ならTrue、失敗ならFalse
+    ##
     def RemoveTable(self, name, con):
         if self.m_comp.ConnectionList.has_key(con):
           try:
@@ -479,10 +552,13 @@ class mDataBase_i (DataBase__POA.mDataBase):
         else:
           return False
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
-        # *** Implement me
-        # Must return: result
+         
 
-    # boolean AddDataBase(in string name)
+    ##
+    # データベースの追加
+    # name：追加するデータベース名
+    # 戻り値：成功ならTrue、失敗ならFalse
+    ##
     def AddDataBase(self, name):
         try:
             names = self.m_comp.base._context.getElementNames()
@@ -512,10 +588,13 @@ class mDataBase_i (DataBase__POA.mDataBase):
             return False
         
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
-        # *** Implement me
-        # Must return: result
+        
 
-    # boolean RemoveDataBase(in string name)
+    ##
+    # データベースの削除
+    # name：削除するデータベース名
+    # 戻り値：成功ならTrue、失敗ならFalse
+    ##
     def RemoveDataBase(self, name):
         
         try:
@@ -524,8 +603,10 @@ class mDataBase_i (DataBase__POA.mDataBase):
         except:
             return False
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
-        # *** Implement me
-        # Must return: result
+
+
+
+        
 
     
 
@@ -562,6 +643,7 @@ class OOoBaseControl(OpenRTM_aist.DataFlowComponentBase):
 
   ##
   # 実行周期を設定する関数
+  # rate：実行周期
   ##
   def m_setRate(self, rate):
       m_ec = self.get_owned_contexts()
@@ -739,7 +821,7 @@ def createOOoBaseComp():
       return
 
     
-    MyMsgBox('',u'RTCを起動しました')
+    MyMsgBox('',OOoRTC.SetCoding('RTCを起動しました','utf-8'))
 
 
     

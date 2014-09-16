@@ -124,6 +124,7 @@ class OOoImpressControl(OpenRTM_aist.DataFlowComponentBase):
 
   ##
   # 実行周期を設定する関数
+  # rate：実行周期
   ##
   def m_setRate(self, rate):
       m_ec = self.get_owned_contexts()
@@ -357,7 +358,7 @@ def createOOoImpressComp():
       return
 
     
-    MyMsgBox('',u'RTCを起動しました')
+    MyMsgBox('',OOoRTC.SetCoding('RTCを起動しました','utf-8'))
 
 
     
