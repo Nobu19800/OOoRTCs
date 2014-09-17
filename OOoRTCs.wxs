@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Product Id="6f9a3445-5fb3-43d9-86ba-d04043724393" Name="OOoRTCs" Version="0.03.0000" Manufacturer="Nobu" Language="1041" Codepage="932">
+        <Package Id="0f81b974-b71d-4d7c-a02f-c2a7798c7a8f" InstallerVersion="200" Platforms="Intel" Manufacturer="Nobu" Keywords="Installer,MSI,Database" Languages="1041" SummaryCodepage="932" />
+        <Media Id="1" Cabinet="Product.cab" EmbedCab="yes" />
+        <Directory Id="TARGETDIR" Name="SourceDir">
+            <Directory Id="ProgramFilesFolder">
+                <Directory Id="OOoRTCsFolder" Name="OOoRTCs">
+                    <Component Id="OOoBaseControlRTCoxt" Guid="E638C5C5-ADEF-4FC0-B1BB-D5737C67B71E">
+                        <File Id="OOoBaseControlRTCoxt" Name="OOoBaseControlRTC.oxt" KeyPath="yes" Compressed="yes" DiskId="1" Source="OOoBaseControlRTC.oxt" />
+                    </Component>
+                    <Component Id="OOoCalcControlRTCoxt" Guid="5B40080B-9E03-4728-8676-CAAF8D9ADB33">
+                        <File Id="OOoCalcControlRTCoxt" Name="OOoCalcControlRTC.oxt" KeyPath="yes" Compressed="yes" DiskId="1" Source="OOoCalcControlRTC.oxt" />
+                    </Component>
+                    <Component Id="OOoDrawControlRTCoxt" Guid="1D3CB3C7-10D3-4B4E-9923-3E311038F197">
+                        <File Id="OOoDrawControlRTCoxt" Name="OOoDrawControlRTC.oxt" KeyPath="yes" Compressed="yes" DiskId="1" Source="OOoDrawControlRTC.oxt" />
+                    </Component>
+                    <Component Id="OOoImpressControlRTCoxt" Guid="28853BB8-8CB9-4D51-BB84-A8B7CDA01FCF">
+                        <File Id="OOoImpressControlRTCoxt" Name="OOoImpressControlRTC.oxt" KeyPath="yes" Compressed="yes" DiskId="1" Source="OOoImpressControlRTC.oxt" />
+                    </Component>
+                    <Component Id="OOoWriterControlRTCoxt" Guid="2200AADB-F8B9-4633-B193-A5768564644F">
+                        <File Id="OOoWriterControlRTCoxt" Name="OOoWriterControlRTC.oxt" KeyPath="yes" Compressed="yes" DiskId="1" Source="OOoWriterControlRTC.oxt" />
+                    </Component>
+                    <Component Id="Installbat" Guid="0236FCE3-C92E-47D0-B92C-1EDF4D4DBB5A">
+                        <File Id="Installbat" Name="unoInstall.bat" KeyPath="yes" Compressed="yes" DiskId="1" Source="unoInstall.bat" />
+                    </Component>
+                </Directory>
+                <Directory Id="OpenOffice" Name="OpenOffice.org 3">
+                    <Directory Id="program" Name="program">
+                        <Component Id="rtcconf" Guid="e727e0fd-bced-4cfb-a001-754292186d09">
+                            <File Id="rtcconf" Name="rtc.conf" KeyPath="yes" Compressed="yes" DiskId="1" Source="rtc.conf" />
+                        </Component>
+                        <Directory Id="OOoRTC" Name="OOoRTC">
+                            <Component Id="OOoRTCpy" Guid="7ce42475-5bd2-4ca9-a2c1-6bda60a03ae9">
+                                <File Id="OOoRTCpy" Name="OOoRTC.py" KeyPath="yes" Compressed="yes" DiskId="1" Source="OOoRTC\OOoRTC.py" />
+                            </Component>
+                            <Directory Id="BaseIDL" Name="BaseIDL">
+                                <Component Id="DataBase_idlpy" Guid="f4cef8d2-3dec-4418-938c-ba413734dd2d">
+                                    <File Id="DataBase_idlpy" Name="DataBase_idl.py" KeyPath="yes" Compressed="yes" DiskId="1" Source="OOoRTC\BaseIDL\DataBase_idl.py" />
+                                </Component>
+                                <Directory Id="Base_GlobalIDL" Name="_GlobalIDL">
+                                    <Component Id="Base_GlobalIDL" Guid="51e5e5e2-8d49-40e9-a4fe-1c67a3820f1b">
+                                        <File Id="Base_GlobalIDL" Name="__init__.py" KeyPath="yes" Compressed="yes" DiskId="1" Source="OOoRTC\BaseIDL\_GlobalIDL\__init__.py" />
+                                    </Component>
+                                </Directory>
+                                <Directory Id="Base_GlobalIDL__POA" Name="_GlobalIDL__POA">
+                                    <Component Id="Base_GlobalIDL__POA" Guid="5a0845fd-7b21-456c-9a13-b03b0d265f11">
+                                        <File Id="Base_GlobalIDL__POA" Name="__init__.py" KeyPath="yes" Compressed="yes" DiskId="1" Source="OOoRTC\BaseIDL\_GlobalIDL__POA\__init__.py" />
+                                    </Component>
+                                </Directory>
+                                <Directory Id="BaseDataBase" Name="DataBase">
+                                    <Component Id="BaseDataBase" Guid="6383bdfc-aca5-40cc-b731-488b8af645c7">
+                                        <File Id="BaseDataBase" Name="__init__.py" KeyPath="yes" Compressed="yes" DiskId="1" Source="OOoRTC\BaseIDL\DataBase\__init__.py" />
+                                    </Component>
+                                </Directory>
+                                <Directory Id="BaseDataBase__POA" Name="DataBase__POA">
+                                    <Component Id="BaseDataBase__POA" Guid="9568299d-b6f1-4d28-ad05-9e372924dfb6">
+                                        <File Id="BaseDataBase__POA" Name="__init__.py" KeyPath="yes" Compressed="yes" DiskId="1" Source="OOoRTC\BaseIDL\DataBase__POA\__init__.py" />
+                                    </Component>
+                                </Directory>
+                            </Directory>
+                            <Directory Id="CalcIDL" Name="CalcIDL">
+                                <Component Id="SpreadSheet_idlpy" Guid="eb94c881-8b09-475b-aa39-668aa5c69f6a">
+                                    <File Id="SpreadSheet_idlpy" Name="SpreadSheet_idl.py" KeyPath="yes" Compressed="yes" DiskId="1" Source="OOoRTC\CalcIDL\SpreadSheet_idl.py" />
+                                </Component>
+                                <Directory Id="Calc_GlobalIDL" Name="_GlobalIDL">
+                                    <Component Id="Calc_GlobalIDL" Guid="235e7cad-b860-49ea-a3c5-a10470c166ee">
+                                        <File Id="Calc_GlobalIDL" Name="__init__.py" KeyPath="yes" Compressed="yes" DiskId="1" Source="OOoRTC\CalcIDL\_GlobalIDL\__init__.py" />
+                                    </Component>
+                                </Directory>
+                                <Directory Id="Calc_GlobalIDL__POA" Name="_GlobalIDL__POA">
+                                    <Component Id="Calc_GlobalIDL__POA" Guid="4a50ff2f-690b-46ad-bfad-8d6d6848c575">
+                                        <File Id="Calc_GlobalIDL__POA" Name="__init__.py" KeyPath="yes" Compressed="yes" DiskId="1" Source="OOoRTC\CalcIDL\_GlobalIDL__POA\__init__.py" />
+                                    </Component>
+                                </Directory>
+                                <Directory Id="CalcSpreadSheet" Name="SpreadSheet">
+                                    <Component Id="CalcSpreadSheet" Guid="38670c38-ec0b-47db-94f7-8eb0fe8461e2">
+                                        <File Id="CalcSpreadSheet" Name="__init__.py" KeyPath="yes" Compressed="yes" DiskId="1" Source="OOoRTC\CalcIDL\SpreadSheet\__init__.py" />
+                                    </Component>
+                                </Directory>
+                                <Directory Id="CalcSpreadSheet__POA" Name="SpreadSheet__POA">
+                                    <Component Id="CalcSpreadSheet__POA" Guid="019ee9d6-56a0-4cb5-956b-f324177e5bff">
+                                        <File Id="CalcSpreadSheet__POA" Name="__init__.py" KeyPath="yes" Compressed="yes" DiskId="1" Source="OOoRTC\CalcIDL\SpreadSheet__POA\__init__.py" />
+                                    </Component>
+                                </Directory>
+                            </Directory>
+                            <Directory Id="WriterIDL" Name="WriterIDL">
+                                <Component Id="Writer_idlpy" Guid="9ca406c1-ab55-4176-b12f-381e557b004f">
+                                    <File Id="Writer_idlpy" Name="Writer_idl.py" KeyPath="yes" Compressed="yes" DiskId="1" Source="OOoRTC\WriterIDL\Writer_idl.py" />
+                                </Component>
+                                <Directory Id="Writer_GlobalIDL" Name="_GlobalIDL">
+                                    <Component Id="Writer_GlobalIDL" Guid="dbde4264-1871-408d-af9f-15538f4110c1">
+                                        <File Id="Writer_GlobalIDL" Name="__init__.py" KeyPath="yes" Compressed="yes" DiskId="1" Source="OOoRTC\WriterIDL\_GlobalIDL\__init__.py" />
+                                    </Component>
+                                </Directory>
+                                <Directory Id="Writer_GlobalIDL__POA" Name="_GlobalIDL__POA">
+                                    <Component Id="Writer_GlobalIDL__POA" Guid="a0c85332-2192-480d-a4e7-57cb03420ee8">
+                                        <File Id="Writer_GlobalIDL__POA" Name="__init__.py" KeyPath="yes" Compressed="yes" DiskId="1" Source="OOoRTC\WriterIDL\_GlobalIDL__POA\__init__.py" />
+                                    </Component>
+                                </Directory>
+                                <Directory Id="WriterWriter" Name="Writer">
+                                    <Component Id="WriterWriter" Guid="32dca805-486f-4322-a0ce-a46b85d5bd56">
+                                        <File Id="WriterWriter" Name="__init__.py" KeyPath="yes" Compressed="yes" DiskId="1" Source="OOoRTC\WriterIDL\Writer\__init__.py" />
+                                    </Component>
+                                </Directory>
+                                <Directory Id="WriterWriter__POA" Name="Writer__POA">
+                                    <Component Id="WriterWriter__POA" Guid="862ba6be-5c78-4eb3-a344-8c5fab59b82b">
+                                        <File Id="WriterWriter__POA" Name="__init__.py" KeyPath="yes" Compressed="yes" DiskId="1" Source="OOoRTC\WriterIDL\Writer__POA\__init__.py" />
+                                    </Component>
+                                </Directory>
+                            </Directory>
+                        </Directory>
+                    </Directory>
+                </Directory>
+            </Directory>
+            <Directory Id="AppDataFolder">
+                <Directory Id="OpenOfficeorgs" Name="OpenOffice.org">
+                    <Component Id="OpenOfficeorgs_Component" DiskId="1" Guid="DE6CFE58-0754-4083-9FCD-D28070D67186">
+                        <RegistryValue Root="HKCU" Key="OpenOfficeorgs" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+                        <RemoveFolder Id="Remove_OpenOfficeorgs" On="both" />
+                    </Component>
+                    <Directory Id="OOo" Name="3">
+                        <Component Id="OOo_Component" DiskId="1" Guid="79595D7B-3982-4EBB-A063-1476D8B0C033">
+                            <RegistryValue Root="HKCU" Key="OOo" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+                            <RemoveFolder Id="Remove_OOo" On="both" />
+                        </Component>
+                        <Directory Id="user" Name="user">
+                            <Component Id="user_Component" DiskId="1" Guid="E871DC05-8D6B-4C0C-9FFC-EDFE40D7CECC">
+                                <RegistryValue Root="HKCU" Key="user" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+                                <RemoveFolder Id="Remove_user" On="both" />
+                            </Component>
+                            <Directory Id="Scripts" Name="Scripts">
+                                <Component Id="Scripts_Component" DiskId="1" Guid="F8115BAD-FD8E-4E67-8456-5C26095FBA3D">
+                                    <RegistryValue Root="HKCU" Key="Scripts" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+                                    <RemoveFolder Id="Remove_Scripts" On="both" />
+                                </Component>
+                                <Directory Id="python" Name="python">
+                                    <Component Id="python_Component" DiskId="1" Guid="81095C77-64A1-4394-96E0-2F6EF89D1DFA">
+                                        <RegistryValue Root="HKCU" Key="user" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+                                        <RemoveFolder Id="Remove_python" On="both" />
+                                    </Component>
+                                    <Component Id="OOoCalcRTCpy" Guid="FEAB8B94-B2CF-47B0-873A-1FCD7E131A9D">
+                                        <File Id="OOoCalcRTCpy" Name="OOoCalcRTC.py" KeyPath="no" Compressed="yes" DiskId="1" Source="OOoCalcRTC.py" />
+                                        <RegistryValue Root="HKCU" Key="OOoCalcRTCpy" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+                                    </Component>
+                                    <Component Id="OOoWriterRTCpy" Guid="EB8F0281-9A87-4C2A-A4DD-B51B7A60C7C1">
+                                        <File Id="OOoWriterRTCpy" Name="OOoWriterRTC.py" KeyPath="no" Compressed="yes" DiskId="1" Source="OOoWriterRTC.py" />
+                                        <RegistryValue Root="HKCU" Key="OOoWriterRTCpy" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+                                    </Component>
+                                    <Component Id="OOoDrawRTCpy" Guid="800B35ED-9B7E-432B-870A-1E874955F9F6">
+                                        <File Id="OOoDrawRTCpy" Name="OOoDrawRTC.py" KeyPath="no" Compressed="yes" DiskId="1" Source="OOoDrawRTC.py" />
+                                        <RegistryValue Root="HKCU" Key="OOoDrawRTCpy" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+                                    </Component>
+                                    <Component Id="OOoImpressRTCpy" Guid="75C01ECC-9275-434C-98B5-98718BB199F0">
+                                        <File Id="OOoImpressRTCpy" Name="OOoImpressRTC.py" KeyPath="no" Compressed="yes" DiskId="1" Source="OOoImpressRTC.py" />
+                                        <RegistryValue Root="HKCU" Key="OOoImpressRTCpy" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+                                    </Component>
+                                    <Component Id="OOoBaseRTCpy" Guid="2FD0B28B-9D9F-4753-AC9D-F369D393C646">
+                                        <File Id="OOoBaseRTCpy" Name="OOoBaseRTC.py" KeyPath="no" Compressed="yes" DiskId="1" Source="OOoBaseRTC.py" />
+                                        <RegistryValue Root="HKCU" Key="OOoBaseRTCpy" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+                                        <RemoveFolder Id="DashMenuDirRem" On="both" />
+                                    </Component>
+                                </Directory>
+                            </Directory>
+                        </Directory>
+                    </Directory>
+                </Directory>
+            </Directory>
+        </Directory>
+        <Feature Id="Feature1" Level="1">
+            <ComponentRef Id="rtcconf" />
+            <ComponentRef Id="OOoRTCpy" />
+            <ComponentRef Id="DataBase_idlpy" />
+            <ComponentRef Id="Base_GlobalIDL" />
+            <ComponentRef Id="Base_GlobalIDL__POA" />
+            <ComponentRef Id="BaseDataBase" />
+            <ComponentRef Id="BaseDataBase__POA" />
+            <ComponentRef Id="SpreadSheet_idlpy" />
+            <ComponentRef Id="Calc_GlobalIDL" />
+            <ComponentRef Id="Calc_GlobalIDL__POA" />
+            <ComponentRef Id="CalcSpreadSheet" />
+            <ComponentRef Id="CalcSpreadSheet__POA" />
+            <ComponentRef Id="Writer_idlpy" />
+            <ComponentRef Id="Writer_GlobalIDL" />
+            <ComponentRef Id="Writer_GlobalIDL__POA" />
+            <ComponentRef Id="WriterWriter" />
+            <ComponentRef Id="WriterWriter__POA" />
+            <ComponentRef Id="OOoBaseRTCpy" />
+            <ComponentRef Id="OOoCalcRTCpy" />
+            <ComponentRef Id="OOoWriterRTCpy" />
+            <ComponentRef Id="OOoImpressRTCpy" />
+            <ComponentRef Id="OOoDrawRTCpy" />
+            <ComponentRef Id="OpenOfficeorgs_Component" />
+            <ComponentRef Id="OOo_Component" />
+            <ComponentRef Id="user_Component" />
+            <ComponentRef Id="Scripts_Component" />
+            <ComponentRef Id="python_Component" />
+            <ComponentRef Id="OOoBaseControlRTCoxt" />
+            <ComponentRef Id="OOoCalcControlRTCoxt" />
+            <ComponentRef Id="OOoImpressControlRTCoxt" />
+            <ComponentRef Id="OOoDrawControlRTCoxt" />
+            <ComponentRef Id="OOoWriterControlRTCoxt" />
+            <ComponentRef Id="Installbat" />
+        </Feature>
+        <UIRef Id="WixUI_ErrorProgressText" />
+        <UIRef Id="WixUI_Minimal" />
+        <UI />
+        <WixVariable Id="WixUILicenseRtf" Value="License.rtf" />
+        <CustomAction Id="unokpg" ExeCommand="[OOoRTCsFolder]unoInstall.bat" Directory="OOoRTCsFolder" Execute="deferred" Return="asyncWait" />
+        <InstallExecuteSequence>
+            <Custom Action="unokpg" After="InstallFiles">NOT Installed</Custom>
+        </InstallExecuteSequence>
+    </Product>
+</Wix>
