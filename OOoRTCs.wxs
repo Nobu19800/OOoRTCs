@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-    <Product Id="6f9a3445-5fb3-43d9-86ba-d04043724393" Name="OOoRTCs" Version="0.03.0000" Manufacturer="Nobu" Language="1041" Codepage="932">
+    <Product Id="6f9a3445-5fb3-43d9-86ba-d04043724393" UpgradeCode="C2A11673-4647-4FFE-925C-CB877DDEEDD5" Name="OOoRTCs" Version="0.04.0000" Manufacturer="Nobu" Language="1041" Codepage="932">
         <Package Id="0f81b974-b71d-4d7c-a02f-c2a7798c7a8f" InstallerVersion="200" Platforms="Intel" Manufacturer="Nobu" Keywords="Installer,MSI,Database" Languages="1041" SummaryCodepage="932" />
         <Media Id="1" Cabinet="Product.cab" EmbedCab="yes" />
         <Directory Id="TARGETDIR" Name="SourceDir">
@@ -24,6 +24,58 @@
                     <Component Id="Installbat" Guid="0236FCE3-C92E-47D0-B92C-1EDF4D4DBB5A">
                         <File Id="Installbat" Name="unoInstall.bat" KeyPath="yes" Compressed="yes" DiskId="1" Source="unoInstall.bat" />
                     </Component>
+		    <Component Id="DataBaseInPut" Guid="B3DCD070-6CF1-472A-8D66-7F53A4B06248">
+                        <File Id="DataBaseInPut" Name="DataBaseInPut.exe" KeyPath="yes" Compressed="yes" DiskId="1" Source="DataBaseInPut.exe">
+			<Shortcut Id='smDataBaseInPut' Directory='ProgramMenuDir' Name='DataBaseInPut.exe' WorkingDirectory='OOoRTCsFolder' Advertise='yes' />
+			</File>
+                    </Component>
+		    <Component Id="DataBaseOutPut" Guid="C9AEC8D1-46C0-4F46-BDE6-A6195CBAF5C4">
+                        <File Id="DataBaseOutPut" Name="DataBaseOutPut.exe" KeyPath="yes" Compressed="yes" DiskId="1" Source="DataBaseOutPut.exe" >
+			<Shortcut Id='smDataBaseOutPut' Directory='ProgramMenuDir' Name='DataBaseOutPut.exe' WorkingDirectory='OOoRTCsFolder' Advertise='yes' />
+			</File>
+                    </Component>
+		    <Component Id="MSVCR71dll" Guid="FC67A4AF-A479-4D00-9E3A-8DF37C872B1F">
+                        <File Id="MSVCR71dll" Name="MSVCR71.dll" KeyPath="yes" Compressed="yes" DiskId="1" Source="MSVCR71.dll" />
+                    </Component>
+		    <Component Id="OOoBaseRTCodb" Guid="E42DAC04-35C0-447B-9187-F4C7D8300370">
+                        <File Id="OOoBaseRTCodb" Name="OOoBaseRTC.odb" KeyPath="yes" Compressed="yes" DiskId="1" Source="OOoBaseRTC\OOoBaseRTC.odb" >
+			<Shortcut Id='smOOoBaseRTC' Directory='ProgramMenuDir' Name='OOoBaseRTC.odb' Advertise='yes' />
+			</File>
+                    </Component>
+		    <Component Id="OOoDrawRTCodg" Guid="F780B64F-116D-4319-9909-A476D691A55F">
+                        <File Id="OOoDrawRTCodg" Name="OOoDrawRTC.odg" KeyPath="yes" Compressed="yes" DiskId="1" Source="OOoDrawRTC\OOoDrawRTC.odg" >
+			<Shortcut Id='smOOoDrawRTC' Directory='ProgramMenuDir' Name='OOoDrawRTC.odg' Advertise='yes' />
+			</File>
+                    </Component>
+		    <Component Id="OooImpressRTCodp" Guid="DF0F8386-2CC2-4651-BF88-0D5B4B716E7E">
+                        <File Id="OooImpressRTCodp" Name="OooImpressRTC.odp" KeyPath="yes" Compressed="yes" DiskId="1" Source="OOoImpressRTC\OOoImpressRTC.odp" >
+			<Shortcut Id='smOooImpressRTC' Directory='ProgramMenuDir' Name='OooImpressRTC.odp' Advertise='yes' />
+			</File>
+                    </Component>
+		    <Component Id="OooWriterRTCodt" Guid="EBAA4A8A-C778-4BBB-A31E-A400F2857721">
+                        <File Id="OooWriterRTCodt" Name="OooWriterRTC.odt" KeyPath="yes" Compressed="yes" DiskId="1" Source="OooWriterRTC\OOoWriterRTC.odt" >
+			<Shortcut Id='smOooWriterRTC' Directory='ProgramMenuDir' Name='OooWriterRTC.odt' Advertise='yes' />
+			</File>
+                    </Component>
+		    <Component Id="OOoCalcRTCods" Guid="BC114549-9D23-4CBD-AF47-DD84599BF3D5">
+                        <File Id="OOoCalcRTCods" Name="OOoCalcRTC.ods" KeyPath="yes" Compressed="yes" DiskId="1" Source="OOoCalcRTC\OOoCalcRTC.ods" >
+			<Shortcut Id='smOOoCalcRTC' Directory='ProgramMenuDir' Name='OOoCalcRTC.ods' Advertise='yes' />
+			</File>
+                    </Component>
+		    <Component Id="rtcconf2" Guid="5F39322B-7D0F-4D09-BBB4-61A366A6F37F">
+                        <File Id="rtcconf2" Name="rtc.conf" KeyPath="yes" Compressed="yes" DiskId="1" Source="rtc.conf" />
+                    </Component>
+		    <Directory Id="IDL" Name="IDL">
+			    <Component Id="DataBaseidl" Guid="7FD8ABD6-03DB-4604-958D-40090D1EB7B4">
+	                        <File Id="DataBaseidl" Name="DataBase.idl" KeyPath="yes" Compressed="yes" DiskId="1" Source="OOoBaseRTC\DataBase.idl" />
+	                    </Component>
+			    <Component Id="SpreadSheetidl" Guid="1D5B32F4-52EF-4C4C-AE2B-97FC74D78305">
+	                        <File Id="SpreadSheetidl" Name="SpreadSheet.idl" KeyPath="yes" Compressed="yes" DiskId="1" Source="OOoCalcRTC\SpreadSheet.idl" />
+	                    </Component>
+			    <Component Id="Writeridl" Guid="EBC119A9-C236-4A46-A0C2-EC632C8CD972">
+	                        <File Id="Writeridl" Name="Writer.idl" KeyPath="yes" Compressed="yes" DiskId="1" Source="OooWriterRTC\Writer.idl" />
+	                    </Component>
+		    </Directory>
                 </Directory>
                 <Directory Id="OpenOffice" Name="OpenOffice.org 3">
                     <Directory Id="program" Name="program">
@@ -166,7 +218,20 @@
                     </Directory>
                 </Directory>
             </Directory>
+	    <Directory Id="ProgramMenuFolder" Name="Programs">
+		<Directory Id="ProgramMenuDir" Name="OOoRTCs">
+			<Component Id="ProgramMenuDir" Guid="F69A8B56-0D54-4AE1-B0A0-E8E52CBB58C9">
+				<RemoveFolder Id='ProgramMenuDir' On='uninstall' />
+				<RegistryValue Root='HKCU' Key='Software\[Manufacturer]\[ProductName]' 
+
+				Type='string' Value='' KeyPath='yes' />
+			</Component>
+		</Directory>
+	    </Directory>
+
+	    <Directory Id="DesktopFolder" Name="Desktop" />
         </Directory>
+	
         <Feature Id="Feature1" Level="1">
             <ComponentRef Id="rtcconf" />
             <ComponentRef Id="OOoRTCpy" />
@@ -201,6 +266,19 @@
             <ComponentRef Id="OOoDrawControlRTCoxt" />
             <ComponentRef Id="OOoWriterControlRTCoxt" />
             <ComponentRef Id="Installbat" />
+            <ComponentRef Id="DataBaseInPut" />
+            <ComponentRef Id="DataBaseOutPut" />
+            <ComponentRef Id="MSVCR71dll" />
+            <ComponentRef Id="OOoBaseRTCodb" />
+            <ComponentRef Id="OOoDrawRTCodg" />
+            <ComponentRef Id="OooImpressRTCodp" />
+            <ComponentRef Id="OooWriterRTCodt" />
+            <ComponentRef Id="OOoCalcRTCods" />
+            <ComponentRef Id="DataBaseidl" />
+            <ComponentRef Id="SpreadSheetidl" />
+            <ComponentRef Id="Writeridl" />
+	    <ComponentRef Id="ProgramMenuDir" />
+	    <ComponentRef Id="rtcconf2" />
         </Feature>
         <UIRef Id="WixUI_ErrorProgressText" />
         <UIRef Id="WixUI_Minimal" />
