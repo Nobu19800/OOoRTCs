@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 
+##
+#
+# @file OOoRTC.py
+
 import os
 
 mgr = None
@@ -14,11 +18,11 @@ base_comp = None
 
 
 ##
-# 入力文字列をWriterのドキュメント上で文字化けしない文字コードで文字列を返す
-# m_str：変換前の文字列
-# m_code：変換前の文字コード
-# 戻り値：変換後の文字列
-##
+# @brief 入力文字列をWriterのドキュメント上で文字化けしない文字コードで文字列を返す
+# @param m_str 変換前の文字列
+# @param m_code 変換前の文字コード
+# @return 変換後の文字列
+#
 def SetCoding(m_str, m_code):
     if os.name == 'posix':
         if m_code == "utf-8":
@@ -35,10 +39,12 @@ def SetCoding(m_str, m_code):
             return ""
 
 ##
-# 文字、背景色の色をRGB形式から変換して返すクラス
-# red、green、blue：各色(0～255)
-# 戻り値：変換後の色の値
-##
+# @brief 文字、背景色の色をRGB形式から変換して返すクラス
+# @param red
+# @param green
+# @param blue
+# @return 変換後の色の値
+#
 
 def RGB (red, green, blue):
     

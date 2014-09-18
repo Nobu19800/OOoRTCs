@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 
+##
+#
+# @file OOoImpressRTC.py
+
 import optparse
 import sys,os,platform
 import re
@@ -86,9 +90,11 @@ oooimpresscontrol_spec = ["implementation_id", imp_id,
     
   
 
+
 ##
-# OpenOffice Impressを操作するためのRTCのクラス
-##
+# @class OOoImpressControl
+# @brief OpenOffice Impressを操作するためのRTCのクラス
+#
 
 class OOoImpressControl(OpenRTM_aist.DataFlowComponentBase):
   def __init__(self, manager):
@@ -123,23 +129,26 @@ class OOoImpressControl(OpenRTM_aist.DataFlowComponentBase):
   
 
   ##
-  # 実行周期を設定する関数
-  # rate：実行周期
-  ##
+  # @brief 実行周期を設定する関数
+  # @param self
+  # @param rate：実行周期
+  #
   def m_setRate(self, rate):
       m_ec = self.get_owned_contexts()
       m_ec[0].set_rate(rate)
 
   ##
-  # 活性化するための関数
-  ## 
+  # @brief 活性化するための関数
+  # @param self
+  #
   def m_activate(self):
       m_ec = self.get_owned_contexts()
       m_ec[0].activate_component(self._objref)
 
   ##
-  # 不活性化するための関数
-  ##
+  # @brief 不活性化するための関数
+  # @param self
+  #
   def m_deactivate(self):
       m_ec = self.get_owned_contexts()
       m_ec[0].deactivate_component(self._objref)
@@ -148,9 +157,12 @@ class OOoImpressControl(OpenRTM_aist.DataFlowComponentBase):
 
   
 
+  
   ##
-  # 不活性化時のコールバック関数
-  ##
+  # @brief 不活性化時のコールバック関数
+  # @param self
+  # @param ec_id
+  #
   def onDeactivated(self, ec_id):
     Presentation = self.impress.document.Presentation
     Presentation.end()
@@ -160,8 +172,10 @@ class OOoImpressControl(OpenRTM_aist.DataFlowComponentBase):
     return RTC.RTC_OK
 
   ##
-  # 活性化時のコールバック関数
-  ##
+  # @brief 活性化処理用コールバック関数
+  # @param self
+  # @param ec_id
+  #
   def onActivated(self, ec_id):
     Presentation = self.impress.document.Presentation
     Presentation.UsePen = True
@@ -186,8 +200,9 @@ class OOoImpressControl(OpenRTM_aist.DataFlowComponentBase):
     return RTC.RTC_OK
   
   ##
-  # 初期化処理用コールバック関数
-  ##
+  # @brief 初期化処理用コールバック関数
+  # @param self
+  #
   def onInitialize(self):
     
     OOoRTC.impress_comp = self
@@ -210,8 +225,10 @@ class OOoImpressControl(OpenRTM_aist.DataFlowComponentBase):
   
 
   ##
-  # 周期処理用コールバック関数
-  ##
+  # @brief 周期処理用コールバック関数
+  # @param self
+  # @param ec_id
+  #
   
   def onExecute(self, ec_id): 
     if self._m_SlideNumIn.isNew():
@@ -258,8 +275,10 @@ class OOoImpressControl(OpenRTM_aist.DataFlowComponentBase):
     return RTC.RTC_OK
 
   ##
-  # 終了処理用コールバック関数
-  ##
+  # @brief 終了処理用コールバック関数
+  # @param self
+  # @param ec_id
+  #
   
   def on_shutdown(self, ec_id):
       OOoRTC.impress_comp = None
@@ -268,8 +287,8 @@ class OOoImpressControl(OpenRTM_aist.DataFlowComponentBase):
 
 
 ##
-# コンポーネントを活性化してImpressの操作を開始する関数
-##
+# @brief コンポーネントを活性化してImpressの操作を開始する関数
+#
 
 def Start():
     
@@ -277,8 +296,8 @@ def Start():
         OOoRTC.impress_comp.m_activate()
 
 ##
-# コンポーネントを不活性化してImpressの操作を終了する関数
-##
+# @brief コンポーネントを不活性化してImpressの操作を終了する関数
+#
 
 def Stop():
     
@@ -287,8 +306,8 @@ def Stop():
 
 
 ##
-# コンポーネントの実行周期を設定する関数
-##
+# @brief コンポーネントの実行周期を設定する関数
+#
 
 def Set_Rate():
     pass
@@ -312,8 +331,8 @@ def Set_Rate():
 
 
 ##
-#RTCをマネージャに登録する関数
-##
+# @brief RTCをマネージャに登録する関数
+#
 def OOoImpressControlInit(manager):
   profile = OpenRTM_aist.Properties(defaults_str=oooimpresscontrol_spec)
   manager.registerFactory(profile,
@@ -336,8 +355,8 @@ def MyModuleInit(manager):
           
 
 ##
-# RTC起動の関数
-##
+# @brief RTC起動の関数
+#
 
 def createOOoImpressComp():
                         
@@ -369,11 +388,11 @@ def createOOoImpressComp():
 
 
 ##
-# メッセージボックス表示の関数
-# title：ウインドウのタイトル
-# message：表示する文章
+# @brief メッセージボックス表示の関数
+# @param title ウインドウのタイトル
+# @param message 表示する文章
 # http://d.hatena.ne.jp/kakurasan/20100408/p1のソースコード(GPLv2)の一部
-##
+#
 
 def MyMsgBox(title, message):
     try:
@@ -384,9 +403,9 @@ def MyMsgBox(title, message):
 
 
 ##
-# OpenOfficeを操作するためのクラス
+# @brief OpenOfficeを操作するためのクラス
 # http://d.hatena.ne.jp/kakurasan/20100408/p1のソースコード(GPLv2)の一部
-##
+#
 
 class Bridge(object):
   def __init__(self):
@@ -405,7 +424,7 @@ class Bridge(object):
 
 
 ##
-# OpenOffice Impressを操作するためのクラス
+# @brief OpenOffice Impressを操作するためのクラス
 # http://d.hatena.ne.jp/kakurasan/20100408/p1のソースコード(GPLv2)の一部を改変
 ##
 

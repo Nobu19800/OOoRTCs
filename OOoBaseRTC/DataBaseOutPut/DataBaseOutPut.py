@@ -70,9 +70,9 @@ databaseoutput_spec = ["implementation_id", "DataBaseOutPut",
 
 
 ##
-# コンフィギュレーションパラメータが更新されたときのコールバック
-##
-
+# @class MyConfigUpdateParam
+# @brief コンフィギュレーションパラメータが更新されたときのコールバック
+#
 class MyConfigUpdateParam(OpenRTM_aist.ConfigurationSetListener):
    def __init__(self,e_rtc):
         self.m_rtc =  e_rtc
@@ -132,8 +132,9 @@ class DataBaseOutPut(OpenRTM_aist.DataFlowComponentBase):
                 self.DSName = "None"
 
         ##
-        # コンフィギュレーションパラメータが変更されたときに呼び出される関数
-        ##
+        # @brief コンフィギュレーションパラメータが変更されたときに呼び出される関数
+        # @param self
+        #
   
         def ConfigUpdate(self):
                 

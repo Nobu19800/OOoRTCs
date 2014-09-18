@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 
+##
+#
+# @file OOoBaseRTC.py
+
 import optparse
 import sys,os,platform
 import codecs
@@ -110,11 +114,16 @@ ooobasecontrol_spec = ["implementation_id", imp_id,
                   ""]
 
 ##
-#サービスポートDataBase
-##
+# @class mDataBase_i
+# @brief サービスポートDataBase
+#
 class mDataBase_i (DataBase__POA.mDataBase):
     
-
+    ##
+    # @brief コンストラクタ
+    # @param self
+    # @param m_comp OOoBaseRTC
+    #
     def __init__(self, m_comp):
         
         self.m_comp = m_comp
@@ -123,11 +132,13 @@ class mDataBase_i (DataBase__POA.mDataBase):
         
 
     ##
-    # データベースと接続する関数
-    # name：データベースの登録名
-    # usr_name, passward：パスワードがかかってる場合に入力します
-    # 戻り値：成功ならTrue、失敗ならFalse
-    ##
+    # @brief データベースと接続する関数
+    # @param self
+    # @param name データベースの登録名
+    # @param usr_name ユーザー名
+    # @param passward パスワード
+    # @return 成功ならTrue、失敗ならFalse
+    #
     def setConnection(self, name, usr_name, passward):
         if self.m_comp.ConnectionList.has_key(name):
           return True
@@ -146,12 +157,13 @@ class mDataBase_i (DataBase__POA.mDataBase):
         
 
     ##
-    # データベースに問い合わせて結果セットを取得する関数
-    # name：結果セットの名前(設定した名前で辞書オブジェクトに格納されます)
-    # con：データベース登録名
-    # oSQL：SQL文
-    # 戻り値：成功ならTrue、失敗ならFalse
-    ##
+    # @brief データベースに問い合わせて結果セットを取得する関数
+    # @param self
+    # @param name 結果セットの名前(設定した名前で辞書オブジェクトに格納されます)
+    # @param con データベースの登録名
+    # @param oSQL SQL文
+    # @return 成功ならTrue、失敗ならFalse
+    #
     def executeQuery(self, name, con, oSQL):
         if self.m_comp.ConnectionList.has_key(con):
           try:
@@ -165,10 +177,11 @@ class mDataBase_i (DataBase__POA.mDataBase):
         
 
     ##
-    # 次のデータレコードへ移動する関数
-    # name：結果セットの名前
-    # 戻り値：成功ならTrue、失敗ならFalse
-    ##
+    # @brief 次のデータレコードへ移動する関数
+    # @param self
+    # @param name 結果セットの名前
+    # @return 成功ならTrue、失敗ならFalse
+    #
     def ResultSetNext(self, name):
         
         if self.m_comp.ResultSet.has_key(name):
@@ -179,10 +192,11 @@ class mDataBase_i (DataBase__POA.mDataBase):
         
 
     ##
-    # 前のデータレコードへ移動する
-    # name：結果セットの名前
-    # 戻り値：成功ならTrue、失敗ならFalse
-    ##
+    # @brief 前のデータレコードへ移動する
+    # @param self
+    # @param name 結果セットの名前
+    # @return 成功ならTrue、失敗ならFalse
+    #
     def ResultSetPrevious(self, name):
         if self.m_comp.ResultSet.has_key(name):
           return self.m_comp.ResultSet[name].previous()
@@ -192,10 +206,11 @@ class mDataBase_i (DataBase__POA.mDataBase):
         
 
     ##
-    # 最初のデータレコードへ移動する
-    # name：結果セットの名前
-    # 戻り値：成功ならTrue、失敗ならFalse
-    ##
+    # @brief 最初のデータレコードへ移動する
+    # @param self
+    # @param name 結果セットの名前
+    # @return 成功ならTrue、失敗ならFalse
+    #
     def ResultSetFirst(self, name):
         if self.m_comp.ResultSet.has_key(name):
           return self.m_comp.ResultSet[name].first()
@@ -205,10 +220,11 @@ class mDataBase_i (DataBase__POA.mDataBase):
         
 
     ##
-    # 最後のデータレコードへ移動する
-    # name：結果セットの名前
-    # 戻り値：成功ならTrue、失敗ならFalse
-    ##
+    # @brief 最後のデータレコードへ移動する
+    # @param self
+    # @param name 結果セットの名前
+    # @return 成功ならTrue、失敗ならFalse
+    #
     def ResultSetLast(self, name):
         if self.m_comp.ResultSet.has_key(name):
           return self.m_comp.ResultSet[name].last()
@@ -218,10 +234,11 @@ class mDataBase_i (DataBase__POA.mDataBase):
         
 
     ##
-    # 最初のデータレコードの前へ移動する
-    # name：結果セットの名前
-    # 戻り値：成功ならTrue、失敗ならFalse
-    ##
+    # @brief 最初のデータレコードの前へ移動する
+    # @param self
+    # @param name 結果セットの名前
+    # @return 成功ならTrue、失敗ならFalse
+    # 
     def ResultSetBeforeFirst(self, name):
         if self.m_comp.ResultSet.has_key(name):
           return self.m_comp.ResultSet[name].beforeFirst()
@@ -231,10 +248,11 @@ class mDataBase_i (DataBase__POA.mDataBase):
         
 
     ##
-    # 最後のデータレコードの次へ移動する
-    # name：結果セットの名前
-    # 戻り値：成功ならTrue、失敗ならFalse
-    ##
+    # @brief 最後のデータレコードの次へ移動する
+    # @param self
+    # @param name 結果セットの名前
+    # @return 成功ならTrue、失敗ならFalse
+    # 
     def ResultSetAfterLast(self, name):
         if self.m_comp.ResultSet.has_key(name):
           return self.m_comp.ResultSet[name].afterLast()
@@ -244,11 +262,12 @@ class mDataBase_i (DataBase__POA.mDataBase):
         
 
     ##
-    # Byte型のデータを取得する関数
-    # name：結果セットの名前
-    # num：列番号
-    # 戻り値：取得したデータ
-    ##
+    # @brief Byte型のデータを取得する関数
+    # @param self
+    # @param name 結果セットの名前
+    # @param num 列番号
+    # @return 取得したデータ
+    #
     def getByte(self, name, num):
         if self.m_comp.ResultSet.has_key(name):
           return chr(self.m_comp.ResultSet[name].getByte(num))
@@ -258,11 +277,12 @@ class mDataBase_i (DataBase__POA.mDataBase):
         
 
     ##
-    # Short型のデータを取得する関数
-    # name：結果セットの名前
-    # num：列番号
-    # 戻り値：取得したデータ
-    ## 
+    # @brief Short型のデータを取得する関数
+    # @param self
+    # @param name 結果セットの名前
+    # @param num 列番号
+    # @return 取得したデータ
+    #
     def getShort(self, name, num):
         if self.m_comp.ResultSet.has_key(name):
           return int(self.m_comp.ResultSet[name].getShort(num))
@@ -271,11 +291,12 @@ class mDataBase_i (DataBase__POA.mDataBase):
         
 
     ##
-    # Long型のデータを取得する関数
-    # name：結果セットの名前
-    # num：列番号
-    # 戻り値：取得したデータ
-    ##
+    # @brief Long型のデータを取得する関数
+    # @param self
+    # @param name 結果セットの名前
+    # @param num 列番号
+    # @return 取得したデータ
+    #
     def getLong(self, name, num):
         if self.m_comp.ResultSet.has_key(name):
           return long(self.m_comp.ResultSet[name].getLong(num))
@@ -285,11 +306,12 @@ class mDataBase_i (DataBase__POA.mDataBase):
         
 
     ##
-    # Float型のデータを取得する関数
-    # name：結果セットの名前
-    # num：列番号
-    # 戻り値：取得したデータ
-    ##
+    # @brief Float型のデータを取得する関数
+    # @param self
+    # @param name 結果セットの名前
+    # @param num 列番号
+    # @return 取得したデータ
+    #
     def getFloat(self, name, num):
         if self.m_comp.ResultSet.has_key(name):
           return float(self.m_comp.ResultSet[name].getFloat(num))
@@ -299,11 +321,12 @@ class mDataBase_i (DataBase__POA.mDataBase):
         
 
     ##
-    # Double型のデータを取得する関数
-    # name：結果セットの名前
-    # num：列番号
-    # 戻り値：取得したデータ
-    ##
+    # @brief Double型のデータを取得する関数
+    # @param self
+    # @param name 結果セットの名前
+    # @param num 列番号
+    # @return 取得したデータ
+    #
     def getDouble(self, name, num):
         if self.m_comp.ResultSet.has_key(name):
           return self.m_comp.ResultSet[name].getDouble(num)
@@ -313,11 +336,12 @@ class mDataBase_i (DataBase__POA.mDataBase):
         
 
     ##
-    # bool型のデータを取得する関数
-    # name：結果セットの名前
-    # num：列番号
-    # 戻り値：取得したデータ
-    ##
+    # @brief bool型のデータを取得する関数
+    # @param self
+    # @param name 結果セットの名前
+    # @param num 列番号
+    # @return 取得したデータ
+    #
     def getBoolean(self, name, num):
         if self.m_comp.ResultSet.has_key(name):
           return bool(self.m_comp.ResultSet[name].getBoolean(num))
@@ -327,11 +351,12 @@ class mDataBase_i (DataBase__POA.mDataBase):
         
 
     ##
-    # String型のデータを取得する関数
-    # name：結果セットの名前
-    # num：列番号
-    # 戻り値：取得したデータ
-    ##
+    # @brief String型のデータを取得する関数
+    # @param self
+    # @param name 結果セットの名前
+    # @param num 列番号
+    # @return 取得したデータ
+    #
     def getString(self, name, num):
         if self.m_comp.ResultSet.has_key(name):
           return str(self.m_comp.ResultSet[name].getString(num))
@@ -341,9 +366,10 @@ class mDataBase_i (DataBase__POA.mDataBase):
         
 
     ##
-    # 登録されたデータベースの名前を取得
-    # 戻り値：データベース名のリスト
-    ##
+    # @brief 登録されたデータベースの名前を取得
+    # @param self
+    # @return データベース名のリスト
+    #
     def getDataBaseNames(self):
         Ans = []
         names = self.m_comp.base._context.getElementNames()
@@ -354,10 +380,11 @@ class mDataBase_i (DataBase__POA.mDataBase):
          
 
     ##
-    # データベースに存在するテーブルの名前を取得
-    # con：データベースの登録名
-    # 戻り値：テーブル名のリスト
-    ##
+    # @brief データベースに存在するテーブルの名前を取得
+    # @param self
+    # @param con データベースの登録名
+    # @return テーブル名のリスト
+    #
     def getDataTableNames(self, con):
         Ans = []
         
@@ -380,11 +407,12 @@ class mDataBase_i (DataBase__POA.mDataBase):
         
 
     ##
-    # データベースの更新
-    # con：データベースの登録名
-    # oSQL：SQL文
-    # 戻り値：成功ならTrue、失敗ならFalse
-    ##
+    # @brief データベースの更新
+    # @param self
+    # @param con データベースの登録名
+    # @param oSQL SQL文
+    # @return 成功ならTrue、失敗ならFalse
+    #
     def executeUpdate(self, con, oSQL):
         
         oRstDataSources = self.m_comp.base._context.getByName(con)
@@ -406,10 +434,11 @@ class mDataBase_i (DataBase__POA.mDataBase):
         
 
     ##
-    # カーソルの行番号を取得
-    # name：結果セットの名前
-    # 戻り値：行番号
-    ##
+    # @brief カーソルの行番号を取得
+    # @param self
+    # @param name 結果セットの名前
+    # @return 行番号
+    #
     def getRow(self, name):
         if self.m_comp.ResultSet.has_key(name):
           return int(self.m_comp.ResultSet[name].getRow())
@@ -418,13 +447,14 @@ class mDataBase_i (DataBase__POA.mDataBase):
         
 
     ##
-    # データベースにテーブルを追加
-    # name：追加するテーブル名
-    # con：データベースの登録名
-    # cols：フィールド名のリスト
-    # dt：フィールドのタイプのリスト
-    # 戻り値：成功ならTrue、失敗ならFalse
-    ##
+    # @brief データベースにテーブルを追加
+    # @param self
+    # @param name 追加するテーブル名
+    # @param con データベースの登録名
+    # @param cols フィールド名のリスト
+    # @param dt フィールドのタイプのリスト
+    # @return 成功ならTrue、失敗ならFalse
+    #
     def AddTable(self, name, con, cols, dt):
         if self.m_comp.ConnectionList.has_key(con):
           try:
@@ -528,12 +558,14 @@ class mDataBase_i (DataBase__POA.mDataBase):
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
         
 
+    
     ##
-    # データベースからテーブルを削除
-    # name：削除するテーブル名
-    # con：データベースの登録名
-    # 戻り値：成功ならTrue、失敗ならFalse
-    ##
+    # @brief データベースからテーブルを削除
+    # @param self
+    # @param name 削除するテーブル名
+    # @param con データベースの登録名
+    # @return 成功ならTrue、失敗ならFalse
+    #
     def RemoveTable(self, name, con):
         if self.m_comp.ConnectionList.has_key(con):
           try:
@@ -555,10 +587,11 @@ class mDataBase_i (DataBase__POA.mDataBase):
          
 
     ##
-    # データベースの追加
-    # name：追加するデータベース名
-    # 戻り値：成功ならTrue、失敗ならFalse
-    ##
+    # @brief データベースの追加
+    # @param self
+    # @param name 追加するデータベース名
+    # @return 成功ならTrue、失敗ならFalse
+    #
     def AddDataBase(self, name):
         try:
             names = self.m_comp.base._context.getElementNames()
@@ -591,10 +624,11 @@ class mDataBase_i (DataBase__POA.mDataBase):
         
 
     ##
-    # データベースの削除
-    # name：削除するデータベース名
-    # 戻り値：成功ならTrue、失敗ならFalse
-    ##
+    # @brief データベースの削除
+    # @param self
+    # @param name 削除するデータベース名
+    # @return 成功ならTrue、失敗ならFalse
+    #
     def RemoveDataBase(self, name):
         
         try:
@@ -611,9 +645,11 @@ class mDataBase_i (DataBase__POA.mDataBase):
     
 
 
+
 ##
-# OpenOffice Baseを操作するためのRTCのクラス
-##
+# @class OOoBaseControl
+# @brief OpenOffice Baseを操作するためのRTCのクラス
+#
 
 class OOoBaseControl(OpenRTM_aist.DataFlowComponentBase):
   def __init__(self, manager):
@@ -642,23 +678,26 @@ class OOoBaseControl(OpenRTM_aist.DataFlowComponentBase):
     return
 
   ##
-  # 実行周期を設定する関数
-  # rate：実行周期
-  ##
+  # @brief 実行周期を設定する関数
+  # @param self
+  # @param rate 実行周期
+  #
   def m_setRate(self, rate):
       m_ec = self.get_owned_contexts()
       m_ec[0].set_rate(rate)
 
   ##
-  # 活性化するための関数
-  ## 
+  # @brief 活性化するための関数
+  # @param self
+  #
   def m_activate(self):
       m_ec = self.get_owned_contexts()
       m_ec[0].activate_component(self._objref)
 
   ##
-  # 不活性化するための関数
-  ##
+  # @brief 不活性化するための関数
+  # @param self
+  #
   def m_deactivate(self):
       m_ec = self.get_owned_contexts()
       m_ec[0].deactivate_component(self._objref)
@@ -667,8 +706,9 @@ class OOoBaseControl(OpenRTM_aist.DataFlowComponentBase):
 
 
   ##
-  # 初期化処理用コールバック関数
-  ##
+  # @brief 初期化処理用コールバック関数
+  # @param self
+  #
   def onInitialize(self):
     
     OOoRTC.base_comp = self
@@ -684,8 +724,10 @@ class OOoBaseControl(OpenRTM_aist.DataFlowComponentBase):
     return RTC.RTC_OK
 
   ##
-  # 非活性化処理用コールバック関数
-  ##
+  # @brief 非活性化処理用コールバック関数
+  # @param self
+  # @param ec_id
+  #
   
   def onDeactivated(self, ec_id):
     for i,j in self.ConnectionList.items():
@@ -695,6 +737,13 @@ class OOoBaseControl(OpenRTM_aist.DataFlowComponentBase):
     self.ConnectionList = {}
     self.ResultSet = {}
     return RTC.RTC_OK
+
+
+  ##
+  # @brief 周期処理用コールバック関数
+  # @param self
+  # @param ec_id
+  #
   
   def onExecute(self, ec_id):
     
@@ -703,8 +752,10 @@ class OOoBaseControl(OpenRTM_aist.DataFlowComponentBase):
     return RTC.RTC_OK
 
   ##
-  # 終了処理用コールバック関数
-  ##
+  # @brief 終了処理用コールバック関数
+  # @param self
+  # @param ec_id
+  #
   
   def on_shutdown(self, ec_id):
       OOoRTC.base_comp = None
@@ -713,8 +764,8 @@ class OOoBaseControl(OpenRTM_aist.DataFlowComponentBase):
 
 
 ##
-# コンポーネントを活性化してBaseの操作を開始する関数
-##
+# @brief コンポーネントを活性化してBaseの操作を開始する関数
+#
 
 def Start():
     
@@ -722,8 +773,8 @@ def Start():
         OOoRTC.base_comp.m_activate()
 
 ##
-# コンポーネントを不活性化してBaseの操作を終了する関数
-##
+# @brief コンポーネントを不活性化してBaseの操作を終了する関数
+#
 
 def Stop():
     
@@ -732,8 +783,8 @@ def Stop():
 
 
 ##
-# コンポーネントの実行周期を設定する関数
-##
+# @brief コンポーネントの実行周期を設定する関数
+#
 
 def Set_Rate():
     pass
@@ -775,8 +826,8 @@ def Set_Rate():
 
 
 ##
-#RTCをマネージャに登録する関数
-##
+# @brief RTCをマネージャに登録する関数
+#
 def OOoBaseControlInit(manager):
   profile = OpenRTM_aist.Properties(defaults_str=ooobasecontrol_spec)
   manager.registerFactory(profile,
@@ -799,8 +850,8 @@ def MyModuleInit(manager):
           
 
 ##
-# RTC起動の関数
-##
+# @brief RTC起動の関数
+#
 
 def createOOoBaseComp():
                         
@@ -832,11 +883,11 @@ def createOOoBaseComp():
 
 
 ##
-# メッセージボックス表示の関数
-# title：ウインドウのタイトル
-# message：表示する文章
+# @brief メッセージボックス表示の関数
+# @param title ウインドウのタイトル
+# @param message 表示する文章
 # http://d.hatena.ne.jp/kakurasan/20100408/p1のソースコード(GPLv2)の一部
-##
+#
 
 def MyMsgBox(title, message):
     try:
@@ -848,9 +899,9 @@ def MyMsgBox(title, message):
 
 
 ##
-# OpenOfficeを操作するためのクラス
+# @brief OpenOfficeを操作するためのクラス
 # http://d.hatena.ne.jp/kakurasan/20100408/p1のソースコード(GPLv2)の一部
-##
+#
 
 class Bridge(object):
   def __init__(self):
@@ -868,8 +919,8 @@ class Bridge(object):
 
 
 ##
-# OpenOffice Baseを操作するためのクラス
-##
+# @brief OpenOffice Baseを操作するためのクラス
+#
 
 class OOoBase():
   def __init__(self):
