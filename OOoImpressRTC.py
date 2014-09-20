@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
+
+
 ##
+#   @file OOoImpressRTC.py
 #
-# @file OOoImpressRTC.py
 
 import optparse
 import sys,os,platform
@@ -97,6 +99,10 @@ oooimpresscontrol_spec = ["implementation_id", imp_id,
 #
 
 class OOoImpressControl(OpenRTM_aist.DataFlowComponentBase):
+    ##
+    # @brief コンストラクタ
+    # @param manager
+    #
   def __init__(self, manager):
     OpenRTM_aist.DataFlowComponentBase.__init__(self, manager)
     
@@ -132,7 +138,6 @@ class OOoImpressControl(OpenRTM_aist.DataFlowComponentBase):
   # @brief 実行周期を設定する関数
   # @param self
   # @param rate：実行周期
-  #
   def m_setRate(self, rate):
       m_ec = self.get_owned_contexts()
       m_ec[0].set_rate(rate)
@@ -140,7 +145,6 @@ class OOoImpressControl(OpenRTM_aist.DataFlowComponentBase):
   ##
   # @brief 活性化するための関数
   # @param self
-  #
   def m_activate(self):
       m_ec = self.get_owned_contexts()
       m_ec[0].activate_component(self._objref)
@@ -148,7 +152,6 @@ class OOoImpressControl(OpenRTM_aist.DataFlowComponentBase):
   ##
   # @brief 不活性化するための関数
   # @param self
-  #
   def m_deactivate(self):
       m_ec = self.get_owned_contexts()
       m_ec[0].deactivate_component(self._objref)
@@ -162,7 +165,7 @@ class OOoImpressControl(OpenRTM_aist.DataFlowComponentBase):
   # @brief 不活性化時のコールバック関数
   # @param self
   # @param ec_id
-  #
+  # @return 
   def onDeactivated(self, ec_id):
     Presentation = self.impress.document.Presentation
     Presentation.end()
@@ -175,7 +178,7 @@ class OOoImpressControl(OpenRTM_aist.DataFlowComponentBase):
   # @brief 活性化処理用コールバック関数
   # @param self
   # @param ec_id
-  #
+  # @return 
   def onActivated(self, ec_id):
     Presentation = self.impress.document.Presentation
     Presentation.UsePen = True
@@ -202,7 +205,7 @@ class OOoImpressControl(OpenRTM_aist.DataFlowComponentBase):
   ##
   # @brief 初期化処理用コールバック関数
   # @param self
-  #
+  # @return 
   def onInitialize(self):
     
     OOoRTC.impress_comp = self
@@ -228,7 +231,7 @@ class OOoImpressControl(OpenRTM_aist.DataFlowComponentBase):
   # @brief 周期処理用コールバック関数
   # @param self
   # @param ec_id
-  #
+  # @return 
   
   def onExecute(self, ec_id): 
     if self._m_SlideNumIn.isNew():
@@ -278,7 +281,7 @@ class OOoImpressControl(OpenRTM_aist.DataFlowComponentBase):
   # @brief 終了処理用コールバック関数
   # @param self
   # @param ec_id
-  #
+  # @return 
   
   def on_shutdown(self, ec_id):
       OOoRTC.impress_comp = None
@@ -332,7 +335,7 @@ def Set_Rate():
 
 ##
 # @brief RTCをマネージャに登録する関数
-#
+# @param manager
 def OOoImpressControlInit(manager):
   profile = OpenRTM_aist.Properties(defaults_str=oooimpresscontrol_spec)
   manager.registerFactory(profile,
@@ -340,6 +343,9 @@ def OOoImpressControlInit(manager):
                           OpenRTM_aist.Delete)
 
 
+##
+# @brief
+# @param manager
 def MyModuleInit(manager):
   manager._factory.unregisterObject(imp_id)
   OOoImpressControlInit(manager)

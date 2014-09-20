@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
+
 ##
+#   @file OOoBaseRTC.py
 #
-# @file OOoBaseRTC.py
 
 import optparse
 import sys,os,platform
@@ -652,6 +653,10 @@ class mDataBase_i (DataBase__POA.mDataBase):
 #
 
 class OOoBaseControl(OpenRTM_aist.DataFlowComponentBase):
+    ##
+    # @brief コンストラクタ
+    # @param manager
+    #
   def __init__(self, manager):
     OpenRTM_aist.DataFlowComponentBase.__init__(self, manager)
     
@@ -708,7 +713,7 @@ class OOoBaseControl(OpenRTM_aist.DataFlowComponentBase):
   ##
   # @brief 初期化処理用コールバック関数
   # @param self
-  #
+  # @return 
   def onInitialize(self):
     
     OOoRTC.base_comp = self
@@ -727,7 +732,7 @@ class OOoBaseControl(OpenRTM_aist.DataFlowComponentBase):
   # @brief 非活性化処理用コールバック関数
   # @param self
   # @param ec_id
-  #
+  # @return 
   
   def onDeactivated(self, ec_id):
     for i,j in self.ConnectionList.items():
@@ -743,7 +748,7 @@ class OOoBaseControl(OpenRTM_aist.DataFlowComponentBase):
   # @brief 周期処理用コールバック関数
   # @param self
   # @param ec_id
-  #
+  # @return 
   
   def onExecute(self, ec_id):
     
@@ -755,7 +760,7 @@ class OOoBaseControl(OpenRTM_aist.DataFlowComponentBase):
   # @brief 終了処理用コールバック関数
   # @param self
   # @param ec_id
-  #
+  # @return 
   
   def on_shutdown(self, ec_id):
       OOoRTC.base_comp = None
@@ -827,14 +832,16 @@ def Set_Rate():
 
 ##
 # @brief RTCをマネージャに登録する関数
-#
+# @param manager
 def OOoBaseControlInit(manager):
   profile = OpenRTM_aist.Properties(defaults_str=ooobasecontrol_spec)
   manager.registerFactory(profile,
                           OOoBaseControl,
                           OpenRTM_aist.Delete)
 
-
+##
+# @brief
+# @param manager
 def MyModuleInit(manager):
   manager._factory.unregisterObject(imp_id)
   OOoBaseControlInit(manager)
