@@ -306,8 +306,11 @@ class OOoDrawControl(OpenRTM_aist.DataFlowComponentBase):
     
     
     for n,ip in self._InPorts.items():
-        if ip._port.isNew():
-          dt = ip._port.read()
+        dt = None
+        while ip._port.isNew():
+            dt = ip._port.read()
+            
+        if dt != None:
           if ip._dataType[1] == basic:
             if len(dt.data) < 2:
               pass
