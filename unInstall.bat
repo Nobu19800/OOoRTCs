@@ -1,11 +1,21 @@
 cd /d %~dp0
 
-set OOoScriptPath=%USERPROFILE%\AppData\Roaming\OpenOffice.org\3\user\Scripts\python
-set OOoPath="%ProgramFiles%\OpenOffice.org 3\program"
+set OOoScriptPath=%USERPROFILE%\AppData\Roaming\OpenOffice\4\user\Scripts\python
+set OOoPath="%ProgramFiles%\OpenOffice 4\program"
 
 IF NOT EXIST %OOoPath% (
 
-   set OOoPath="%ProgramFiles(x86)%\OpenOffice.org 3\program"
+   set OOoPath="%ProgramFiles(x86)%\OpenOffice 4\program"
+   IF NOT EXIST %OOoPath% (
+	set OOoPath="%ProgramFiles%\OpenOffice.org 3\program"
+	IF NOT EXIST %OOoPath% (
+		set OOoPath="%ProgramFiles(x86)%\OpenOffice.org 3\program"
+	)
+   )
+)
+
+IF NOT EXIST %OOoScriptPath% (
+	set OOoScriptPath=%USERPROFILE%\AppData\Roaming\OpenOffice.org\3\user\Scripts\python
 )
 
 del %OOoScriptPath%\OOoCalcRTC.py
@@ -15,7 +25,7 @@ del %OOoScriptPath%\OOoBaseRTC.py
 del %OOoScriptPath%\OOoImpressRTC.py
 
 
-del %OOoPath%\OOoRTC.py
+
 del %OOoPath%\rtc.conf
 rd /s %OOoPath%\OOoRTC
 

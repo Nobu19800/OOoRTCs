@@ -3,7 +3,7 @@
 
 ##
 #   @file OOoBaseRTC.py
-#
+#   @brief OOoBaseControl Component
 
 import optparse
 import sys,os,platform
@@ -122,7 +122,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
     
     ##
     # @brief コンストラクタ
-    # @param self
+    # @param self 
     # @param m_comp OOoBaseRTC
     #
     def __init__(self, m_comp):
@@ -134,7 +134,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
     ##
     # @brief データベースと接続する関数
-    # @param self
+    # @param self 
     # @param name データベースの登録名
     # @param usr_name ユーザー名
     # @param passward パスワード
@@ -159,7 +159,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
     ##
     # @brief データベースに問い合わせて結果セットを取得する関数
-    # @param self
+    # @param self 
     # @param name 結果セットの名前(設定した名前で辞書オブジェクトに格納されます)
     # @param con データベースの登録名
     # @param oSQL SQL文
@@ -179,7 +179,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
     ##
     # @brief 次のデータレコードへ移動する関数
-    # @param self
+    # @param self 
     # @param name 結果セットの名前
     # @return 成功ならTrue、失敗ならFalse
     #
@@ -194,7 +194,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
     ##
     # @brief 前のデータレコードへ移動する
-    # @param self
+    # @param self 
     # @param name 結果セットの名前
     # @return 成功ならTrue、失敗ならFalse
     #
@@ -208,7 +208,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
     ##
     # @brief 最初のデータレコードへ移動する
-    # @param self
+    # @param self 
     # @param name 結果セットの名前
     # @return 成功ならTrue、失敗ならFalse
     #
@@ -222,7 +222,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
     ##
     # @brief 最後のデータレコードへ移動する
-    # @param self
+    # @param self 
     # @param name 結果セットの名前
     # @return 成功ならTrue、失敗ならFalse
     #
@@ -236,7 +236,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
     ##
     # @brief 最初のデータレコードの前へ移動する
-    # @param self
+    # @param self 
     # @param name 結果セットの名前
     # @return 成功ならTrue、失敗ならFalse
     # 
@@ -250,7 +250,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
     ##
     # @brief 最後のデータレコードの次へ移動する
-    # @param self
+    # @param self 
     # @param name 結果セットの名前
     # @return 成功ならTrue、失敗ならFalse
     # 
@@ -264,7 +264,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
     ##
     # @brief Byte型のデータを取得する関数
-    # @param self
+    # @param self 
     # @param name 結果セットの名前
     # @param num 列番号
     # @return 取得したデータ
@@ -279,7 +279,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
     ##
     # @brief Short型のデータを取得する関数
-    # @param self
+    # @param self 
     # @param name 結果セットの名前
     # @param num 列番号
     # @return 取得したデータ
@@ -293,7 +293,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
     ##
     # @brief Long型のデータを取得する関数
-    # @param self
+    # @param self 
     # @param name 結果セットの名前
     # @param num 列番号
     # @return 取得したデータ
@@ -308,7 +308,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
     ##
     # @brief Float型のデータを取得する関数
-    # @param self
+    # @param self 
     # @param name 結果セットの名前
     # @param num 列番号
     # @return 取得したデータ
@@ -323,7 +323,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
     ##
     # @brief Double型のデータを取得する関数
-    # @param self
+    # @param self 
     # @param name 結果セットの名前
     # @param num 列番号
     # @return 取得したデータ
@@ -338,7 +338,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
     ##
     # @brief bool型のデータを取得する関数
-    # @param self
+    # @param self 
     # @param name 結果セットの名前
     # @param num 列番号
     # @return 取得したデータ
@@ -353,7 +353,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
     ##
     # @brief String型のデータを取得する関数
-    # @param self
+    # @param self 
     # @param name 結果セットの名前
     # @param num 列番号
     # @return 取得したデータ
@@ -368,7 +368,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
     ##
     # @brief 登録されたデータベースの名前を取得
-    # @param self
+    # @param self 
     # @return データベース名のリスト
     #
     def getDataBaseNames(self):
@@ -382,7 +382,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
     ##
     # @brief データベースに存在するテーブルの名前を取得
-    # @param self
+    # @param self 
     # @param con データベースの登録名
     # @return テーブル名のリスト
     #
@@ -409,7 +409,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
     ##
     # @brief データベースの更新
-    # @param self
+    # @param self 
     # @param con データベースの登録名
     # @param oSQL SQL文
     # @return 成功ならTrue、失敗ならFalse
@@ -436,7 +436,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
     ##
     # @brief カーソルの行番号を取得
-    # @param self
+    # @param self 
     # @param name 結果セットの名前
     # @return 行番号
     #
@@ -449,7 +449,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
     ##
     # @brief データベースにテーブルを追加
-    # @param self
+    # @param self 
     # @param name 追加するテーブル名
     # @param con データベースの登録名
     # @param cols フィールド名のリスト
@@ -562,7 +562,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
     
     ##
     # @brief データベースからテーブルを削除
-    # @param self
+    # @param self 
     # @param name 削除するテーブル名
     # @param con データベースの登録名
     # @return 成功ならTrue、失敗ならFalse
@@ -589,7 +589,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
     ##
     # @brief データベースの追加
-    # @param self
+    # @param self 
     # @param name 追加するデータベース名
     # @return 成功ならTrue、失敗ならFalse
     #
@@ -626,7 +626,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
 
     ##
     # @brief データベースの削除
-    # @param self
+    # @param self 
     # @param name 削除するデータベース名
     # @return 成功ならTrue、失敗ならFalse
     #
@@ -655,7 +655,8 @@ class mDataBase_i (DataBase__POA.mDataBase):
 class OOoBaseControl(OpenRTM_aist.DataFlowComponentBase):
     ##
     # @brief コンストラクタ
-    # @param manager
+    # @param self 
+    # @param manager マネージャーオブジェクト
     #
   def __init__(self, manager):
     OpenRTM_aist.DataFlowComponentBase.__init__(self, manager)
@@ -684,7 +685,7 @@ class OOoBaseControl(OpenRTM_aist.DataFlowComponentBase):
 
   ##
   # @brief 実行周期を設定する関数
-  # @param self
+  # @param self 
   # @param rate 実行周期
   #
   def m_setRate(self, rate):
@@ -693,7 +694,7 @@ class OOoBaseControl(OpenRTM_aist.DataFlowComponentBase):
 
   ##
   # @brief 活性化するための関数
-  # @param self
+  # @param self 
   #
   def m_activate(self):
       m_ec = self.get_owned_contexts()
@@ -712,8 +713,8 @@ class OOoBaseControl(OpenRTM_aist.DataFlowComponentBase):
 
   ##
   # @brief 初期化処理用コールバック関数
-  # @param self
-  # @return 
+  # @param self 
+  # @return RTC::ReturnCode_t
   def onInitialize(self):
     
     OOoRTC.base_comp = self
@@ -730,9 +731,9 @@ class OOoBaseControl(OpenRTM_aist.DataFlowComponentBase):
 
   ##
   # @brief 非活性化処理用コールバック関数
-  # @param self
-  # @param ec_id
-  # @return 
+  # @param self 
+  # @param ec_id target ExecutionContext Id
+  # @return RTC::ReturnCode_t
   
   def onDeactivated(self, ec_id):
     for i,j in self.ConnectionList.items():
@@ -746,9 +747,9 @@ class OOoBaseControl(OpenRTM_aist.DataFlowComponentBase):
 
   ##
   # @brief 周期処理用コールバック関数
-  # @param self
-  # @param ec_id
-  # @return 
+  # @param self 
+  # @param ec_id target ExecutionContext Id
+  # @return RTC::ReturnCode_t
   
   def onExecute(self, ec_id):
     
@@ -758,9 +759,9 @@ class OOoBaseControl(OpenRTM_aist.DataFlowComponentBase):
 
   ##
   # @brief 終了処理用コールバック関数
-  # @param self
-  # @param ec_id
-  # @return 
+  # @param self 
+  # @param ec_id target ExecutionContext Id
+  # @return RTC::ReturnCode_t
   
   def on_shutdown(self, ec_id):
       OOoRTC.base_comp = None
@@ -832,7 +833,7 @@ def Set_Rate():
 
 ##
 # @brief RTCをマネージャに登録する関数
-# @param manager
+# @param manager マネージャーオブジェクト
 def OOoBaseControlInit(manager):
   profile = OpenRTM_aist.Properties(defaults_str=ooobasecontrol_spec)
   manager.registerFactory(profile,
@@ -841,7 +842,7 @@ def OOoBaseControlInit(manager):
 
 ##
 # @brief
-# @param manager
+# @param manager マネージャーオブジェクト
 def MyModuleInit(manager):
   manager._factory.unregisterObject(imp_id)
   OOoBaseControlInit(manager)
