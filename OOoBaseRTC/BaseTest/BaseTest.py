@@ -9,6 +9,7 @@
 
 
 """
+
 import sys
 import time
 sys.path.append(".")
@@ -295,6 +296,7 @@ def MyModuleInit(manager):
     comp = manager.createComponent("BaseTest")
 
 def main():
+        
 	mgr = OpenRTM_aist.Manager.init(sys.argv)
 	mgr.setModuleInitProc(MyModuleInit)
 	mgr.activateManager()
