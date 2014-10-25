@@ -39,7 +39,7 @@ from OpenRTM_aist import CorbaConsumer
 from omniORB import CORBA
 import CosNaming
 
-
+import threading
 
 
 
@@ -128,6 +128,8 @@ class mDataBase_i (DataBase__POA.mDataBase):
     def __init__(self, m_comp):
         
         self.m_comp = m_comp
+        self._mutex = threading.RLock()
+        
         
         
         
@@ -141,8 +143,10 @@ class mDataBase_i (DataBase__POA.mDataBase):
     # @return 成功ならTrue、失敗ならFalse
     #
     def setConnection(self, name, usr_name, passward):
+        
         if self.m_comp.ConnectionList.has_key(name):
           return True
+        guard = OpenRTM_aist.ScopedLock(self._mutex)
         try:
           tmp = {}
           db = self.m_comp.base._context.getByName(name)
@@ -150,8 +154,11 @@ class mDataBase_i (DataBase__POA.mDataBase):
           tmp["Statement"] = tmp["Connection"].createStatement()
           
           self.m_comp.ConnectionList[name] = tmp
+          del guard
           return True
         except:
+          if guard:
+              del guard
           return False
         
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
@@ -166,11 +173,16 @@ class mDataBase_i (DataBase__POA.mDataBase):
     # @return 成功ならTrue、失敗ならFalse
     #
     def executeQuery(self, name, con, oSQL):
+        
         if self.m_comp.ConnectionList.has_key(con):
+          guard = OpenRTM_aist.ScopedLock(self._mutex)
           try:
             self.m_comp.ResultSet[name] = self.m_comp.ConnectionList[con]["Statement"].executeQuery(oSQL)
+            del guard
             return True
           except:
+            if guard:
+              del guard
             return False
           raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
         else:
@@ -373,9 +385,11 @@ class mDataBase_i (DataBase__POA.mDataBase):
     #
     def getDataBaseNames(self):
         Ans = []
+        guard = OpenRTM_aist.ScopedLock(self._mutex)
         names = self.m_comp.base._context.getElementNames()
         for i in names:
             Ans.append(str(i))
+        del guard
         return Ans
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
          
@@ -392,14 +406,17 @@ class mDataBase_i (DataBase__POA.mDataBase):
         
         
         if self.m_comp.ConnectionList.has_key(con):
+            guard = OpenRTM_aist.ScopedLock(self._mutex)
             try:
 		
                 oDBTables = self.m_comp.ConnectionList[con]["Connection"].getTables().createEnumeration()
                 while oDBTables.hasMoreElements():
                     oTable = oDBTables.nextElement()
                     Ans.append(str(oTable.Name))
-                    
+                del guard
             except:
+                if guard:
+                  del guard
                 Ans.append("ERROR")
                 
 
@@ -415,7 +432,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
     # @return 成功ならTrue、失敗ならFalse
     #
     def executeUpdate(self, con, oSQL):
-        
+        guard = OpenRTM_aist.ScopedLock(self._mutex)
         oRstDataSources = self.m_comp.base._context.getByName(con)
         
         
@@ -423,12 +440,15 @@ class mDataBase_i (DataBase__POA.mDataBase):
           try:
 
             self.m_comp.ConnectionList[con]["Statement"].executeUpdate(oSQL)
-            
+            del guard
             return True
           except:
+            if guard:
+              del guard
             return False
           raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
         else:
+          del guard
           return False
         
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
@@ -458,6 +478,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
     #
     def AddTable(self, name, con, cols, dt):
         if self.m_comp.ConnectionList.has_key(con):
+          guard = OpenRTM_aist.ScopedLock(self._mutex)
           try:
             oTables = self.m_comp.ConnectionList[con]["Connection"].getTables()
             oDBTables = oTables.createEnumeration()
@@ -550,8 +571,11 @@ class mDataBase_i (DataBase__POA.mDataBase):
             
             
             
+            del guard
             return True
           except:
+            if guard:
+              del guard
             return False
           
         else:
@@ -569,6 +593,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
     #
     def RemoveTable(self, name, con):
         if self.m_comp.ConnectionList.has_key(con):
+          guard = OpenRTM_aist.ScopedLock(self._mutex)
           try:
             oTables = self.m_comp.ConnectionList[con]["Connection"].getTables()
             oDBTables = oTables.createEnumeration()
@@ -577,9 +602,13 @@ class mDataBase_i (DataBase__POA.mDataBase):
                 oTable = oDBTables.nextElement()
                 if str(oTable.Name) == name:
                     oTables.dropByName(name)
+                    del guard
                     return True
+            del guard
             return False
           except:
+            if guard:
+              del guard
             return False
           
         else:
@@ -594,7 +623,9 @@ class mDataBase_i (DataBase__POA.mDataBase):
     # @return 成功ならTrue、失敗ならFalse
     #
     def AddDataBase(self, name):
+        guard = OpenRTM_aist.ScopedLock(self._mutex)
         try:
+            
             names = self.m_comp.base._context.getElementNames()
             for i in names:
                 if name == str(i):
@@ -616,9 +647,11 @@ class mDataBase_i (DataBase__POA.mDataBase):
             oDS = XSCRIPTCONTEXT.getDesktop().loadComponentFromURL(unohelper.systemPathToFileUrl(ofile),"_blank", 0, () )
             self.m_comp.base._context.registerObject(name,oDS.DataSource)
             oDS.close(True)
-
+            del guard
             return True
         except:
+            if guard:
+              del guard
             return False
         
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
@@ -631,11 +664,14 @@ class mDataBase_i (DataBase__POA.mDataBase):
     # @return 成功ならTrue、失敗ならFalse
     #
     def RemoveDataBase(self, name):
-        
+        guard = OpenRTM_aist.ScopedLock(self._mutex)
         try:
             self.m_comp.base._context.revokeObject(name)
+            del guard
             return True
         except:
+            if guard:
+              del guard
             return False
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
 
