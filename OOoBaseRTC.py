@@ -27,9 +27,7 @@ elif os.name == 'nt':
     
     
 
-import time
-import random
-import commands
+
 import RTC
 import OpenRTM_aist
 
@@ -724,7 +722,7 @@ class OOoBaseControl(OpenRTM_aist.DataFlowComponentBase):
   # @param self 
   # @param rate 実行周期
   #
-  def m_setRate(self, rate):
+  def mSetRate(self, rate):
       m_ec = self.get_owned_contexts()
       m_ec[0].set_rate(rate)
 
@@ -732,7 +730,7 @@ class OOoBaseControl(OpenRTM_aist.DataFlowComponentBase):
   # @brief 活性化するための関数
   # @param self 
   #
-  def m_activate(self):
+  def mActivate(self):
       m_ec = self.get_owned_contexts()
       m_ec[0].activate_component(self._objref)
 
@@ -740,7 +738,7 @@ class OOoBaseControl(OpenRTM_aist.DataFlowComponentBase):
   # @brief 不活性化するための関数
   # @param self
   #
-  def m_deactivate(self):
+  def mDeactivate(self):
       m_ec = self.get_owned_contexts()
       m_ec[0].deactivate_component(self._objref)
 
@@ -812,7 +810,7 @@ class OOoBaseControl(OpenRTM_aist.DataFlowComponentBase):
 def Start():
     
     if OOoRTC.base_comp:
-        OOoRTC.base_comp.m_activate()
+        OOoRTC.base_comp.mActivate()
 
 ##
 # @brief コンポーネントを不活性化してBaseの操作を終了する関数
@@ -821,7 +819,7 @@ def Start():
 def Stop():
     
     if OOoRTC.base_comp:
-        OOoRTC.base_comp.m_deactivate()
+        OOoRTC.base_comp.mDeactivate()
 
 
 ##
@@ -848,7 +846,7 @@ def Set_Rate():
             except:
                return
               
-            OOoRTC.draw_comp.m_setRate(text)"""
+            OOoRTC.draw_comp.mSetRate(text)"""
       
       
 
@@ -898,7 +896,9 @@ def MyModuleInit(manager):
 #
 
 def createOOoBaseComp():
-                        
+    if OOoRTC.base_comp:
+        MyMsgBox('',OOoRTC.SetCoding('RTCは起動済みです','utf-8'))
+        return                         
     
     if OOoRTC.mgr == None:
         if os.name == 'posix':

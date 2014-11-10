@@ -23,9 +23,7 @@ if os.name == 'posix':
 elif os.name == 'nt':
     sys.path += ['.\\OOoRTC', 'C:\\Python2' + str(sv[1]) + '\\lib\\site-packages', 'C:\\Python2' + str(sv[1]) + '\\Lib\\site-packages\\OpenRTM_aist\\RTM_IDL', 'C:\\Python2' + str(sv[1]) + '\\lib\\site-packages\\rtctree\\rtmidl']
 
-import time
-import random
-import commands
+
 import RTC
 import OpenRTM_aist
 
@@ -139,21 +137,21 @@ class OOoImpressControl(OpenRTM_aist.DataFlowComponentBase):
   # @brief 実行周期を設定する関数
   # @param self 
   # @param rate：実行周期
-  def m_setRate(self, rate):
+  def mSetRate(self, rate):
       m_ec = self.get_owned_contexts()
       m_ec[0].set_rate(rate)
 
   ##
   # @brief 活性化するための関数
   # @param self 
-  def m_activate(self):
+  def mActivate(self):
       m_ec = self.get_owned_contexts()
       m_ec[0].activate_component(self._objref)
 
   ##
   # @brief 不活性化するための関数
   # @param self 
-  def m_deactivate(self):
+  def mDeactivate(self):
       m_ec = self.get_owned_contexts()
       m_ec[0].deactivate_component(self._objref)
 
@@ -297,7 +295,7 @@ class OOoImpressControl(OpenRTM_aist.DataFlowComponentBase):
 def Start():
     
     if OOoRTC.impress_comp:
-        OOoRTC.impress_comp.m_activate()
+        OOoRTC.impress_comp.mActivate()
 
 ##
 # @brief コンポーネントを不活性化してImpressの操作を終了する関数
@@ -306,7 +304,7 @@ def Start():
 def Stop():
     
     if OOoRTC.impress_comp:
-        OOoRTC.impress_comp.m_deactivate()
+        OOoRTC.impress_comp.mDeactivate()
 
 
 ##
@@ -366,7 +364,9 @@ def MyModuleInit(manager):
 #
 
 def createOOoImpressComp():
-                        
+    if OOoRTC.impress_comp:
+        MyMsgBox('',OOoRTC.SetCoding('RTCは起動済みです','utf-8'))
+        return                        
     
     if OOoRTC.mgr == None:
         if os.name == 'posix':

@@ -8,8 +8,6 @@ OpenOfficePath=/usr/lib/libreoffice/program
 
 if [ -e $OOoScriptPath ]; then
 	OOoScriptPath=~/.config/libreoffice/3/user
-elif [ -e $OOoScriptPath ]; then
-	OOoScriptPath=~/.config/libreoffice/4/user
 else
 	OOoScriptPath=~/.openoffice.org/3/user
 fi
