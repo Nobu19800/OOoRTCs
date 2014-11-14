@@ -477,7 +477,7 @@ class OOoWriterControl(OpenRTM_aist.DataFlowComponentBase):
   # @param m_str 書き込む文字列
   #
 
-  def SetWord(self, m_str):
+  def setWord(self, m_str):
       cursor = self.writer.document.getCurrentController().getViewCursor()
 
       inp_str = OOoRTC.SetCoding(m_str, self.conf_Code[0])
@@ -813,7 +813,7 @@ class OOoWriterControl(OpenRTM_aist.DataFlowComponentBase):
         data = self._m_wordIn.read()
         
         #t1_ = OpenRTM_aist.Time()
-        self.SetWord(data.data)
+        self.setWord(data.data)
         #t2_ = OpenRTM_aist.Time()
         #self.file.write(str((t2_-t1_).getTime().toDouble())+"\n")
 
