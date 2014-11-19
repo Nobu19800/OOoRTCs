@@ -51,7 +51,7 @@ from com.sun.star.awt import Point, Size
 
 
 import OOoRTC
-
+from ImpressControl import *
 
 
 
@@ -96,66 +96,25 @@ oooimpresscontrol_spec = ["implementation_id", imp_id,
 # @brief OpenOffice Impressを操作するためのRTCのクラス
 #
 
-class OOoImpressControl(OpenRTM_aist.DataFlowComponentBase):
+class OOoImpressControl(ImpressControl):
     ##
     # @brief コンストラクタ
     # @param self 
     # @param manager マネージャーオブジェクト
     #
   def __init__(self, manager):
-    OpenRTM_aist.DataFlowComponentBase.__init__(self, manager)
-    
-    self._d_m_SlideNumin = RTC.TimedShort(RTC.Time(0,0),0)
-    self._m_SlideNumIn = OpenRTM_aist.InPort("SlideNumberIn", self._d_m_SlideNumin)
+    ImpressControl.__init__(self, manager)
 
-    self._d_m_EffectNum = RTC.TimedShort(RTC.Time(0,0),0)
-    self._m_EffectNumIn = OpenRTM_aist.InPort("EffectNumberIn", self._d_m_EffectNum)
     
-    self._d_m_SlideNumout = RTC.TimedShort(RTC.Time(0,0),0)
-    self._m_SlideNumOut = OpenRTM_aist.OutPort("SlideNumberOut", self._d_m_SlideNumout)
-
     try:
       self.impress = OOoImpress()
     except NotOOoWtiterException:
       return
 
 
-    self.SlideFileInitialNumber = [0]
-    self.SlideNumberInRelative = [1]
-    
-
-    
-    
-    
     
     
     return
-
-  
-
-  ##
-  # @brief 実行周期を設定する関数
-  # @param self 
-  # @param rate：実行周期
-  def mSetRate(self, rate):
-      m_ec = self.get_owned_contexts()
-      m_ec[0].set_rate(rate)
-
-  ##
-  # @brief 活性化するための関数
-  # @param self 
-  def mActivate(self):
-      m_ec = self.get_owned_contexts()
-      m_ec[0].activate_component(self._objref)
-
-  ##
-  # @brief 不活性化するための関数
-  # @param self 
-  def mDeactivate(self):
-      m_ec = self.get_owned_contexts()
-      m_ec[0].deactivate_component(self._objref)
-
-      
 
   
 
@@ -166,6 +125,7 @@ class OOoImpressControl(OpenRTM_aist.DataFlowComponentBase):
   # @param ec_id target ExecutionContext Id
   # @return RTC::ReturnCode_t
   def onDeactivated(self, ec_id):
+    ImpressControl.onDeactivated(self, ec_id)
     Presentation = self.impress.document.Presentation
     Presentation.end()
 
@@ -179,6 +139,7 @@ class OOoImpressControl(OpenRTM_aist.DataFlowComponentBase):
   # @param ec_id target ExecutionContext Id
   # @return RTC::ReturnCode_t
   def onActivated(self, ec_id):
+    ImpressControl.onActivated(self, ec_id)
     Presentation = self.impress.document.Presentation
     Presentation.UsePen = True
     Presentation.start()
@@ -206,24 +167,56 @@ class OOoImpressControl(OpenRTM_aist.DataFlowComponentBase):
   # @param self 
   # @return RTC::ReturnCode_t
   def onInitialize(self):
-    
+    ImpressControl.onInitialize(self)
     OOoRTC.impress_comp = self
 
-    
-    
-    self.addInPort("SlideNumberIn",self._m_SlideNumIn)
-    self.addInPort("EffectNumberIn",self._m_EffectNumIn)
-    self.addOutPort("SlideNumberOut",self._m_SlideNumOut)
-
-    self.bindParameter("SlideFileInitialNumber", self.SlideFileInitialNumber, "0")
-    self.bindParameter("SlideNumberInRelative", self.SlideNumberInRelative, "1")
     
     
     return RTC.RTC_OK
 
 
 
+  ##
+  # @brief スライド番号の進める、戻す
+  # @param self 
+  # @param num 進めるスライド数
+  def changeSlideNum(self, num):
+    Presentation = self.impress.document.Presentation
+    if self.SlideNumberInRelative[0] == 0:
+        pagenum = num
+    else:
+        pagenum = Presentation.Controller.getCurrentSlideIndex() + num
+    if pagenum < 0:
+        pagenum = 0
+    if Presentation.Controller.getSlideCount() <= pagenum:
+        pagenum = Presentation.Controller.getSlideCount() - 1
+    if pagenum != Presentation.Controller.getCurrentSlideIndex():
+        Presentation.Controller.gotoSlideIndex(pagenum)
+    
 
+
+  ##
+  # @brief アニメーションを進める、戻す
+  # @param self 
+  # @param num 進めるアニメーションの数
+  def changeEffeceNum(self, num):
+    Presentation = self.impress.document.Presentation
+    if num > 0:
+        for i in range(0, num):
+          Presentation.Controller.getSlideShow().nextEffect()
+    elif num < 0:
+        for i in range(0, -num):
+          Presentation.Controller.getSlideShow().previousEffect()
+
+
+  ##
+  # @brief スライド番号取得
+  # @param self 
+  # @return スライド番号
+  def getSlideNum(self):
+    Presentation = self.impress.document.Presentation
+          
+    return Presentation.Controller.getCurrentSlideIndex()
   
 
   ##
@@ -232,45 +225,8 @@ class OOoImpressControl(OpenRTM_aist.DataFlowComponentBase):
   # @param ec_id target ExecutionContext Id
   # @return RTC::ReturnCode_t
   
-  def onExecute(self, ec_id): 
-    if self._m_SlideNumIn.isNew():
-      data = self._m_SlideNumIn.read()
-      Presentation = self.impress.document.Presentation
-      
-      if self.SlideNumberInRelative[0] == 0:
-        pagenum = data.data
-      else:
-        pagenum = Presentation.Controller.getCurrentSlideIndex() + data.data
-      if pagenum < 0:
-        pagenum = 0
-      if Presentation.Controller.getSlideCount() <= pagenum:
-        pagenum = Presentation.Controller.getSlideCount() - 1
-      if pagenum != Presentation.Controller.getCurrentSlideIndex():
-        Presentation.Controller.gotoSlideIndex(pagenum)
-        OpenRTM_aist.setTimestamp(self._d_m_SlideNumout)
-        self._d_m_SlideNumout.data = Presentation.Controller.getCurrentSlideIndex()
-        self._m_SlideNumOut.write()
-      
-      """if data.data > 0:
-        for i in range(0, data.data):
-          Presentation.Controller.gotoNextSlide()
-      elif data.data < 0:
-        for i in range(0, -data.data):
-          Presentation.Controller.gotoPreviousSlide()"""
-        
-    
-
-    if self._m_EffectNumIn.isNew():
-      data = self._m_EffectNumIn.read()
-      Presentation = self.impress.document.Presentation
-      if data.data > 0:
-        for i in range(0, data.data):
-          Presentation.Controller.getSlideShow().nextEffect()
-      elif data.data < 0:
-        for i in range(0, -data.data):
-          Presentation.Controller.getSlideShow().previousEffect()
-        
-      
+  def onExecute(self, ec_id):
+    ImpressControl.onExecute(self, ec_id)  
     
         
 
@@ -283,6 +239,7 @@ class OOoImpressControl(OpenRTM_aist.DataFlowComponentBase):
   # @return RTC::ReturnCode_t
   
   def on_shutdown(self, ec_id):
+      ImpressControl.on_shutdown(self, ec_id)
       OOoRTC.impress_comp = None
       return RTC.RTC_OK
 
@@ -371,7 +328,7 @@ def createOOoImpressComp():
     if OOoRTC.mgr == None:
         if os.name == 'posix':
             home = expanduser("~")
-            OOoRTC.mgr = OpenRTM_aist.Manager.init([os.path.abspath(__file__), '-f', home+'/rtc.conf'])
+            OOoRTC.mgr = OpenRTM_aist.Manager.init([os.path.abspath(__file__), '-f', home+'/OOoRTC/rtc.conf'])
         elif os.name == 'nt':
             OOoRTC.mgr = OpenRTM_aist.Manager.init([os.path.abspath(__file__), '-f', '.\\rtc.conf'])
         else:

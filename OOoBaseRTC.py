@@ -903,7 +903,7 @@ def createOOoBaseComp():
     if OOoRTC.mgr == None:
         if os.name == 'posix':
             home = expanduser("~")
-            OOoRTC.mgr = OpenRTM_aist.Manager.init([os.path.abspath(__file__), '-f', home+'/rtc.conf'])
+            OOoRTC.mgr = OpenRTM_aist.Manager.init([os.path.abspath(__file__), '-f', home+'/OOoRTC/rtc.conf'])
         elif os.name == 'nt':
             OOoRTC.mgr = OpenRTM_aist.Manager.init([os.path.abspath(__file__), '-f', '.\\rtc.conf'])
         else:

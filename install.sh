@@ -25,7 +25,7 @@ cp OOoImpressRTC.py ${OOoScriptPath}/Scripts/python/OOoImpressRTC.py
 
 
 
-cp rtc.conf ~/rtc.conf
+
 rm -rf ~/OOoRTC
 cp OOoRTC -r ~/OOoRTC
 
