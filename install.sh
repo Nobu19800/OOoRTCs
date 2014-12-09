@@ -33,12 +33,24 @@ cp OOoRTC -r ~/OOoRTC
 
 
 if [ -e $OpenOfficePath ]; then
+	${OpenOfficePath}/unopkg remove -v OOoCalcControlRTC.oxt
+	${OpenOfficePath}/unopkg remove -v OOoDrawControlRTC.oxt
+	${OpenOfficePath}/unopkg remove -v OOoWriterControlRTC.oxt
+	${OpenOfficePath}/unopkg remove -v OOoBaseControlRTC.oxt
+	${OpenOfficePath}/unopkg remove -v OOoImpressControlRTC.oxt
+
 	${OpenOfficePath}/unopkg add -v OOoCalcControlRTC.oxt
 	${OpenOfficePath}/unopkg add -v OOoDrawControlRTC.oxt
 	${OpenOfficePath}/unopkg add -v OOoWriterControlRTC.oxt
 	${OpenOfficePath}/unopkg add -v OOoBaseControlRTC.oxt
 	${OpenOfficePath}/unopkg add -v OOoImpressControlRTC.oxt
 else
+	unopkg remove -v OOoCalcControlRTC.oxt
+	unopkg remove -v OOoDrawControlRTC.oxt
+	unopkg remove -v OOoWriterControlRTC.oxt
+	unopkg remove -v OOoBaseControlRTC.oxt
+	unopkg remove -v OOoImpressControlRTC.oxt
+
 	unopkg add -v OOoCalcControlRTC.oxt
 	unopkg add -v OOoDrawControlRTC.oxt
 	unopkg add -v OOoWriterControlRTC.oxt
