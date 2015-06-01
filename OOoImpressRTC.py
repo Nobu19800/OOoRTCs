@@ -235,11 +235,11 @@ class OOoImpressControl(ImpressControl):
   ##
   # @brief 終了処理用コールバック関数
   # @param self 
-  # @param ec_id target ExecutionContext Id
+  # @param 
   # @return RTC::ReturnCode_t
   
-  def on_shutdown(self, ec_id):
-      ImpressControl.on_shutdown(self, ec_id)
+  def onFinalize(self):
+      ImpressControl.onFinalize(self)
       OOoRTC.impress_comp = None
       return RTC.RTC_OK
 

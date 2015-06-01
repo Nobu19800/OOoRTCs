@@ -4,7 +4,7 @@ set OOoScriptPath=%USERPROFILE%\AppData\Roaming\OpenOffice\4\user\Scripts\python
 set OOoPath="%ProgramFiles%\OpenOffice 4\program"
 
 IF NOT EXIST %OOoPath% (
-	set OOoPath="%ProgramFiles(x86)%\OpenOffice 4\program"	
+	set OOoPath="%ProgramFiles(x86)%\OpenOffice 4\program"
 )
 
 IF NOT EXIST %OOoPath% (
