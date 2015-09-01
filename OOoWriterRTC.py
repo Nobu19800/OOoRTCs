@@ -22,9 +22,9 @@ sv = sys.version_info
 
 if os.name == 'posix':
     home = expanduser("~")
-    sys.path += [home+'/OOoRTC', home+'/OOoRTC/WriterIDL', '/usr/lib/python2.' + str(sv[1]) + '/dist-packages', '/usr/lib/python2.' + str(sv[1]) + '/dist-packages/rtctree/rtmidl']
+    sys.path += [home+'/OOoRTC', home+'/OOoRTC/WriterIDL', '/usr/lib/python2.' + str(sv[1]) + '/dist-packages']
 elif os.name == 'nt':
-    sys.path += ['.\\OOoRTC', '.\\OOoRTC\\WriterIDL', 'C:\\Python2' + str(sv[1]) + '\\lib\\site-packages', 'C:\\Python2' + str(sv[1]) + '\\Lib\\site-packages\\OpenRTM_aist\\RTM_IDL', 'C:\\Python2' + str(sv[1]) + '\\lib\\site-packages\\rtctree\\rtmidl']
+    sys.path += ['.\\OOoRTC', '.\\OOoRTC\\WriterIDL', 'C:\\Python2' + str(sv[1]) + '\\lib\\site-packages', 'C:\\Python2' + str(sv[1]) + '\\Lib\\site-packages\\OpenRTM_aist\\RTM_IDL']
     
 
 

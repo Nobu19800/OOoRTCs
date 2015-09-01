@@ -16,9 +16,9 @@ sv = sys.version_info
 
 if os.name == 'posix':
     home = expanduser("~")
-    sys.path += [home+'/OOoRTC', home+'/OOoRTC/CalcIDL', '/usr/lib/python2.' + str(sv[1]) + '/dist-packages', '/usr/lib/python2.' + str(sv[1]) + '/dist-packages/rtctree/rtmidl']
+    sys.path += [home+'/OOoRTC', home+'/OOoRTC/CalcIDL', '/usr/lib/python2.' + str(sv[1]) + '/dist-packages']
 elif os.name == 'nt':
-    sys.path += ['.\\OOoRTC', '.\\OOoRTC\\CalcIDL', 'C:\\Python2' + str(sv[1]) + '\\lib\\site-packages', 'C:\\Python2' + str(sv[1]) + '\\Lib\\site-packages\\OpenRTM_aist\\RTM_IDL', 'C:\\Python2' + str(sv[1]) + '\\lib\\site-packages\\rtctree\\rtmidl']
+    sys.path += ['.\\OOoRTC', '.\\OOoRTC\\CalcIDL', 'C:\\Python2' + str(sv[1]) + '\\lib\\site-packages', 'C:\\Python2' + str(sv[1]) + '\\Lib\\site-packages\\OpenRTM_aist\\RTM_IDL']
     
     
     
@@ -38,7 +38,7 @@ from OpenRTM_aist import RTObject
 from OpenRTM_aist import CorbaConsumer
 from omniORB import CORBA
 import CosNaming
-from rtctree.utils import build_attr_string, dict_to_nvlist, nvlist_to_dict
+
 
 import threading
 
@@ -1302,16 +1302,16 @@ def LoadSheet():
                             if p[0] == m_name:
                                 F_Name = p[0][-2] + p[0][-1]
                                 profile = p[1].get_port_profile()
-                                props = nvlist_to_dict(profile.properties)
+                                #props = nvlist_to_dict(profile.properties)
                                 
                                     
                                 
                                 row,col,mlen,sn,mstate,t_attachports = LoadParam(count, sheet)
                                     
                                 
-                                if props['port.port_type'] == 'DataInPort':
+                                if OOoRTC.nvlist_getValue(profile.properties,'port.port_type') == 'DataInPort':
                                     OOoRTC.calc_comp.mAddOutPort(F_Name, p, row, col, mlen, sn, mstate, t_attachports)
-                                elif props['port.port_type'] == 'DataOutPort':
+                                elif OOoRTC.nvlist_getValue(profile.properties,'port.port_type') == 'DataOutPort':
                                     OOoRTC.calc_comp.mAddInPort(F_Name, p, row, col, mlen, sn, mstate, t_attachports)
                 except:
                     pass
@@ -1833,13 +1833,13 @@ class CreatePortListener( unohelper.Base, XActionListener):
             objectControl.setText(F_Name)
             
             profile = t_comp[1].get_port_profile()
-            props = nvlist_to_dict(profile.properties)
+            #props = nvlist_to_dict(profile.properties)
 
             
             
-            if props['port.port_type'] == 'DataInPort':
+            if OOoRTC.nvlist_getValue(profile.properties,'port.port_type') == 'DataInPort':
                 CompAddOutPort(F_Name, t_comp, self.dlg_control)
-            elif props['port.port_type'] == 'DataOutPort':
+            elif OOoRTC.nvlist_getValue(profile.properties,'port.port_type') == 'DataOutPort':
                 CompAddInPort(F_Name, t_comp, self.dlg_control)
 
             MyMsgBox('',OOoRTC.SetCoding(t_comp[0][-2]+"の"+t_comp[0][-1]+"と通信するデータポートを作成しました。",'utf-8'))

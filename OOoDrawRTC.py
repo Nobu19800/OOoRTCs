@@ -19,9 +19,9 @@ sv = sys.version_info
 
 if os.name == 'posix':
     home = expanduser("~")
-    sys.path += [home+'/OOoRTC', '/usr/lib/python2.' + str(sv[1]) + '/dist-packages', '/usr/lib/python2.' + str(sv[1]) + '/dist-packages/rtctree/rtmidl']
+    sys.path += [home+'/OOoRTC', '/usr/lib/python2.' + str(sv[1]) + '/dist-packages']
 elif os.name == 'nt':
-    sys.path += ['.\\OOoRTC', 'C:\\Python2' + str(sv[1]) + '\\lib\\site-packages', 'C:\\Python2' + str(sv[1]) + '\\Lib\\site-packages\\OpenRTM_aist\\RTM_IDL', 'C:\\Python2' + str(sv[1]) + '\\lib\\site-packages\\rtctree\\rtmidl']
+    sys.path += ['.\\OOoRTC', 'C:\\Python2' + str(sv[1]) + '\\lib\\site-packages', 'C:\\Python2' + str(sv[1]) + '\\Lib\\site-packages\\OpenRTM_aist\\RTM_IDL']
 
 
 
@@ -33,7 +33,7 @@ from OpenRTM_aist import RTObject
 from OpenRTM_aist import CorbaConsumer
 from omniORB import CORBA
 import CosNaming
-from rtctree.utils import build_attr_string, dict_to_nvlist, nvlist_to_dict
+
 
 
 
@@ -844,7 +844,7 @@ def LoadSheet():
                   
                   
                   profile = p[1].get_port_profile()
-                  props = nvlist_to_dict(profile.properties)
+                  #props = nvlist_to_dict(profile.properties)
 
                   m_i,m_j,_ox,_oy,_or,_sx,_sy,_x,_y,_r,_obj,flag = LoadParam(m_list, oDrawPages)
 
@@ -856,9 +856,9 @@ def LoadSheet():
                   
                   
                   if flag:
-                    if props['port.port_type'] == 'DataInPort':
+                    if OOoRTC.nvlist_getValue(profile.properties,'port.port_type') == 'DataInPort':
                         OOoRTC.draw_comp.mAddOutPort(F_Name, p, [_ox,_oy,_or], [_sx,_sy], [_x, _y, _r], _obj)
-                    if props['port.port_type'] == 'DataOutPort':
+                    if OOoRTC.nvlist_getValue(profile.properties,'port.port_type') == 'DataOutPort':
                         OOoRTC.draw_comp.mAddInPort(F_Name, p, [_ox,_oy,_or], [_sx,_sy], [_x, _y, _r], _obj)
 
 
@@ -1042,10 +1042,10 @@ class CreatePortListener( unohelper.Base, XActionListener):
                     
                     
                     profile = t_comp[1].get_port_profile()
-                    props = nvlist_to_dict(profile.properties)
+                    #props = nvlist_to_dict(profile.properties)
 
                     
-                    CompAddPort(F_Name, t_comp, self.dlg_control, obj, props['port.port_type'])
+                    CompAddPort(F_Name, t_comp, self.dlg_control, obj, OOoRTC.nvlist_getValue(profile.properties,'port.port_type'))
                     
                         
                     t_str = str(m_i) + "ページの" +  str(m_j) + "番目の図形と" + t_comp[0][-2] + t_comp[0][-1] + "を関連付けました"
