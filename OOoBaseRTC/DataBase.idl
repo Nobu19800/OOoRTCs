@@ -26,7 +26,7 @@ module DataBase {
 		boolean executeUpdate(in string con, in string oSQL);
 		short getRow(in string name);
 
-		boolean AddTable(in string name, in string con, in StringLine cols, in StringLine dt);
+		boolean AddTable(in string name, in string con, in StringSeq cols, in StringSeq dt);
 		boolean RemoveTable(in string name, in string con);
 		boolean AddDataBase(in string name);
 		boolean RemoveDataBase(in string name);

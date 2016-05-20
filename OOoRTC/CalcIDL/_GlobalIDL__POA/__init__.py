@@ -6,6 +6,7 @@ import omniORB
 omniORB.updateModule("_GlobalIDL__POA")
 
 # ** 1. Stub files contributing to this module
+import DataBase_idl
 import SpreadSheet_idl
 
 # ** 2. Sub-modules

@@ -16,9 +16,9 @@ sv = sys.version_info
 
 if os.name == 'posix':
     home = expanduser("~")
-    sys.path += [home+'/OOoRTC', home+'/OOoRTC/CalcIDL', '/usr/lib/python2.' + str(sv[1]) + '/dist-packages']
+    sys.path += [home+'/OOoRTC', home+'/OOoRTC/CalcIDL', '/usr/lib/python2.' + str(sv[1]) + '/dist-packages', '/usr/lib/python2.' + str(sv[1]) + '/dist-packages/rtctree/rtmidl']
 elif os.name == 'nt':
-    sys.path += ['.\\OOoRTC', '.\\OOoRTC\\CalcIDL', 'C:\\Python2' + str(sv[1]) + '\\lib\\site-packages', 'C:\\Python2' + str(sv[1]) + '\\Lib\\site-packages\\OpenRTM_aist\\RTM_IDL']
+    sys.path += ['.\\OOoRTC', '.\\OOoRTC\\CalcIDL', 'C:\\Python2' + str(sv[1]) + '\\lib\\site-packages', 'C:\\Python2' + str(sv[1]) + '\\Lib\\site-packages\\OpenRTM_aist\\RTM_IDL', 'C:\\Python2' + str(sv[1]) + '\\lib\\site-packages\\rtctree\\rtmidl']
     
     
     
@@ -38,7 +38,7 @@ from OpenRTM_aist import RTObject
 from OpenRTM_aist import CorbaConsumer
 from omniORB import CORBA
 import CosNaming
-
+from rtctree.utils import build_attr_string, dict_to_nvlist, nvlist_to_dict
 
 import threading
 
@@ -371,7 +371,8 @@ class OOoCalcInPort(CalcDataPort.CalcInPort, OOoCalcPortObject):
         
 
         if cell != None:
-            
+            cell.getCellByPosition(0, 0).String = b
+            """
             if self._dataType[2] == m_string:
                 cell.getCellByPosition(0, 0).String = b
             elif self._dataType[2] == m_value:
@@ -397,7 +398,7 @@ class OOoCalcInPort(CalcDataPort.CalcInPort, OOoCalcPortObject):
                 self.count += 1
                     
             if self.state:
-                self._num = self._num + 1
+                self._num = self._num + 1"""
 
 
         
@@ -452,7 +453,10 @@ class OOoCalcInPortSeq(CalcDataPort.CalcInPortSeq, OOoCalcPortObject):
         cell, sheet, m_len = self.getCell(m_cal)
 
         if cell != None:
-            if self._dataType[2] == m_string:
+            for j in range(0, len(b)):
+                if m_len > j:
+                    cell.getCellByPosition(j, 0).String = b[j]
+            """if self._dataType[2] == m_string:
                 for j in range(0, len(b)):
                     if m_len > j:
                         cell.getCellByPosition(j, 0).String = b[j]
@@ -483,7 +487,7 @@ class OOoCalcInPortSeq(CalcDataPort.CalcInPortSeq, OOoCalcPortObject):
                 self.count += 1
                 
             if self.state:
-                self._num = self._num + 1
+                self._num = self._num + 1"""
                 
             
 
@@ -1302,16 +1306,16 @@ def LoadSheet():
                             if p[0] == m_name:
                                 F_Name = p[0][-2] + p[0][-1]
                                 profile = p[1].get_port_profile()
-                                #props = nvlist_to_dict(profile.properties)
+                                props = nvlist_to_dict(profile.properties)
                                 
                                     
                                 
                                 row,col,mlen,sn,mstate,t_attachports = LoadParam(count, sheet)
                                     
                                 
-                                if OOoRTC.nvlist_getValue(profile.properties,'port.port_type') == 'DataInPort':
+                                if props['port.port_type'] == 'DataInPort':
                                     OOoRTC.calc_comp.mAddOutPort(F_Name, p, row, col, mlen, sn, mstate, t_attachports)
-                                elif OOoRTC.nvlist_getValue(profile.properties,'port.port_type') == 'DataOutPort':
+                                elif props['port.port_type'] == 'DataOutPort':
                                     OOoRTC.calc_comp.mAddInPort(F_Name, p, row, col, mlen, sn, mstate, t_attachports)
                 except:
                     pass
@@ -1833,13 +1837,13 @@ class CreatePortListener( unohelper.Base, XActionListener):
             objectControl.setText(F_Name)
             
             profile = t_comp[1].get_port_profile()
-            #props = nvlist_to_dict(profile.properties)
+            props = nvlist_to_dict(profile.properties)
 
             
             
-            if OOoRTC.nvlist_getValue(profile.properties,'port.port_type') == 'DataInPort':
+            if props['port.port_type'] == 'DataInPort':
                 CompAddOutPort(F_Name, t_comp, self.dlg_control)
-            elif OOoRTC.nvlist_getValue(profile.properties,'port.port_type') == 'DataOutPort':
+            elif props['port.port_type'] == 'DataOutPort':
                 CompAddInPort(F_Name, t_comp, self.dlg_control)
 
             MyMsgBox('',OOoRTC.SetCoding(t_comp[0][-2]+"の"+t_comp[0][-1]+"と通信するデータポートを作成しました。",'utf-8'))
