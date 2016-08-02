@@ -395,10 +395,10 @@ class OOoCalcInPort(CalcDataPort.CalcInPort, OOoCalcPortObject):
                     cellf.getCellByPosition(0, 0).Value = fb
                     
                 cell.getCellByPosition(0, 0).Value = b
-                self.count += 1
+                self.count += 1"""
                     
             if self.state:
-                self._num = self._num + 1"""
+                self._num = self._num + 1
 
 
         
@@ -484,10 +484,10 @@ class OOoCalcInPortSeq(CalcDataPort.CalcInPortSeq, OOoCalcPortObject):
                 for j in range(0, len(b)):
                     if m_len > j:
                         cell.getCellByPosition(j, 0).Value = b[j]
-                self.count += 1
+                self.count += 1"""
                 
             if self.state:
-                self._num = self._num + 1"""
+                self._num = self._num + 1
                 
             
 
