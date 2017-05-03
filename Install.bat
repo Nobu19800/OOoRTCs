@@ -1,5 +1,9 @@
 cd /d %~dp0
 
+cmd /c OOoRTC\CalcIDL\idlcompile.bat
+cmd /c OOoRTC\BaseIDL\idlcompile.bat
+cmd /c OOoRTC\WriterIDL\idlcompile.bat
+
 set OOoScriptPath=%USERPROFILE%\AppData\Roaming\OpenOffice\4\user\Scripts\python
 set OOoPath="%ProgramFiles%\OpenOffice 4\program"
 

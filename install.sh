@@ -1,6 +1,10 @@
 #!/bin/sh
 cd `dirname $0`
 
+sh OOoRTC/CalcIDL/idlcompile.sh
+sh OOoRTC/BaseIDL/idlcompile.sh
+sh OOoRTC/WriterIDL/idlcompile.sh
+
 OOoScriptPath=~/.config/libreoffice/3/user
 OpenOfficePath=/usr/lib/libreoffice/program
 if [ -e $OOoScriptPath ]; then

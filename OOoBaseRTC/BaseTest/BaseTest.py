@@ -170,7 +170,7 @@ class BaseTest(OpenRTM_aist.DataFlowComponentBase):
                                         flag = False
 
                         except:
-                                print "ERROR"
+                                print("ERROR")
 		return RTC.RTC_OK
 	
 	#	##
@@ -201,12 +201,12 @@ class BaseTest(OpenRTM_aist.DataFlowComponentBase):
                 sys.stdin.readline()
                 try:   
                         if self._database._ptr().ResultSetNext("RS1"):
-                                print self._database._ptr().getString("RS1", 1)
-                                print self._database._ptr().getString("RS1", 2)
+                                print(self._database._ptr().getString("RS1", 1))
+                                print(self._database._ptr().getString("RS1", 2))
                                 
 
                 except:
-                        print "ERROR"
+                        print("ERROR")
 		return RTC.RTC_OK
 	
 	#	##

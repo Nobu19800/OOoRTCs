@@ -406,7 +406,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
         if self.m_comp.ConnectionList.has_key(con):
             guard = OpenRTM_aist.ScopedLock(self._mutex)
             try:
-		
+
                 oDBTables = self.m_comp.ConnectionList[con]["Connection"].getTables().createEnumeration()
                 while oDBTables.hasMoreElements():
                     oTable = oDBTables.nextElement()

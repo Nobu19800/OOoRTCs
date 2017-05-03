@@ -238,13 +238,13 @@ class DataBaseInPut(OpenRTM_aist.DataFlowComponentBase):
                               SQL += "'" + str(data.data[i]) + "')"
                         
                         try:
-                                print SQL
+                                print(SQL)
                                 f2 = self._database._ptr().executeUpdate(self.DataBase_Name[0],SQL)
                                 
                                 if f2 == False:
-                                   print "ERROR"
+                                   print("ERROR")
                         except:
-                                print "ERROR"
+                                print("ERROR")
                 
 		return RTC.RTC_OK
 	
