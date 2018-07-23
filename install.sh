@@ -5,12 +5,18 @@ sh OOoRTC/CalcIDL/idlcompile.sh
 sh OOoRTC/BaseIDL/idlcompile.sh
 sh OOoRTC/WriterIDL/idlcompile.sh
 
-OOoScriptPath=~/.config/libreoffice/3/user
+OOoScriptPath1=~/.config/libreoffice/3/user
+OOoScriptPath2=~/.openoffice.org/3/user
+OOoScriptPath3=~/.config/libreoffice/4/user
+
 OpenOfficePath=/usr/lib/libreoffice/program
-if [ -e $OOoScriptPath ]; then
-	OOoScriptPath=~/.config/libreoffice/3/user
+
+if [ -e $OOoScriptPath1 ]; then
+	OOoScriptPath=$OOoScriptPath1
+elif [ -e $OOoScriptPath2 ]; then
+	OOoScriptPath=$OOoScriptPath2
 else
-	OOoScriptPath=~/.openoffice.org/3/user
+	OOoScriptPath=$OOoScriptPath3
 fi
 mkdir $OOoScriptPath/Scripts
 mkdir $OOoScriptPath/Scripts/python
