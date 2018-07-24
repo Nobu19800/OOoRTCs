@@ -5,6 +5,8 @@
 #   @file OOoCalcRTC.py
 #   @brief OOoCalcControl Component
 
+
+
 import optparse
 import sys,os,platform
 import re
@@ -14,11 +16,13 @@ from os.path import expanduser
 sv = sys.version_info
 
 
+
+
 if os.name == 'posix':
     home = expanduser("~")
-    sys.path += [home+'/OOoRTC', home+'/OOoRTC/CalcIDL', '/usr/lib/python2.' + str(sv[1]) + '/dist-packages', '/usr/lib/python2.' + str(sv[1]) + '/dist-packages/rtctree/rtmidl']
+    sys.path += [home+'/OOoRTC', home+'/OOoRTC/CalcIDL', '/usr/lib/python' + str(sv[0]) + '.' + str(sv[1]) + '/dist-packages', '/usr/lib/python' + str(sv[0]) + '.' + str(sv[1]) + '/dist-packages/rtctree/rtmidl']
 elif os.name == 'nt':
-    sys.path += ['.\\OOoRTC', '.\\OOoRTC\\CalcIDL', 'C:\\Python2' + str(sv[1]) + '\\lib\\site-packages', 'C:\\Python2' + str(sv[1]) + '\\Lib\\site-packages\\OpenRTM_aist\\RTM_IDL', 'C:\\Python2' + str(sv[1]) + '\\lib\\site-packages\\rtctree\\rtmidl']
+    sys.path += ['.\\OOoRTC', '.\\OOoRTC\\CalcIDL', 'C:\\Python' + str(sv[0]) + '.' + str(sv[1]) + '\\lib\\site-packages', 'C:\\Python' + str(sv[0]) + '.' + str(sv[1]) + '\\Lib\\site-packages\\OpenRTM_aist\\RTM_IDL', 'C:\\Python' + str(sv[0]) + '.' + str(sv[1]) + '\\lib\\site-packages\\rtctree\\rtmidl']
     
     
     
@@ -28,9 +32,10 @@ elif os.name == 'nt':
 
 import time
 import random
-import commands
-import RTC
+#import commands
 import OpenRTM_aist
+import RTC
+
 
 
 from OpenRTM_aist import CorbaNaming
@@ -1004,7 +1009,11 @@ def CompAddInPort(name, o_port, dlg_control, autoCon = True):
         mst = True
         if mstate == 0:
             mst = False
-        tcomp = OOoRTC.calc_comp.mAddInPort(name, o_port, row, col, mlen, sn, mst, {}, autoCon)
+        try:
+            tcomp = OOoRTC.calc_comp.mAddInPort(name, o_port, row, col, mlen, sn, mst, {}, autoCon)
+        except:
+            import traceback
+            MyMsgBox('',OOoRTC.SetCoding(traceback.format_exc(),'utf-8'))
         if tcomp:
             tcomp.update_cellName(OOoRTC.calc_comp)
 
@@ -1098,6 +1107,15 @@ class Bridge(object):
         msgbox.dispose()
     except:
         msgbox = self._toolkit.createMessageBox(self._window,'infobox',1,title,message)
+        msgbox.execute()
+        msgbox.dispose()
+  def run_errordialog(self, title='', message=''):
+    try:
+        msgbox = self._toolkit.createMessageBox(self._window,uno.createUnoStruct('com.sun.star.awt.Rectangle'),'errorbox',1,"",message)
+        msgbox.execute()
+        msgbox.dispose()
+    except:
+        msgbox = self._toolkit.createMessageBox(self._window,'errorbox',1,title,message)
         msgbox.execute()
         msgbox.dispose()
 
@@ -1572,9 +1590,9 @@ class PortListListener(unohelper.Base, XTextListener):
             
             
             
-            if OOoRTC.calc_comp.InPorts.has_key(str(ptlist_control.Text)) == True:
+            if str(ptlist_control.Text) in OOoRTC.calc_comp.InPorts:
                 UpdateTree(self.dlg_control, OOoRTC.calc_comp.InPorts[str(ptlist_control.Text)])
-            elif OOoRTC.calc_comp.OutPorts.has_key(str(ptlist_control.Text)) == True:
+            elif str(ptlist_control.Text) in OOoRTC.calc_comp.OutPorts:
                 UpdateTree(self.dlg_control, OOoRTC.calc_comp.OutPorts[str(ptlist_control.Text)])
         
 
@@ -1587,7 +1605,7 @@ def AttachTC(dlg_control, m_port):
     tfcol_control = dlg_control.getControl( ControlName.InPortCBName )
     iname = str(tfcol_control.Text)
     
-    if OOoRTC.calc_comp.InPorts.has_key(iname) == True:
+    if iname in OOoRTC.calc_comp.InPorts:
                         
         m_port.attachports[iname] = iname
         OOoRTC.calc_comp.InPorts[iname].attachports[m_port._name] = m_port._name
@@ -1624,14 +1642,13 @@ class AttachListener( unohelper.Base, XActionListener):
     # @param actionEvent 
     def actionPerformed(self, actionEvent):
         
-
         if OOoRTC.calc_comp:
             
             ptlist_control = self.dlg_control.getControl( ControlName.PortCBName )
             
             
             
-            if OOoRTC.calc_comp.OutPorts.has_key(str(ptlist_control.Text)) == True:
+            if str(ptlist_control.Text) in OOoRTC.calc_comp.OutPorts:
                 o = OOoRTC.calc_comp.OutPorts[str(ptlist_control.Text)]
                 AttachTC(self.dlg_control, o)
                 return
@@ -1667,9 +1684,9 @@ def DetachTC(dlg_control, m_port):
     tfcol_control = dlg_control.getControl( ControlName.AttachCBName )
     iname = str(tfcol_control.Text)
                     
-    if m_port.attachports.has_key(iname) == True:
+    if iname in m_port.attachports:
         del m_port.attachports[iname]
-        if OOoRTC.calc_comp.InPorts[iname].attachports.has_key(m_port._name) == True:
+        if m_port._name in OOoRTC.calc_comp.InPorts[iname].attachports:
             del OOoRTC.calc_comp.InPorts[iname].attachports[m_port._name]
             UpdateSaveSheet()  
             UpdateAttachPort(dlg_control, m_port)
@@ -1708,7 +1725,7 @@ class DetachListener( unohelper.Base, XActionListener):
             
             
             
-            if OOoRTC.calc_comp.OutPorts.has_key(str(ptlist_control.Text)) == True:
+            if str(ptlist_control.Text) in OOoRTC.calc_comp.OutPorts:
                 o = OOoRTC.calc_comp.OutPorts[str(ptlist_control.Text)]
                 DetachTC(self.dlg_control, o)
                 return
@@ -1785,17 +1802,18 @@ class CreatePortListener( unohelper.Base, XActionListener):
             ptlist_control = self.dlg_control.getControl( ControlName.PortCBName )
             
             
-            
-            if OOoRTC.calc_comp.InPorts.has_key(str(ptlist_control.Text)) == True:
+            if str(ptlist_control.Text) in OOoRTC.calc_comp.InPorts:
                 SetPortParam(OOoRTC.calc_comp.InPorts[str(ptlist_control.Text)], self.dlg_control)
                 return
-            elif OOoRTC.calc_comp.OutPorts.has_key(str(ptlist_control.Text)) == True:
+            elif str(ptlist_control.Text) in OOoRTC.calc_comp.OutPorts:
                 SetPortParam(OOoRTC.calc_comp.OutPorts[str(ptlist_control.Text)], self.dlg_control)
                 return
-
+        
         dtcb_control = self.dlg_control.getControl( ControlName.DataTypeCBName )
         dt = str(dtcb_control.Text)
+        
         if dt != "":
+            
             F_Name = dt + str(OpenRTM_aist.uuid1())
             ptcb_control = self.dlg_control.getControl( ControlName.PortTypeCBName )
             pt = str(ptcb_control.Text)
@@ -1817,6 +1835,7 @@ class CreatePortListener( unohelper.Base, XActionListener):
 
         
         t_comp, nd = OOoRTC.JudgePort(objectTree, self._paths)
+        
         if t_comp:
             
             for n,o in OOoRTC.calc_comp.OutPorts.items():
@@ -1825,7 +1844,9 @@ class CreatePortListener( unohelper.Base, XActionListener):
                     
                     return
             for n,i in OOoRTC.calc_comp.InPorts.items():
+                
                 if i._port_a[0] == t_comp[0]:
+                    
                     SetPortParam(i, self.dlg_control)
                     
                     return
@@ -1976,14 +1997,14 @@ class DeleteListener( unohelper.Base, XActionListener ):
             ptlist_control = self.dlg_control.getControl( ControlName.PortCBName )
             
             
-            if OOoRTC.calc_comp.InPorts.has_key(str(ptlist_control.Text)) == True:
+            if str(ptlist_control.Text) in OOoRTC.calc_comp.InPorts:
                 
                 i = OOoRTC.calc_comp.InPorts[str(ptlist_control.Text)]
                 
                 OOoRTC.calc_comp.mRemoveInPort(i)
                 DelPortTC(i, self.dlg_control)
                 return
-            elif OOoRTC.calc_comp.OutPorts.has_key(str(ptlist_control.Text)) == True:
+            elif str(ptlist_control.Text) in OOoRTC.calc_comp.OutPorts:
                 o = OOoRTC.calc_comp.OutPorts[str(ptlist_control.Text)]
                 OOoRTC.calc_comp.mRemoveOutPort(o)
                 DelPortTC(o, self.dlg_control)

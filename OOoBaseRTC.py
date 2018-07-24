@@ -11,7 +11,7 @@ import codecs
 import re
 import time
 import random
-import commands
+#import commands
 import math
 
 
@@ -21,15 +21,16 @@ sv = sys.version_info
 
 if os.name == 'posix':
     home = expanduser("~")
-    sys.path += [home+'/OOoRTC', home+'/OOoRTC/BaseIDL', '/usr/lib/python2.' + str(sv[1]) + '/dist-packages']
+    sys.path += [home+'/OOoRTC', home+'/OOoRTC/CalcIDL', '/usr/lib/python' + str(sv[0]) + '.' + str(sv[1]) + '/dist-packages', '/usr/lib/python' + str(sv[0]) + '.' + str(sv[1]) + '/dist-packages/rtctree/rtmidl']
 elif os.name == 'nt':
-    sys.path += ['.\\OOoRTC', '.\\OOoRTC\\BaseIDL', 'C:\\Python2' + str(sv[1]) + '\\lib\\site-packages', 'C:\\Python2' + str(sv[1]) + '\\Lib\\site-packages\\OpenRTM_aist\\RTM_IDL']
+    sys.path += ['.\\OOoRTC', '.\\OOoRTC\\CalcIDL', 'C:\\Python' + str(sv[0]) + '.' + str(sv[1]) + '\\lib\\site-packages', 'C:\\Python' + str(sv[0]) + '.' + str(sv[1]) + '\\Lib\\site-packages\\OpenRTM_aist\\RTM_IDL', 'C:\\Python' + str(sv[0]) + '.' + str(sv[1]) + '\\lib\\site-packages\\rtctree\\rtmidl']
+    
     
     
 
-
-import RTC
 import OpenRTM_aist
+import RTC
+
 
 from OpenRTM_aist import CorbaNaming
 from OpenRTM_aist import RTObject
@@ -142,7 +143,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
     #
     def setConnection(self, name, usr_name, passward):
         
-        if self.m_comp.ConnectionList.has_key(name):
+        if name in self.m_comp.ConnectionList:
           return True
         guard = OpenRTM_aist.ScopedLock(self._mutex)
         try:
@@ -172,7 +173,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
     #
     def executeQuery(self, name, con, oSQL):
         
-        if self.m_comp.ConnectionList.has_key(con):
+        if con in self.m_comp.ConnectionList:
           guard = OpenRTM_aist.ScopedLock(self._mutex)
           try:
             self.m_comp.ResultSet[name] = self.m_comp.ConnectionList[con]["Statement"].executeQuery(oSQL)
@@ -195,7 +196,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
     #
     def ResultSetNext(self, name):
         
-        if self.m_comp.ResultSet.has_key(name):
+        if name in self.m_comp.ResultSet:
           return self.m_comp.ResultSet[name].next()
         else:
           return False
@@ -209,7 +210,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
     # @return 成功ならTrue、失敗ならFalse
     #
     def ResultSetPrevious(self, name):
-        if self.m_comp.ResultSet.has_key(name):
+        if name in self.m_comp.ResultSet:
           return self.m_comp.ResultSet[name].previous()
         else:
           return False
@@ -223,7 +224,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
     # @return 成功ならTrue、失敗ならFalse
     #
     def ResultSetFirst(self, name):
-        if self.m_comp.ResultSet.has_key(name):
+        if name in self.m_comp.ResultSet:
           return self.m_comp.ResultSet[name].first()
         else:
           return False
@@ -237,7 +238,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
     # @return 成功ならTrue、失敗ならFalse
     #
     def ResultSetLast(self, name):
-        if self.m_comp.ResultSet.has_key(name):
+        if name in self.m_comp.ResultSet:
           return self.m_comp.ResultSet[name].last()
         else:
           return False
@@ -251,7 +252,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
     # @return 成功ならTrue、失敗ならFalse
     # 
     def ResultSetBeforeFirst(self, name):
-        if self.m_comp.ResultSet.has_key(name):
+        if name in self.m_comp.ResultSet:
           return self.m_comp.ResultSet[name].beforeFirst()
         else:
           return False
@@ -265,7 +266,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
     # @return 成功ならTrue、失敗ならFalse
     # 
     def ResultSetAfterLast(self, name):
-        if self.m_comp.ResultSet.has_key(name):
+        if name in self.m_comp.ResultSet:
           return self.m_comp.ResultSet[name].afterLast()
         else:
           return False
@@ -280,7 +281,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
     # @return 取得したデータ
     #
     def getByte(self, name, num):
-        if self.m_comp.ResultSet.has_key(name):
+        if name in self.m_comp.ResultSet:
           return chr(self.m_comp.ResultSet[name].getByte(num))
         else:
           return 0
@@ -295,7 +296,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
     # @return 取得したデータ
     #
     def getShort(self, name, num):
-        if self.m_comp.ResultSet.has_key(name):
+        if name in self.m_comp.ResultSet:
           return int(self.m_comp.ResultSet[name].getShort(num))
         return 0
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
@@ -309,7 +310,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
     # @return 取得したデータ
     #
     def getLong(self, name, num):
-        if self.m_comp.ResultSet.has_key(name):
+        if name in self.m_comp.ResultSet:
           return long(self.m_comp.ResultSet[name].getLong(num))
         else:
           return 0
@@ -324,7 +325,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
     # @return 取得したデータ
     #
     def getFloat(self, name, num):
-        if self.m_comp.ResultSet.has_key(name):
+        if name in self.m_comp.ResultSet:
           return float(self.m_comp.ResultSet[name].getFloat(num))
         else:
           return 0
@@ -339,7 +340,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
     # @return 取得したデータ
     #
     def getDouble(self, name, num):
-        if self.m_comp.ResultSet.has_key(name):
+        if name in self.m_comp.ResultSet:
           return self.m_comp.ResultSet[name].getDouble(num)
         else:
           return 0
@@ -354,7 +355,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
     # @return 取得したデータ
     #
     def getBoolean(self, name, num):
-        if self.m_comp.ResultSet.has_key(name):
+        if name in self.m_comp.ResultSet:
           return bool(self.m_comp.ResultSet[name].getBoolean(num))
         else:
           return False
@@ -369,7 +370,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
     # @return 取得したデータ
     #
     def getString(self, name, num):
-        if self.m_comp.ResultSet.has_key(name):
+        if name in self.m_comp.ResultSet:
           return str(self.m_comp.ResultSet[name].getString(num))
         else:
           return ""
@@ -403,7 +404,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
         
         
         
-        if self.m_comp.ConnectionList.has_key(con):
+        if con in self.m_comp.ConnectionList:
             guard = OpenRTM_aist.ScopedLock(self._mutex)
             try:
 
@@ -434,7 +435,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
         oRstDataSources = self.m_comp.base._context.getByName(con)
         
         
-        if self.m_comp.ConnectionList.has_key(con):
+        if con in self.m_comp.ConnectionList:
           try:
 
             self.m_comp.ConnectionList[con]["Statement"].executeUpdate(oSQL)
@@ -459,7 +460,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
     # @return 行番号
     #
     def getRow(self, name):
-        if self.m_comp.ResultSet.has_key(name):
+        if name in self.m_comp.ResultSet:
           return int(self.m_comp.ResultSet[name].getRow())
         return 0
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
@@ -475,7 +476,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
     # @return 成功ならTrue、失敗ならFalse
     #
     def AddTable(self, name, con, cols, dt):
-        if self.m_comp.ConnectionList.has_key(con):
+        if con in self.m_comp.ConnectionList:
           guard = OpenRTM_aist.ScopedLock(self._mutex)
           try:
             oTables = self.m_comp.ConnectionList[con]["Connection"].getTables()
@@ -590,7 +591,7 @@ class mDataBase_i (DataBase__POA.mDataBase):
     # @return 成功ならTrue、失敗ならFalse
     #
     def RemoveTable(self, name, con):
-        if self.m_comp.ConnectionList.has_key(con):
+        if con in self.m_comp.ConnectionList:
           guard = OpenRTM_aist.ScopedLock(self._mutex)
           try:
             oTables = self.m_comp.ConnectionList[con]["Connection"].getTables()

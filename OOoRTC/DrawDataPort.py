@@ -15,9 +15,10 @@ sv = sys.version_info
 
 if os.name == 'posix':
     home = expanduser("~")
-    sys.path += [home+'/OOoRTC', '/usr/lib/python2.' + str(sv[1]) + '/dist-packages']
+    sys.path += [home+'/OOoRTC', home+'/OOoRTC/CalcIDL', '/usr/lib/python' + str(sv[0]) + '.' + str(sv[1]) + '/dist-packages', '/usr/lib/python' + str(sv[0]) + '.' + str(sv[1]) + '/dist-packages/rtctree/rtmidl']
 elif os.name == 'nt':
-    sys.path += ['.\\OOoRTC', 'C:\\Python2' + str(sv[1]) + '\\lib\\site-packages', 'C:\\Python2' + str(sv[1]) + '\\Lib\\site-packages\\OpenRTM_aist\\RTM_IDL']
+    sys.path += ['.\\OOoRTC', '.\\OOoRTC\\CalcIDL', 'C:\\Python' + str(sv[0]) + '.' + str(sv[1]) + '\\lib\\site-packages', 'C:\\Python' + str(sv[0]) + '.' + str(sv[1]) + '\\Lib\\site-packages\\OpenRTM_aist\\RTM_IDL', 'C:\\Python' + str(sv[0]) + '.' + str(sv[1]) + '\\lib\\site-packages\\rtctree\\rtmidl']
+    
     
     
     
@@ -26,7 +27,7 @@ elif os.name == 'nt':
 
 import time
 import random
-import commands
+#import commands
 import RTC
 import OpenRTM_aist
 

@@ -10,7 +10,7 @@ import sys,os,platform
 import re
 import time
 import random
-import commands
+#import commands
 import math
 
 
@@ -21,10 +21,11 @@ sv = sys.version_info
 
 if os.name == 'posix':
     home = expanduser("~")
-    sys.path += [home+'/OOoRTC', home+'/OOoRTC/CalcIDL', '/usr/lib/python2.' + str(sv[1]) + '/dist-packages']
+    sys.path += [home+'/OOoRTC', home+'/OOoRTC/CalcIDL', '/usr/lib/python' + str(sv[0]) + '.' + str(sv[1]) + '/dist-packages', '/usr/lib/python' + str(sv[0]) + '.' + str(sv[1]) + '/dist-packages/rtctree/rtmidl']
 elif os.name == 'nt':
-    sys.path += ['.\\OOoRTC', '.\\OOoRTC\\CalcIDL', 'C:\\Python2' + str(sv[1]) + '\\lib\\site-packages', 'C:\\Python2' + str(sv[1]) + '\\Lib\\site-packages\\OpenRTM_aist\\RTM_IDL']
-
+    sys.path += ['.\\OOoRTC', '.\\OOoRTC\\CalcIDL', 'C:\\Python' + str(sv[0]) + '.' + str(sv[1]) + '\\lib\\site-packages', 'C:\\Python' + str(sv[0]) + '.' + str(sv[1]) + '\\Lib\\site-packages\\OpenRTM_aist\\RTM_IDL', 'C:\\Python' + str(sv[0]) + '.' + str(sv[1]) + '\\lib\\site-packages\\rtctree\\rtmidl']
+    
+    
 
 
 
@@ -539,13 +540,13 @@ class CalcControl(OpenRTM_aist.DataFlowComponentBase):
               
               tdt = ""
               tmp = None
-              if self.ConfInPorts.has_key(dn):
+              if dn in self.ConfInPorts:
                   if self.conf_port_type[0] != "DataInPort":
                       del self.ConfInPorts[dn]
                   else:
                       tmp = self.ConfInPorts[dn]
                       tdt = "DataInPort"
-              if self.ConfOutPorts.has_key(dn):
+              if dn in self.ConfOutPorts:
                   if self.conf_port_type[0] != "DataOutPort":
                       del self.ConfOutPorts[dn]
                   else:
@@ -723,14 +724,14 @@ class CalcControl(OpenRTM_aist.DataFlowComponentBase):
   def udAPort(self, ip, OutPorts, InPorts):
       
       for n,p in ip.attachports.items():
-        if OutPorts.has_key(p) == True:
+        if p in OutPorts:
             
             op = OutPorts[p]
             if len(op.attachports) != 0:
                 
                 Flag = True
                 for i,j in op.attachports.items():
-                    if InPorts.has_key(j) == True:
+                    if j in InPorts:
                         #if len(self.InPorts[j].buffdata) == 0:
                         if InPorts[j]._port.isNew() != True:
                             Flag = False

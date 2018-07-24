@@ -15,9 +15,11 @@ sv = sys.version_info
 
 
 if os.name == 'posix':
-    sys.path += ['/usr/lib/python2.' + str(sv[1]) + '/dist-packages']
+    home = expanduser("~")
+    sys.path += [home+'/OOoRTC', home+'/OOoRTC/CalcIDL', '/usr/lib/python' + str(sv[0]) + '.' + str(sv[1]) + '/dist-packages', '/usr/lib/python' + str(sv[0]) + '.' + str(sv[1]) + '/dist-packages/rtctree/rtmidl']
 elif os.name == 'nt':
-    sys.path += ['C:\\Python2' + str(sv[1]) + '\\lib\\site-packages', 'C:\\Python2' + str(sv[1]) + '\\Lib\\site-packages\\OpenRTM_aist\\RTM_IDL']
+    sys.path += ['.\\OOoRTC', '.\\OOoRTC\\CalcIDL', 'C:\\Python' + str(sv[0]) + '.' + str(sv[1]) + '\\lib\\site-packages', 'C:\\Python' + str(sv[0]) + '.' + str(sv[1]) + '\\Lib\\site-packages\\OpenRTM_aist\\RTM_IDL', 'C:\\Python' + str(sv[0]) + '.' + str(sv[1]) + '\\lib\\site-packages\\rtctree\\rtmidl']
+    
     
     
     
@@ -27,9 +29,10 @@ elif os.name == 'nt':
 
 import time
 import random
-import commands
-import RTC
+#import commands
 import OpenRTM_aist
+import RTC
+
 
 
 from OpenRTM_aist import CorbaNaming
@@ -65,14 +68,22 @@ def SetCoding(m_str, m_code):
             return m_str
         else:
             try:
-                return m_str.decode(m_code).encode("utf-8")
+                if sys.version_info[0] == 2:
+                    return m_str.decode(m_code).encode("utf-8")
+                else:
+                    return m_str
             except:
                 return ""
     elif os.name == 'nt':
         try:
-            return m_str.decode(m_code).encode('cp932')
+            if sys.version_info[0] == 2:
+                return m_str.decode(m_code).encode('cp932')
+            else:
+                return m_str
         except:
-            return ""
+            import traceback
+            
+            return traceback.format_exc()
 
 ##
 # @brief 文字、背景色の色をRGB形式から変換して返すクラス
