@@ -123,6 +123,7 @@ ooocalccontrol_spec = ["implementation_id", imp_id,
                   "conf.default.green", "255",
                   "conf.default.blue", "0",
                   "conf.default.stime", "0.05",
+                  "conf.default.stime_enable", "0",
                   "conf.default.stCell_row", "A",
                   "conf.default.stCell_col", "1",
                   "conf.default.stCell_sheetname", "sheet1",
@@ -841,14 +842,15 @@ class OOoCalcControl(CalcControl):
     return RTC.RTC_OK
 
   def setTime(self):
-    CN = self.stCell_row[0] + str(self.stCell_col[0])
-    if self.calc.sheets.hasByName(self.stCell_sheetname[0]):
-        sheet = self.calc.sheets.getByName(self.stCell_sheetname[0])
-        try:
-            cell = sheet.getCellRangeByName(CN)
-            cell.getCellByPosition(0, 0).Value = self.m_time
-        except:
-            pass
+    if self.stime_enable[0] == 1:
+        CN = self.stCell_row[0] + str(self.stCell_col[0])
+        if self.calc.sheets.hasByName(self.stCell_sheetname[0]):
+            sheet = self.calc.sheets.getByName(self.stCell_sheetname[0])
+            try:
+                cell = sheet.getCellRangeByName(CN)
+                cell.getCellByPosition(0, 0).Value = self.m_time
+            except:
+                pass
 
   ##
   # @brief 周期処理用コールバック関数

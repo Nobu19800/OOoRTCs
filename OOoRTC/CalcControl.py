@@ -223,6 +223,7 @@ class CalcControl(OpenRTM_aist.DataFlowComponentBase):
 
     
     self.stime = [0.05]
+    self.stime_enable = [0]
     self.stCell_row = ["A"]
     self.stCell_col = [1]
     self.stCell_sheetname = ["sheet1"]
@@ -629,6 +630,8 @@ class CalcControl(OpenRTM_aist.DataFlowComponentBase):
     self.bindParameter("c_move", self.c_move, "1")
     self.bindParameter("Attach_Port", self.Attach_Port, "None")
     self.bindParameter("stime", self.stime, "0.05")
+    self.bindParameter("stime_enable", self.stime_enable, "0")
+    
     self.bindParameter("stCell_row", self.stCell_row, "A")
     self.bindParameter("stCell_col", self.stCell_col, "1")
     self.bindParameter("stCell_sheetname", self.stCell_sheetname, "sheet1")
