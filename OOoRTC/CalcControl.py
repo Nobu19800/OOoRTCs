@@ -874,7 +874,7 @@ class CalcControl(OpenRTM_aist.DataFlowComponentBase):
 #
 
 
-class DataListener(OpenRTM_aist.ConnectorDataListenerT):
+class DataListener(OpenRTM_aist.ConnectorDataListener):
     ##
     # @brief コンストラクタ
     # @param self 
